@@ -1,0 +1,25 @@
+---
+interface Props {
+  className?: string;
+  bgVariant?: 'white' | 'base' | 'secondary' | 'sage';
+}
+
+const { className = "", bgVariant = 'white' } = Astro.props;
+
+// Cards, Containers & Afbeeldingen: Zachte afronding (rounded-2xl of rounded-3xl).
+// Gebruik geen harde borders (border-width: 0), maar definieer secties met lichte achtergrondkleuren 
+// of uiterst zachte box-shadows.
+
+const bgColors = {
+  white: "bg-white",
+  base: "bg-[var(--color-brand-base)]",
+  secondary: "bg-[var(--color-brand-secondary)]",
+  sage: "bg-[var(--color-brand-sage)]",
+};
+
+const bgClass = bgColors[bgVariant];
+---
+
+<div class={`rounded-3xl p-8 md:p-12 shadow-sm shadow-[var(--color-brand-secondary)]/50 ${bgClass} ${className}`}>
+  <slot />
+</div>

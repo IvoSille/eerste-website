@@ -1,0 +1,26 @@
+---
+interface Props {
+  id?: string;
+  className?: string;
+  bgVariant?: 'base' | 'secondary' | 'sage';
+}
+
+const { id, className = "", bgVariant = 'base' } = Astro.props;
+
+// Densiteit & Spacing: Zeer luchtig. Gebruik minimaal py-24 of py-32 in Tailwind
+// tussen grote secties om het gevoel van druk/stress weg te nemen.
+
+const bgColors = {
+  base: "bg-[var(--color-brand-base)]",
+  secondary: "bg-[var(--color-brand-secondary)]",
+  sage: "bg-[var(--color-brand-sage)]",
+};
+
+const bgClass = bgColors[bgVariant];
+---
+
+<section id={id} class={`py-24 md:py-32 ${bgClass} ${className}`}>
+  <div class="max-w-4xl mx-auto px-6 lg:px-8">
+    <slot />
+  </div>
+</section>
