@@ -47,18 +47,30 @@ import Button from './Button.astro';
 					<label for="situatie" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">Korte beschrijving van je situatie</label>
 					<textarea id="situatie" name="situatie" required autocomplete="off" class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all min-h-[140px]" placeholder="Vertel kort over je klachten..."></textarea>
 				</div>
-				<Button type="submit" className="w-full text-base md:text-lg py-4 md:py-5 mt-2 md:mt-4">Verstuur Aanvraag</Button>
+				<Button type="submit" className="w-full text-base md:text-lg py-4 md:py-5 mt-2 md:mt-4">Verstuur aanvraag</Button>
 			</form>
 		</div>
 		
 		{/* FOOTER */}
-		<div class="pt-16 md:pt-24 mt-16 md:mt-20 border-t border-[var(--color-brand-secondary)] text-xs md:text-sm text-[var(--color-brand-muted)] text-left max-w-3xl mx-auto space-y-4">
+		<footer class="pt-16 md:pt-24 mt-16 md:mt-20 border-t border-[var(--color-brand-secondary)] text-xs md:text-sm text-[var(--color-brand-muted)] max-w-3xl mx-auto space-y-6">
 			<p class="leading-relaxed">
 				<strong>Disclaimer:</strong> De begeleiding die ik bied is educatief en coachend van aard. Het is geen medische behandeling en vervangt geen advies van een arts of specialist. Ik stel geen diagnoses, schrijf geen medicatie voor, en adviseer nooit om lopende medische behandelingen te stoppen. Bij acute klachten of twijfel raad ik altijd aan om contact op te nemen met je huisarts.
 			</p>
-			<p class="text-center pt-8 font-medium">
+
+			<div class="flex flex-col sm:flex-row sm:justify-between gap-4 pt-4">
+				<div class="space-y-1">
+					<p class="font-semibold text-[var(--color-brand-primary-text)]">Crystal Helder</p>
+					<p>KVK 70630879</p>
+					<p>Tienhoven / Utrecht</p>
+				</div>
+				<div class="space-y-1 sm:text-right">
+					<a href="/algemene-voorwaarden/" class="hover:text-[var(--color-brand-accent)] transition-colors duration-300 underline underline-offset-2">Algemene voorwaarden & privacy</a>
+				</div>
+			</div>
+
+			<p class="text-center pt-6 font-medium border-t border-[var(--color-brand-secondary)]">
 				&copy; {new Date().getFullYear()} Crystal Helder. Alle rechten voorbehouden.
 			</p>
-		</div>
+		</footer>
 	</div>
 </section>

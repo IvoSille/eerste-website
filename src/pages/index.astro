@@ -7,20 +7,22 @@ import About from '../components/About.astro';
 import Testimonials from '../components/Testimonials.astro';
 import FAQ from '../components/FAQ.astro';
 import Contact from '../components/Contact.astro';
+import Nav from '../components/Nav.astro';
 ---
 
 <Layout title="Crystal Helder - GNM Begeleiding">
-	
-	{/* DECORATIVE BACKGROUND BLOBS - Hidden or scaled down on mobile */}
-	<div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-		<div class="absolute top-[-10%] right-[-5%] w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[60px] md:blur-[80px] opacity-70 animate-pulse" style="animation-duration: 10s;"></div>
-		<div class="absolute top-[20%] left-[-10%] w-[250px] h-[250px] md:w-[500px] md:h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[80px] md:blur-[100px] opacity-50"></div>
+	<Nav />
+
+	{/* DECORATIVE BACKGROUND BLOBS - Hidden on mobile for performance, static on tablet+ */}
+	<div class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+		<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-70"></div>
+		<div class="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-50"></div>
 	</div>
 
 	<Hero />
 
 	{/* WRAPPER FOR FLOWING SECTIONS */}
-	<div class="relative w-full mt-6 md:mt-20">
+	<div class="relative w-full mt-2 md:mt-20">
 		<Philosophy />
 		<Methodology />
 		<About />
@@ -31,15 +33,15 @@ import Contact from '../components/Contact.astro';
 </Layout>
 
 <style is:global>
-	/* Scroll Animation Classes */
-	.fade-in-section {
+	/* Scroll Animation — only hide when JS is confirmed available */
+	:global(html.js) .fade-in-section {
 		opacity: 0;
 		transform: translateY(20px);
 		visibility: hidden;
 		transition: opacity 600ms ease-out, transform 600ms ease-out;
 		will-change: opacity, visibility, transform;
 	}
-	.fade-in-section.is-visible {
+	:global(html.js) .fade-in-section.is-visible {
 		opacity: 1;
 		transform: none;
 		visibility: visible;

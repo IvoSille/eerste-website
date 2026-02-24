@@ -42,7 +42,7 @@
 @theme {
   --color-brand-base: #FAF7F5;
   --color-brand-primary-text: #2C2624;
-  --color-brand-muted: #7A6F6C;
+  --color-brand-muted: #6B5F5C;
   --color-brand-accent: #C8664D;
   --color-brand-accent-hover: #A8533D;
   --color-brand-secondary: #EADAD3;
@@ -87,7 +87,7 @@
       transition-duration: 0.01ms !important;
     }
 
-    .fade-in-section {
+    html.js .fade-in-section {
       opacity: 1 !important;
       transform: none !important;
       visibility: visible !important;
