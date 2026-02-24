@@ -36,16 +36,16 @@ import Button from './Button.astro';
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 					<div>
 						<label for="naam" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">Naam</label>
-						<input type="text" id="naam" name="naam" required class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all" placeholder="Jouw naam" />
+						<input type="text" id="naam" name="naam" required autocomplete="name" class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all" placeholder="Jouw naam" />
 					</div>
 					<div>
 						<label for="email" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">E-mail</label>
-						<input type="email" id="email" name="email" required class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all" placeholder="Jouw e-mailadres" />
+						<input type="email" id="email" name="email" required autocomplete="email" class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all" placeholder="Jouw e-mailadres" />
 					</div>
 				</div>
 				<div>
 					<label for="situatie" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">Korte beschrijving van je situatie</label>
-					<textarea id="situatie" name="situatie" required class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all min-h-[140px]" placeholder="Vertel kort over je klachten..."></textarea>
+					<textarea id="situatie" name="situatie" required autocomplete="off" class="w-full rounded-2xl border-0 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] transition-all min-h-[140px]" placeholder="Vertel kort over je klachten..."></textarea>
 				</div>
 				<Button type="submit" className="w-full text-base md:text-lg py-4 md:py-5 mt-2 md:mt-4">Verstuur Aanvraag</Button>
 			</form>

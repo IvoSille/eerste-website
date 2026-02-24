@@ -75,4 +75,22 @@
     font-family: var(--font-heading);
     color: var(--color-brand-primary-text);
   }
+
+  /* Respect OS-level motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+
+    .fade-in-section {
+      opacity: 1 !important;
+      transform: none !important;
+      visibility: visible !important;
+    }
+  }
 }
