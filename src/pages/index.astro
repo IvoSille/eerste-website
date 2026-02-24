@@ -1,7 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 import Button from '../components/Button.astro';
 import Card from '../components/Card.astro';
+import { Image } from 'astro:assets';
+import foto1 from '../assets/images/foto_1.jpg';
+import foto2 from '../assets/images/foto_2.jpg';
+import foto3 from '../assets/images/foto_3.jpg';
 ---
 
 <Layout title="Crystal Helder - GNM Begeleiding">
@@ -39,7 +44,7 @@ import Card from '../components/Card.astro';
 				<div class="absolute inset-0 bg-gradient-to-tr from-[#E8D1C5] to-[#fdfbf9] rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-xl shadow-[var(--color-brand-accent)]/20 transform rotate-[-2deg] transition-transform duration-700 hover:rotate-0"></div>
 				
 				{/* Foto 1 - The main heroic photo */}
-				<img src="/images/foto_1.jpg" alt="Crystal GNM begeleiding" class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]" style="object-position: center 20%;" />
+				<Image src={foto1} alt="Crystal GNM begeleiding" class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]" style="object-position: center 20%;" fetchpriority="high" loading="eager" />
 				
 				{/* Floating Card - Hidden on very small screens, small on mobile, larger on md */}
 				<div class="hidden sm:block absolute -bottom-6 -left-4 md:-left-12 lg:-left-16 bg-white/80 backdrop-blur-md border border-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-xl shadow-[var(--color-brand-muted)]/10 w-[240px] md:w-[280px]">
@@ -89,7 +94,7 @@ import Card from '../components/Card.astro';
 				<div class="w-full lg:w-1/2 relative space-y-8 lg:space-y-10">
 					{/* Foto 2 integration */}
 					<div class="relative w-full aspect-[16/9] md:aspect-[3/2] rounded-[2rem] overflow-hidden shadow-xl shadow-[var(--color-brand-secondary)]/30 mb-8 transform hover:scale-[1.02] transition-transform duration-500">
-						<img src="/images/foto_2.jpg" alt="Biologische Natuurwetten in de praktijk" class="absolute inset-0 w-full h-full object-cover" />
+						<Image src={foto2} alt="Biologische Natuurwetten in de praktijk" class="absolute inset-0 w-full h-full object-cover" />
 					</div>
 					
 					<Card bgVariant="sage" className="bg-gradient-to-br from-[var(--color-brand-sage)] to-[#dceacb] border border-white/40 shadow-xl shadow-[var(--color-brand-sage)]/20 p-8 md:p-10">
@@ -158,7 +163,7 @@ import Card from '../components/Card.astro';
 				<div class="order-2 lg:order-1 space-y-10">
 					<div class="flex flex-col sm:flex-row items-center sm:items-start gap-8 lg:hidden mb-8">
 						<div class="w-48 h-48 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-accent)]/80">
-							<img src="/images/foto_3.jpg" alt="Portret Crystal" class="w-full h-full object-cover" style="object-position: center 15%;" />
+							<Image src={foto3} alt="Portret Crystal" class="w-full h-full object-cover" style="object-position: center 15%;" />
 						</div>
 						<h2 class="text-4xl font-semibold leading-tight text-center sm:text-left mt-4 sm:mt-0">Mijn naam is Crystal.</h2>
 					</div>
@@ -179,7 +184,7 @@ import Card from '../components/Card.astro';
 
 					{/* Desktop layout for Photo 3 */}
 					<div class="hidden lg:block w-full max-w-sm aspect-[4/3] rounded-3xl overflow-hidden mt-12 shadow-2xl relative group">
-						<img src="/images/foto_3.jpg" alt="Portret Crystal" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style="object-position: center 15%;" />
+						<Image src={foto3} alt="Portret Crystal" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style="object-position: center 15%;" />
 					</div>
 				</div>
 
