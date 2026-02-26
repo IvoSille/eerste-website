@@ -6,19 +6,22 @@ import Button from './Button.astro';
 <section id="kennismaking" class="py-24 md:py-32 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] to-[#f4ebe6] relative fade-in-section">
 	<div class="absolute inset-0 opacity-[0.12]" style="background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E\");"></div>
 	<div class="max-w-4xl mx-auto text-center relative z-10 w-full">
-		<h2 class="text-3xl md:text-5xl font-semibold mb-6">Klaar voor meer inzicht?</h2>
-		<p class="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed">
-			De eerste stap is een vrijblijvend kennismakingsgesprek. Geen verkooppraatje — een eerlijk gesprek waarin we kijken of mijn aanpak aansluit bij wat je nodig hebt.
+		<h2 class="text-3xl md:text-5xl font-semibold mb-6">Wil je weten of dit traject bij je past?</h2>
+		<p class="text-lg md:text-xl mb-4 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed">
+			De eerste stap is een vrijblijvend kennismakingsgesprek. Geen verkooppraatje — een eerlijk gesprek waarin ik luister naar je situatie en samen met je kijk of mijn aanpak aansluit bij wat je nodig hebt.
 		</p>
-		
+		<p class="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed">
+			Ik neem bewust niet iedereen aan. Dat is geen verkooptruc, dat is zorgvuldigheid. Ik wil zeker weten dat ik je echt kan helpen voordat we samen aan de slag gaan.
+		</p>
+
 		<div class="bg-white/80 backdrop-blur-xl p-8 md:p-14 rounded-3xl md:rounded-[3rem] shadow-2xl shadow-[var(--color-brand-accent)]/10 border border-white text-left max-w-2xl mx-auto w-full">
 			<h3 class="text-2xl font-bold mb-6 md:mb-8 text-center text-[var(--color-brand-accent)]">Plan je kennismaking</h3>
-			
+
 			{/* Functional Netlify Form */}
-			<form 
-				name="kennismaking" 
-				method="POST" 
-				data-netlify="true" 
+			<form
+				name="kennismaking"
+				method="POST"
+				data-netlify="true"
 				netlify-honeypot="bot-field"
 				class="space-y-4 md:space-y-6"
 				action="/bedankt/"
@@ -26,10 +29,10 @@ import Button from './Button.astro';
 				{/* Hidden honeypot field to prevent spam */}
 				<p class="hidden">
 					<label>
-						Don’t fill this out if you're human: <input name="bot-field" />
+						Don't fill this out if you're human: <input name="bot-field" />
 					</label>
 				</p>
-				
+
 				{/* Hidden input to tell Netlify which form this is */}
 				<input type="hidden" name="form-name" value="kennismaking" />
 
@@ -50,7 +53,7 @@ import Button from './Button.astro';
 				<Button type="submit" className="w-full text-base md:text-lg py-4 md:py-5 mt-2 md:mt-4">Verstuur aanvraag</Button>
 			</form>
 		</div>
-		
+
 		{/* FOOTER */}
 		<footer class="pt-16 md:pt-24 mt-16 md:mt-20 border-t border-[var(--color-brand-secondary)] text-xs md:text-sm text-[var(--color-brand-muted)] max-w-3xl mx-auto space-y-6">
 			<p class="leading-relaxed">

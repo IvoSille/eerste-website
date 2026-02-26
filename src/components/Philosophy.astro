@@ -1,49 +1,68 @@
 ---
-import Card from './Card.astro';
 import { Image } from 'astro:assets';
 import foto2 from '../assets/images/foto_2.jpg';
 ---
 
-{/* SECTIE 2 & 3 - COMBINED INTO A DYNAMIC FLOW */}
+{/* SECTIE 2 - HERKENNING */}
 <div class="bg-gradient-to-b from-transparent via-white to-white py-16 md:py-32 px-6 lg:px-8 fade-in-section">
 	<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-center">
-		
+
 		{/* Left text column */}
 		<div class="w-full lg:w-1/2 space-y-10 md:space-y-12">
 			<div>
 				<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-6 md:mb-8 leading-tight">
-					Je hebt overal gezocht. Maar het antwoord op “waarom” is nooit gekomen.
+					Je hebt overal gezocht. Maar het antwoord op "waarom" is nooit gekomen.
 				</h2>
 				<div class="space-y-4 md:space-y-6 text-base md:text-lg text-[var(--color-brand-muted)]">
 					<p>
 						Je bent bij de huisarts geweest, bij de specialist, misschien bij meerdere. Er zijn onderzoeken gedaan, scans gemaakt, bloedwaarden geprikt. Soms was er een diagnose. Soms niet. Maar één vraag bleef altijd onbeantwoord: <strong class="text-[var(--color-brand-primary-text)] font-semibold">waarom heb ik dit?</strong>
 					</p>
 					<p>
-						Misschien heb je gehoord over de biologische natuurwetten — over het idee dat klachten niet willekeurig zijn, maar een logica volgen. En iets daaraan voelde herkenbaar. Maar hoe je dat precies op jouw situatie moet toepassen? Dat is een ander verhaal.
+						Waarom juist nu? Waarom juist hier in mijn lichaam? Waarom gaat het niet over, ondanks alles wat ik al heb geprobeerd?
+					</p>
+					<p>
+						Misschien heb je via een podcast, een boek of een vriendin gehoord over de biologische natuurwetten — over het idee dat klachten niet willekeurig zijn, maar een logica volgen. En iets daaraan voelde herkenbaar. Het klopte. Maar hoe je dat precies op jouw situatie moet toepassen? Dat is een ander verhaal.
 					</p>
 				</div>
 			</div>
 
 			<div class="pl-6 md:pl-8 border-l-4 border-[var(--color-brand-accent)] py-2">
 				<p class="text-xl md:text-2xl font-medium text-[var(--color-brand-primary-text)] leading-snug">
-					Je zoekt geen níeuwe theorie. Je zoekt iemand die samen met jou naar jouw situatie kijkt.
+					Je zoekt geen níeuwe theorie. Je zoekt iemand die samen met jou naar jouw situatie kijkt en je helpt begrijpen wat er speelt.
 				</p>
 			</div>
 		</div>
 
-		{/* Right Column Content */}
-		<div class="w-full lg:w-1/2 relative space-y-8 lg:space-y-10">
-			{/* Foto 2 integration */}
-			<div class="relative w-full aspect-[16/9] md:aspect-[3/2] rounded-[2rem] overflow-hidden shadow-xl shadow-[var(--color-brand-secondary)]/30 mb-8 transform hover:scale-[1.02] transition-transform duration-500">
+		{/* Right Column — Photo */}
+		<div class="w-full lg:w-1/2 relative">
+			<div class="relative w-full aspect-[16/9] md:aspect-[3/2] rounded-[2rem] overflow-hidden shadow-xl shadow-[var(--color-brand-secondary)]/30 transform hover:scale-[1.02] transition-transform duration-500">
 				<Image src={foto2} alt="Biologische Natuurwetten in de praktijk" class="absolute inset-0 w-full h-full object-cover" />
 			</div>
-			
-			<Card bgVariant="sage" className="bg-gradient-to-br from-[var(--color-brand-sage)] to-[#dceacb] border border-white/40 shadow-xl shadow-[var(--color-brand-sage)]/20 p-8 md:p-10">
-				<h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-[var(--color-brand-primary-text)]">De Biologische Natuurwetten</h3>
-				<p class="text-base md:text-[1.1rem] text-[var(--color-brand-primary-text)] leading-relaxed">
-					Elke klacht is terug te voeren op een specifiek biologisch programma, geactiveerd door iets wat je hebt meegemaakt. Dit is een systematisch kader dat je helpt de taal van je lichaam te leren lezen.
-				</p>
-			</Card>
+		</div>
+	</div>
+</div>
+
+{/* SECTIE 3 - DE BIOLOGISCHE NATUURWETTEN */}
+<div class="bg-[var(--color-brand-sage)]/30 py-16 md:py-24 px-6 lg:px-8 fade-in-section">
+	<div class="max-w-3xl mx-auto">
+		<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 md:mb-10 leading-tight text-center">
+			Klachten volgen een patroon. Dat patroon is te begrijpen.
+		</h2>
+		<div class="space-y-5 md:space-y-6 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+			<p>
+				De 5 biologische natuurwetten beschrijven hoe je lichaam reageert op ingrijpende gebeurtenissen. Niet willekeurig, maar volgens vaste patronen die in elk menselijk lichaam hetzelfde werken.
+			</p>
+			<p>
+				Elke klacht — van huidproblemen tot darmklachten, van rugpijn tot hormonale verstoringen — is terug te voeren op een specifiek biologisch programma dat is geactiveerd door iets wat je hebt meegemaakt. Iets dat indruk heeft gemaakt. Een conflict, een schok, een situatie die je niet zag aankomen.
+			</p>
+			<p>
+				Als je weet welk conflict er speelt, begrijp je waarom je lichaam doet wat het doet. En pas dan kun je gericht iets veranderen.
+			</p>
+		</div>
+		<div class="mt-8 md:mt-10 pl-6 md:pl-8 border-l-4 border-[var(--color-brand-accent)] py-2">
+			<p class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-snug italic">
+				Dit is geen alternatieve geneeskunde. Dit is een systematisch kader dat je helpt de taal van je lichaam te leren lezen.
+			</p>
 		</div>
 	</div>
 </div>
