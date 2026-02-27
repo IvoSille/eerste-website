@@ -2,6 +2,13 @@
   command = "npm run build"
   publish = "dist"
 
+# Redirect root to current landing page
+[[redirects]]
+  from = "/"
+  to = "/gnm-begeleiding/"
+  status = 302
+  force = true
+
 # Cache fonts for 1 year (immutable, never change)
 [[headers]]
   for = "/fonts/*"
