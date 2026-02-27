@@ -7,6 +7,16 @@ import Button from '../components/Button.astro';
   title="Bedankt voor je bericht — Crystal Helder"
   description="Je aanvraag is ontvangen. Crystal neemt zo spoedig mogelijk contact met je op."
 >
+  <!-- DataLayer: Conversion event on thank you page -->
+  <script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'generate_lead',
+    lead_source: 'kennismakingsformulier',
+    conversion_page: true
+  });
+  </script>
+
   <div class="min-h-screen flex items-center justify-center px-6 py-24 relative overflow-hidden">
 
     {/* Background blobs */}

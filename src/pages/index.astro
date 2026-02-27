@@ -49,6 +49,66 @@ import Nav from '../components/Nav.astro';
 </style>
 
 <script>
+	// DataLayer: CTA click tracking
+	document.addEventListener('DOMContentLoaded', () => {
+		document.addEventListener('click', (e) => {
+			const link = e.target.closest('a[href^="#"]');
+			if (!link) return;
+
+			const href = link.getAttribute('href');
+			const text = link.textContent.trim();
+			const section = link.closest('section');
+			const location = section?.id || 'hero';
+
+			if (href === '#kennismaking' || href === '#aanpak') {
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({
+					event: 'cta_click',
+					cta_text: text,
+					cta_destination: href.replace('#', ''),
+					cta_location: location
+				});
+			}
+		});
+	});
+
+	// DataLayer: Scroll depth tracking
+	document.addEventListener('DOMContentLoaded', () => {
+		const thresholds = [25, 50, 75, 90];
+		const fired = new Set();
+
+		const checkScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+			thresholds.forEach(threshold => {
+				if (scrollPercent >= threshold && !fired.has(threshold)) {
+					fired.add(threshold);
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: 'scroll_depth',
+						scroll_percentage: threshold
+					});
+				}
+			});
+		};
+
+		let ticking = false;
+		window.addEventListener('scroll', () => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					checkScroll();
+					ticking = false;
+				});
+				ticking = true;
+			}
+		}, { passive: true });
+	});
+</script>
+
+<script>
 	// Run this code on the client to handle the scroll animations
 	document.addEventListener('DOMContentLoaded', () => {
 		const animateOnScroll = function() {

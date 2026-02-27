@@ -54,6 +54,21 @@ import Button from './Button.astro';
 			</form>
 		</div>
 
+		<script is:inline>
+		document.addEventListener('astro:page-load', function() {
+			var form = document.querySelector('form[name="kennismaking"]');
+			if (form) {
+				form.addEventListener('submit', function() {
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: 'generate_lead',
+						lead_source: 'kennismakingsformulier'
+					});
+				});
+			}
+		});
+		</script>
+
 		{/* FOOTER */}
 		<footer class="pt-16 md:pt-24 mt-16 md:mt-20 text-xs md:text-sm text-[var(--color-brand-muted)] max-w-3xl mx-auto space-y-6 relative">
 			<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-brand-accent)]/30 to-transparent"></div>

@@ -172,6 +172,14 @@
 					targetDetail.setAttribute('open', '');
 					targetDetail.classList.add('is-open');
 
+					// DataLayer: track FAQ open
+					const questionText = targetDetail.querySelector('summary span')?.textContent?.trim() || '';
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: 'faq_open',
+						faq_question: questionText
+					});
+
 					// Small trick: force a reflow before animating to '1fr' to ensure transition runs
 					const content = targetDetail.querySelector('.faq-content');
 					content.getBoundingClientRect();
