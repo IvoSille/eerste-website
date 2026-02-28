@@ -1,22 +1,32 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Hero from '../../components/Hero.astro';
-import Philosophy from '../../components/Philosophy.astro';
-import Methodology from '../../components/Methodology.astro';
-import About from '../../components/About.astro';
-import Testimonials from '../../components/Testimonials.astro';
-import FAQ from '../../components/FAQ.astro';
-import Contact from '../../components/Contact.astro';
-import Nav from '../../components/Nav.astro';
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import Philosophy from "../../components/Philosophy.astro";
+import Methodology from "../../components/Methodology.astro";
+import About from "../../components/About.astro";
+import Testimonials from "../../components/Testimonials.astro";
+import FAQ from "../../components/FAQ.astro";
+import Contact from "../../components/Contact.astro";
+import Nav from "../../components/Nav.astro";
 ---
 
 <Layout title="Crystal Helder - GNM Begeleiding">
 	<Nav />
 
-	{/* DECORATIVE BACKGROUND BLOBS - Hidden on mobile for performance, static on tablet+ */}
-	<div class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-		<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"></div>
-		<div class="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"></div>
+	{
+		/* DECORATIVE BACKGROUND BLOBS - Hidden on mobile for performance, static on tablet+ */
+	}
+	<div
+		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+	>
+		<div
+			class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"
+		>
+		</div>
+		<div
+			class="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"
+		>
+		</div>
 	</div>
 
 	<Hero />
@@ -50,88 +60,96 @@ import Nav from '../../components/Nav.astro';
 
 <script>
 	// DataLayer: CTA click tracking
-	document.addEventListener('DOMContentLoaded', () => {
-		document.addEventListener('click', (e) => {
+	document.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("click", (e) => {
 			const link = e.target.closest('a[href^="#"]');
 			if (!link) return;
 
-			const href = link.getAttribute('href');
+			const href = link.getAttribute("href");
 			const text = link.textContent.trim();
-			const section = link.closest('section');
-			const location = section?.id || 'hero';
+			const section = link.closest("section");
+			const location = section?.id || "hero";
 
-			if (href === '#kennismaking' || href === '#aanpak') {
+			if (href === "#kennismaking" || href === "#aanpak") {
 				window.dataLayer = window.dataLayer || [];
 				window.dataLayer.push({
-					event: 'cta_click',
+					event: "cta_click",
 					cta_text: text,
-					cta_destination: href.replace('#', ''),
-					cta_location: location
+					cta_destination: href.replace("#", ""),
+					cta_location: location,
 				});
 			}
 		});
 	});
 
 	// DataLayer: Scroll depth tracking
-	document.addEventListener('DOMContentLoaded', () => {
+	document.addEventListener("DOMContentLoaded", () => {
 		const thresholds = [25, 50, 75, 90];
 		const fired = new Set();
 
 		const checkScroll = () => {
 			const scrollTop = window.scrollY;
-			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+			const docHeight =
+				document.documentElement.scrollHeight - window.innerHeight;
 			if (docHeight <= 0) return;
 			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
 
-			thresholds.forEach(threshold => {
+			thresholds.forEach((threshold) => {
 				if (scrollPercent >= threshold && !fired.has(threshold)) {
 					fired.add(threshold);
 					window.dataLayer = window.dataLayer || [];
 					window.dataLayer.push({
-						event: 'scroll_depth',
-						scroll_percentage: threshold
+						event: "scroll_depth",
+						scroll_percentage: threshold,
 					});
 				}
 			});
 		};
 
 		let ticking = false;
-		window.addEventListener('scroll', () => {
-			if (!ticking) {
-				window.requestAnimationFrame(() => {
-					checkScroll();
-					ticking = false;
-				});
-				ticking = true;
-			}
-		}, { passive: true });
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						checkScroll();
+						ticking = false;
+					});
+					ticking = true;
+				}
+			},
+			{ passive: true }
+		);
 	});
 </script>
 
 <script>
 	// Run this code on the client to handle the scroll animations
-	document.addEventListener('DOMContentLoaded', () => {
-		const animateOnScroll = function() {
-			const observer = new IntersectionObserver((entries, observer) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('is-visible');
-						// Optional: Stop observing once it has animated in to keep it visible
-						observer.unobserve(entry.target);
-					}
-				});
-			}, {
-				root: null,
-				rootMargin: '0px',
-				threshold: 0.15 // Trigger when 15% of the element is visible
-			});
+	document.addEventListener("DOMContentLoaded", () => {
+		const animateOnScroll = function () {
+			const observer = new IntersectionObserver(
+				(entries, observer) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("is-visible");
+							// Optional: Stop observing once it has animated in to keep it visible
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{
+					root: null,
+					rootMargin: "0px",
+					threshold: 0.15, // Trigger when 15% of the element is visible
+				}
+			);
 
-			const elements = document.querySelectorAll('.fade-in-section');
-			elements.forEach(el => observer.observe(el));
+			const elements = document.querySelectorAll(".fade-in-section");
+			elements.forEach((el) => observer.observe(el));
 		};
 
 		// Run immediately or when Astro view transitions fire
 		animateOnScroll();
-		document.addEventListener('astro:page-load', animateOnScroll);
+		document.addEventListener("astro:page-load", animateOnScroll);
 	});
 </script>

@@ -1,21 +1,65 @@
 ---
-import Button from './Button.astro';
+import Button from "./Button.astro";
 ---
 
 {/* SECTIE 9 - KENNISMAKING & FOOTER */}
-<section id="kennismaking" class="py-24 md:py-32 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] to-[#f4ebe6] relative fade-in-section">
-	<div class="absolute inset-0 opacity-[0.12]" style="background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.15'/%3E%3C/svg%3E\");"></div>
+<section
+	id="kennismaking"
+	class="py-24 md:py-32 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] to-[#f4ebe6] relative fade-in-section"
+>
+	<div
+		class="absolute inset-0 opacity-[0.12]"
+		style="background-image: url(\"
+		data:image
+		svg+xml,%3Csvg
+		xmlns="http://www.w3.org/2000/svg"
+		width="300"
+		height="300"
+		%3E%3Cfilter
+		id="n"
+		%3E%3CfeTurbulence
+		type="fractalNoise"
+		baseFrequency="0.75"
+		numOctaves="4"
+		stitchTiles="stitch"
+		%3E%3C
+		filter%3E%3Crect
+		width="300"
+		height="300"
+		filter="url(%23n)"
+		opacity="0.15"
+		%3E%3C
+		svg%3E\");"
+	>
+	</div>
 	<div class="max-w-4xl mx-auto text-center relative z-10 w-full">
-		<h2 class="text-3xl md:text-5xl font-semibold mb-6 tracking-tight">Wil je weten of dit traject bij je past?</h2>
-		<p class="text-lg md:text-xl mb-4 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed">
-			De eerste stap is een vrijblijvend kennismakingsgesprek. Geen verkooppraatje — een eerlijk gesprek waarin ik luister naar je situatie en samen met je kijk of mijn aanpak aansluit bij wat je nodig hebt.
+		<h2 class="text-3xl md:text-5xl font-semibold mb-6 tracking-tight">
+			Wil je weten of dit traject bij je past?
+		</h2>
+		<p
+			class="text-lg md:text-xl mb-4 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed"
+		>
+			De eerste stap is een vrijblijvend kennismakingsgesprek. Geen
+			verkooppraatje — een eerlijk gesprek waarin ik luister naar je
+			situatie en samen met je kijk of mijn aanpak aansluit bij wat je
+			nodig hebt.
 		</p>
-		<p class="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed">
-			Ik neem bewust niet iedereen aan. Dat is geen verkooptruc, dat is zorgvuldigheid. Ik wil zeker weten dat ik je echt kan helpen voordat we samen aan de slag gaan.
+		<p
+			class="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed"
+		>
+			Ik neem bewust niet iedereen aan. Dat is geen verkooptruc, dat is
+			zorgvuldigheid. Ik wil zeker weten dat ik je echt kan helpen voordat
+			we samen aan de slag gaan.
 		</p>
 
-		<div class="bg-gradient-to-b from-white/90 to-white/70 backdrop-blur-xl p-8 md:p-14 rounded-3xl md:rounded-[3rem] shadow-2xl shadow-[var(--color-brand-accent)]/15 border border-white text-left max-w-2xl mx-auto w-full">
-			<h3 class="text-2xl font-bold mb-6 md:mb-8 text-center text-[var(--color-brand-accent)]">Plan je kennismaking</h3>
+		<div
+			class="bg-gradient-to-b from-white/90 to-white/70 backdrop-blur-xl p-8 md:p-14 rounded-3xl md:rounded-[3rem] shadow-2xl shadow-[var(--color-brand-accent)]/15 border border-white text-left max-w-2xl mx-auto w-full"
+		>
+			<h3
+				class="text-2xl font-bold mb-6 md:mb-8 text-center text-[var(--color-brand-accent)]"
+			>
+				Plan je kennismaking
+			</h3>
 
 			{/* Functional Netlify Form */}
 			<form
@@ -29,7 +73,9 @@ import Button from './Button.astro';
 				{/* Hidden honeypot field to prevent spam */}
 				<p class="hidden">
 					<label>
-						Don't fill this out if you're human: <input name="bot-field" />
+						Don't fill this out if you're human: <input
+							name="bot-field"
+						/>
 					</label>
 				</p>
 
@@ -38,56 +84,117 @@ import Button from './Button.astro';
 
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
 					<div>
-						<label for="naam" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">Naam</label>
-						<input type="text" id="naam" name="naam" required autocomplete="name" class="w-full rounded-2xl border border-[var(--color-brand-secondary)]/50 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent transition-all" placeholder="Jouw naam" />
+						<label
+							for="naam"
+							class="block text-sm font-semibold mb-2 ml-1 md:ml-2"
+							>Naam</label
+						>
+						<input
+							type="text"
+							id="naam"
+							name="naam"
+							required
+							autocomplete="name"
+							class="w-full rounded-2xl border border-[var(--color-brand-secondary)]/50 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent transition-all"
+							placeholder="Jouw naam"
+						/>
 					</div>
 					<div>
-						<label for="email" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">E-mail</label>
-						<input type="email" id="email" name="email" required autocomplete="email" class="w-full rounded-2xl border border-[var(--color-brand-secondary)]/50 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent transition-all" placeholder="Jouw e-mailadres" />
+						<label
+							for="email"
+							class="block text-sm font-semibold mb-2 ml-1 md:ml-2"
+							>E-mail</label
+						>
+						<input
+							type="email"
+							id="email"
+							name="email"
+							required
+							autocomplete="email"
+							class="w-full rounded-2xl border border-[var(--color-brand-secondary)]/50 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent transition-all"
+							placeholder="Jouw e-mailadres"
+						/>
 					</div>
 				</div>
 				<div>
-					<label for="situatie" class="block text-sm font-semibold mb-2 ml-1 md:ml-2">Korte beschrijving van je situatie</label>
-					<textarea id="situatie" name="situatie" required autocomplete="off" class="w-full rounded-2xl border border-[var(--color-brand-secondary)]/50 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent transition-all min-h-[140px]" placeholder="Vertel kort over je klachten..."></textarea>
+					<label
+						for="situatie"
+						class="block text-sm font-semibold mb-2 ml-1 md:ml-2"
+						>Korte beschrijving van je situatie</label
+					>
+					<textarea
+						id="situatie"
+						name="situatie"
+						required
+						autocomplete="off"
+						class="w-full rounded-2xl border border-[var(--color-brand-secondary)]/50 bg-[var(--color-brand-base)] p-4 text-base focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent transition-all min-h-[140px]"
+						placeholder="Vertel kort over je klachten..."
+					></textarea>
 				</div>
-				<Button type="submit" className="w-full text-base md:text-lg py-4 md:py-5 mt-2 md:mt-4">Verstuur aanvraag</Button>
+				<Button
+					type="submit"
+					className="w-full text-base md:text-lg py-4 md:py-5 mt-2 md:mt-4"
+					>Verstuur aanvraag</Button
+				>
 			</form>
 		</div>
 
 		<script is:inline>
-		document.addEventListener('astro:page-load', function() {
-			var form = document.querySelector('form[name="kennismaking"]');
-			if (form) {
-				form.addEventListener('submit', function() {
-					window.dataLayer = window.dataLayer || [];
-					window.dataLayer.push({
-						event: 'generate_lead',
-						lead_source: 'kennismakingsformulier'
+			document.addEventListener("astro:page-load", function () {
+				var form = document.querySelector('form[name="kennismaking"]');
+				if (form) {
+					form.addEventListener("submit", function () {
+						window.dataLayer = window.dataLayer || [];
+						window.dataLayer.push({
+							event: "generate_lead",
+							lead_source: "kennismakingsformulier",
+						});
 					});
-				});
-			}
-		});
+				}
+			});
 		</script>
 
 		{/* FOOTER */}
-		<footer class="pt-16 md:pt-24 mt-16 md:mt-20 text-xs md:text-sm text-[var(--color-brand-muted)] max-w-3xl mx-auto space-y-6 relative">
-			<div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-brand-accent)]/30 to-transparent"></div>
+		<footer
+			class="pt-16 md:pt-24 mt-16 md:mt-20 text-xs md:text-sm text-[var(--color-brand-muted)] max-w-3xl mx-auto space-y-6 relative"
+		>
+			<div
+				class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-brand-accent)]/30 to-transparent"
+			>
+			</div>
 			<p class="leading-relaxed">
-				<strong>Disclaimer:</strong> De begeleiding die ik bied is educatief en coachend van aard. Het is geen medische behandeling en vervangt geen advies van een arts of specialist. Ik stel geen diagnoses, schrijf geen medicatie voor, en adviseer nooit om lopende medische behandelingen te stoppen. Bij acute klachten of twijfel raad ik altijd aan om contact op te nemen met je huisarts.
+				<strong>Disclaimer:</strong> De begeleiding die ik bied is educatief
+				en coachend van aard. Het is geen medische behandeling en vervangt
+				geen advies van een arts of specialist. Ik stel geen diagnoses, schrijf
+				geen medicatie voor, en adviseer nooit om lopende medische behandelingen
+				te stoppen. Bij acute klachten of twijfel raad ik altijd aan om contact
+				op te nemen met je huisarts.
 			</p>
 
-			<div class="flex flex-col sm:flex-row sm:justify-between gap-4 pt-4">
+			<div
+				class="flex flex-col sm:flex-row sm:justify-between gap-4 pt-4"
+			>
 				<div class="space-y-1">
-					<p class="font-semibold text-[var(--color-brand-primary-text)]">Crystal Helder</p>
+					<p
+						class="font-semibold text-[var(--color-brand-primary-text)]"
+					>
+						Crystal Helder
+					</p>
 					<p>KVK 70630879</p>
 					<p>Tienhoven / Utrecht</p>
 				</div>
 				<div class="space-y-1 sm:text-right">
-					<a href="/algemene-voorwaarden/" class="hover:text-[var(--color-brand-accent)] transition-colors duration-300 underline underline-offset-2">Algemene voorwaarden & privacy</a>
+					<a
+						href="/algemene-voorwaarden/"
+						class="hover:text-[var(--color-brand-accent)] transition-colors duration-300 underline underline-offset-2"
+						>Algemene voorwaarden & privacy</a
+					>
 				</div>
 			</div>
 
-			<p class="text-center pt-6 font-medium border-t border-[var(--color-brand-secondary)]">
+			<p
+				class="text-center pt-6 font-medium border-t border-[var(--color-brand-secondary)]"
+			>
 				&copy; {new Date().getFullYear()} Crystal Helder. Alle rechten voorbehouden.
 			</p>
 		</footer>

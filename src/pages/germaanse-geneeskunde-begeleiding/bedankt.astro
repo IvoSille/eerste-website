@@ -1,8 +1,8 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Button from '../../components/Button.astro';
-import { Image } from 'astro:assets';
-import fotoBedankt from '../../assets/images/foto_bedankt.jpg';
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { Image } from "astro:assets";
+import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
 ---
 
 <Layout
@@ -11,82 +11,149 @@ import fotoBedankt from '../../assets/images/foto_bedankt.jpg';
 >
   <!-- DataLayer: Conversion event on thank you page -->
   <script is:inline>
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'generate_lead',
-    lead_source: 'cal_booking',
-    conversion_page: true
-  });
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: "generate_lead",
+      lead_source: "cal_booking",
+      conversion_page: true,
+    });
   </script>
 
-  <div class="min-h-screen flex items-center justify-center px-6 py-24 relative overflow-hidden">
-
+  <div
+    class="min-h-screen flex items-center justify-center px-6 py-24 relative overflow-hidden"
+  >
     {/* Background blobs */}
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-      <div class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-70"></div>
-      <div class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-50"></div>
+    <div
+      class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+    >
+      <div
+        class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-70"
+      >
+      </div>
+      <div
+        class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-50"
+      >
+      </div>
     </div>
 
     <div class="max-w-2xl mx-auto text-center">
-
       {/* Animated checkmark circle */}
-      <div class="w-24 h-24 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[var(--color-brand-sage)]/30">
-        <svg class="w-12 h-12 text-[var(--color-brand-primary-text)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      <div
+        class="w-24 h-24 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[var(--color-brand-sage)]/30"
+      >
+        <svg
+          class="w-12 h-12 text-[var(--color-brand-primary-text)]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M5 13l4 4L19 7"></path>
         </svg>
       </div>
 
-      <div class="inline-block px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-white mb-6 text-xs font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] shadow-sm">
+      <div
+        class="inline-block px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-white mb-6 text-xs font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] shadow-sm"
+      >
         Afspraak Bevestigd
       </div>
 
-      <h1 class="text-4xl md:text-6xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight">
-        Je afspraak is <span class="text-[var(--color-brand-accent)]">ingepland</span>.
+      <h1
+        class="text-4xl md:text-6xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight"
+      >
+        Je afspraak is <span class="text-[var(--color-brand-accent)]"
+          >ingepland</span
+        >.
       </h1>
 
-      <p class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto">
-        Je ontvangt binnen enkele minuten een bevestiging per e-mail met een Google Meet link.
+      <p
+        class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto"
+      >
+        Je ontvangt binnen enkele minuten een bevestiging per e-mail met een
+        Google Meet link.
       </p>
 
       {/* Foto Crystal + persoonlijk woord */}
-      <div class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left flex flex-col md:flex-row items-center gap-6 md:gap-8">
-        <div class="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-secondary)] shadow-lg">
-          <Image src={fotoBedankt} alt="Crystal Helder" class="w-full h-full object-cover" style="object-position: center 20%;" />
+      <div
+        class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left flex flex-col md:flex-row items-center gap-6 md:gap-8"
+      >
+        <div
+          class="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-secondary)] shadow-lg"
+        >
+          <Image
+            src={fotoBedankt}
+            alt="Crystal Helder"
+            class="w-full h-full object-cover"
+            style="object-position: center 20%;"
+          />
         </div>
         <div>
-          <p class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-relaxed italic">
-            "Fijn dat je deze stap hebt gezet. Ik neem de tijd om naar je te luisteren — dit gesprek is er helemaal voor jou."
+          <p
+            class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-relaxed italic"
+          >
+            "Fijn dat je deze stap hebt gezet. Ik neem de tijd om naar je te
+            luisteren — dit gesprek is er helemaal voor jou."
           </p>
-          <p class="mt-3 text-sm font-semibold text-[var(--color-brand-muted)]">— Crystal Helder</p>
+          <p class="mt-3 text-sm font-semibold text-[var(--color-brand-muted)]">
+            — Crystal Helder
+          </p>
         </div>
       </div>
 
       {/* Wat je kunt verwachten */}
-      <div class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left">
-        <h2 class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]">Wat je kunt verwachten</h2>
-        <p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
-          Het kennismakingsgesprek duurt 30 minuten. Ik luister naar je situatie en we kijken samen of mijn aanpak past bij wat je nodig hebt. Geen verplichtingen, wel een helder beeld van de volgende stap.
+      <div
+        class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left"
+      >
+        <h2
+          class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
+        >
+          Wat je kunt verwachten
+        </h2>
+        <p
+          class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed"
+        >
+          Het kennismakingsgesprek duurt 30 minuten. Ik luister naar je situatie
+          en we kijken samen of mijn aanpak past bij wat je nodig hebt. Geen
+          verplichtingen, wel een helder beeld van de volgende stap.
         </p>
       </div>
 
       {/* Ter voorbereiding */}
-      <div class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-12 text-left">
-        <h2 class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]">Ter voorbereiding</h2>
-        <p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+      <div
+        class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-12 text-left"
+      >
+        <h2
+          class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
+        >
+          Ter voorbereiding
+        </h2>
+        <p
+          class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4"
+        >
           Wil je alvast nadenken over deze vraag:
         </p>
-        <p class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] border-l-4 border-[var(--color-brand-accent)] pl-5 py-2 italic">
+        <p
+          class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] border-l-4 border-[var(--color-brand-accent)] pl-5 py-2 italic"
+        >
           Wat speelde er in je leven toen de klachten begonnen?
         </p>
-        <p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mt-4">
-          Je hoeft het antwoord niet paraat te hebben. Maar als je er even bij stilstaat, helpt dat ons om sneller tot de kern te komen.
+        <p
+          class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mt-4"
+        >
+          Je hoeft het antwoord niet paraat te hebben. Maar als je er even bij
+          stilstaat, helpt dat ons om sneller tot de kern te komen.
         </p>
       </div>
 
-      <Button href="/germaanse-geneeskunde-begeleiding/" className="text-lg px-10 py-5">
+      <Button
+        href="/germaanse-geneeskunde-begeleiding/"
+        className="text-lg px-10 py-5"
+      >
         Terug naar de homepagina
       </Button>
-
     </div>
   </div>
 </Layout>
