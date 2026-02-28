@@ -92,7 +92,7 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 			})();
 		</script>
 
-		<!-- Google Tag Manager -->
+		<!-- Google Tag Manager via Stape Custom Loader -->
 		<script is:inline>
 			(function (w, d, s, l, i) {
 				w[l] = w[l] || [];
@@ -101,21 +101,27 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 					event: "gtm.js",
 				});
 				var f = d.getElementsByTagName(s)[0],
-					j = d.createElement(s),
-					dl = l != "dataLayer" ? "&l=" + l : "";
+					j = d.createElement(s);
 				j.async = true;
-				j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+				j.src =
+					"https://ss.crystalhelder.nl/bakhobnkjj.js?" + i;
 				f.parentNode.insertBefore(j, f);
-			})(window, document, "script", "dataLayer", "GTM-MG6HVKP7");
+			})(
+				window,
+				document,
+				"script",
+				"dataLayer",
+				"8y=Aw5WKTYiRSYtXCM4KT9fTRxXWUBTSQwFVwkZFxEbCQcCDwcKBx1GBQY%3D"
+			);
 		</script>
 	</head>
 	<body
 		class="bg-[var(--color-brand-base)] text-[var(--color-brand-primary-text)] antialiased font-sans text-lg selection:bg-[var(--color-brand-accent)] selection:text-white"
 	>
-		<!-- Google Tag Manager (noscript) -->
+		<!-- Google Tag Manager (noscript) via Stape -->
 		<noscript
 			><iframe
-				src="https://www.googletagmanager.com/ns.html?id=GTM-MG6HVKP7"
+				src="https://ss.crystalhelder.nl/ns.html?id=GTM-MG6HVKP7"
 				height="0"
 				width="0"
 				style="display:none;visibility:hidden"></iframe>
