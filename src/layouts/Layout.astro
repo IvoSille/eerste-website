@@ -35,6 +35,41 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } = As
 		
 		<title>{title}</title>
 
+		<!-- Google Consent Mode v2 defaults (MUST load before GTM) -->
+		<script is:inline>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('consent', 'default', {
+		  'ad_storage': 'denied',
+		  'ad_user_data': 'denied',
+		  'ad_personalization': 'denied',
+		  'analytics_storage': 'denied',
+		  'wait_for_update': 500
+		});
+		// Restore previous consent choice if still valid (6 months)
+		(function() {
+		  try {
+		    var stored = localStorage.getItem('cookie_consent');
+		    if (stored) {
+		      var data = JSON.parse(stored);
+		      var sixMonths = 180 * 24 * 60 * 60 * 1000;
+		      if (data.timestamp && (Date.now() - data.timestamp) < sixMonths) {
+		        if (data.choice === 'granted') {
+		          gtag('consent', 'update', {
+		            'ad_storage': 'granted',
+		            'ad_user_data': 'granted',
+		            'ad_personalization': 'granted',
+		            'analytics_storage': 'granted'
+		          });
+		        }
+		      } else {
+		        localStorage.removeItem('cookie_consent');
+		      }
+		    }
+		  } catch(e) {}
+		})();
+		</script>
+
 		<!-- Google Tag Manager -->
 		<script is:inline>
 		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
