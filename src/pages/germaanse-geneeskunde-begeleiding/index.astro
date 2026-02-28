@@ -62,20 +62,21 @@ import Nav from "../../components/Nav.astro";
 	// DataLayer: CTA click tracking
 	document.addEventListener("DOMContentLoaded", () => {
 		document.addEventListener("click", (e) => {
-			const link = e.target.closest('a[href^="#"]');
-			if (!link) return;
+			const el = e.target.closest('a[href^="#"], [data-cal-link]');
+			if (!el) return;
 
-			const href = link.getAttribute("href");
-			const text = link.textContent.trim();
-			const section = link.closest("section");
+			const href = el.getAttribute("href");
+			const calLink = el.getAttribute("data-cal-link");
+			const text = el.textContent.trim();
+			const section = el.closest("section");
 			const location = section?.id || "hero";
 
-			if (href === "#kennismaking" || href === "#aanpak") {
+			if (href === "#kennismaking" || href === "#aanpak" || calLink) {
 				window.dataLayer = window.dataLayer || [];
 				window.dataLayer.push({
 					event: "cta_click",
 					cta_text: text,
-					cta_destination: href.replace("#", ""),
+					cta_destination: calLink ? "kennismaking" : href.replace("#", ""),
 					cta_location: location,
 				});
 			}

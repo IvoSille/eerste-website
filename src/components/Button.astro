@@ -4,9 +4,10 @@ interface Props {
   type?: "button" | "submit" | "reset";
   className?: string;
   variant?: "primary" | "secondary";
+  [key: string]: any;
 }
 
-const { href, type = "button", className = "", variant = "primary" } = Astro.props;
+const { href, type = "button", className = "", variant = "primary", ...rest } = Astro.props;
 
 // "Buttons (CTA's): Volledig afgeronde hoeken (rounded-full or pill-shape).
 // Geef ze een royale padding (px-8 py-4) en een zeer zachte, diffuse schaduw
@@ -26,11 +27,11 @@ const classes = `${baseStyles} ${variants[variant]} ${className}`;
 
 {
   href ? (
-    <a href={href} class={classes}>
+    <a href={href} class={classes} {...rest}>
       <slot />
     </a>
   ) : (
-    <button type={type} class={classes}>
+    <button type={type} class={classes} {...rest}>
       <slot />
     </button>
   )
