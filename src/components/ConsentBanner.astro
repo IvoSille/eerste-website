@@ -1,34 +1,41 @@
 ---
-// No props needed — self-contained consent banner
+// No props needed — self-contained consent overlay
 ---
 
+<!-- Full-screen overlay backdrop -->
 <div
-  id="consent-banner"
-  class="fixed bottom-0 inset-x-0 z-50 translate-y-full transition-transform duration-500 ease-in-out"
+  id="consent-overlay"
+  class="fixed inset-0 z-[9999] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-500"
   role="dialog"
   aria-label="Cookie consent"
+  aria-modal="true"
 >
-  <div class="bg-white shadow-[0_-2px_16px_rgba(0,0,0,0.08)] px-4 py-3 sm:px-6 sm:py-4">
-    <div class="max-w-3xl mx-auto flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
-      <p class="text-base text-[var(--color-brand-primary-text)] font-sans">
-        🍪 Cookies oké?
-      </p>
-      <div class="flex items-center gap-3">
-        <button
-          id="consent-accept"
-          class="px-5 py-2 rounded-full text-sm font-heading font-medium bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white transition-colors duration-200"
-        >
-          Ja
-        </button>
+  <!-- Dim background -->
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <!-- Consent card -->
+  <div class="relative bg-white rounded-3xl shadow-2xl px-8 py-10 sm:px-10 sm:py-12 max-w-md w-[calc(100%-2rem)] mx-4 text-center">
+    <p class="text-3xl mb-4">🍪</p>
+    <p class="text-base sm:text-lg text-[var(--color-brand-primary-text)] font-sans leading-relaxed mb-8">
+      We gebruiken cookies om je ervaring te verbeteren en onze website te optimaliseren.
+    </p>
+    <div class="flex flex-col items-center gap-4">
+      <button
+        id="consent-accept"
+        class="w-full max-w-[260px] px-8 py-3 rounded-full text-base font-heading font-semibold bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white transition-colors duration-200"
+      >
+        Accepteren
+      </button>
+      <div class="flex items-center gap-6">
         <button
           id="consent-reject"
-          class="px-5 py-2 rounded-full text-sm font-heading font-medium border border-[var(--color-brand-muted)]/40 text-[var(--color-brand-muted)] hover:border-[var(--color-brand-muted)] hover:text-[var(--color-brand-primary-text)] transition-colors duration-200"
+          class="text-sm text-[var(--color-brand-muted)] hover:text-[var(--color-brand-primary-text)] transition-colors duration-200"
         >
-          Nee
+          Weigeren
         </button>
         <a
           href="/algemene-voorwaarden/"
-          class="text-sm text-[var(--color-brand-muted)] hover:text-[var(--color-brand-primary-text)] underline underline-offset-2 transition-colors duration-200 whitespace-nowrap"
+          class="text-sm text-[var(--color-brand-muted)] hover:text-[var(--color-brand-primary-text)] underline underline-offset-2 transition-colors duration-200"
         >
           Meer info
         </a>
@@ -43,7 +50,7 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
 
-  // Don't show banner if consent already stored and valid
+  // Don't show overlay if consent already stored and valid
   // NOTE: Same validation logic exists in Layout.astro consent defaults script — keep both in sync
   try {
     var stored = localStorage.getItem('cookie_consent');
@@ -51,35 +58,25 @@
       var data = JSON.parse(stored);
       var sixMonths = 180 * 24 * 60 * 60 * 1000;
       if (data.timestamp && (Date.now() - data.timestamp) < sixMonths) {
-        return; // Valid choice exists, don't show banner
+        return; // Valid choice exists, don't show overlay
       }
     }
   } catch(e) {}
 
-  var banner = document.getElementById('consent-banner');
-  if (!banner) return;
+  var overlay = document.getElementById('consent-overlay');
+  if (!overlay) return;
 
-  // Show banner after 2 seconds OR first scroll, whichever comes first
-  var shown = false;
-  function showBanner() {
-    if (shown) return;
-    shown = true;
-    banner.classList.remove('translate-y-full');
-    banner.classList.add('translate-y-0');
-    window.removeEventListener('scroll', onScroll);
-  }
+  // Show overlay immediately — no delay, user must choose
+  overlay.classList.remove('opacity-0', 'pointer-events-none');
+  overlay.classList.add('opacity-100');
 
-  var timer = setTimeout(showBanner, 2000);
+  // Block scrolling while overlay is visible
+  document.body.style.overflow = 'hidden';
 
-  function onScroll() {
-    clearTimeout(timer);
-    showBanner();
-  }
-  window.addEventListener('scroll', onScroll, { once: true, passive: true });
-
-  function hideBanner() {
-    banner.classList.remove('translate-y-0');
-    banner.classList.add('translate-y-full');
+  function hideOverlay() {
+    overlay.classList.remove('opacity-100');
+    overlay.classList.add('opacity-0', 'pointer-events-none');
+    document.body.style.overflow = '';
   }
 
   function storeChoice(choice) {
@@ -99,12 +96,12 @@
       'analytics_storage': 'granted'
     });
     storeChoice('granted');
-    hideBanner();
+    hideOverlay();
   });
 
   document.getElementById('consent-reject').addEventListener('click', function() {
     storeChoice('denied');
-    hideBanner();
+    hideOverlay();
   });
 })();
 </script>
