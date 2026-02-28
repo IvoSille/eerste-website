@@ -1,0 +1,105 @@
+---
+// No props needed — self-contained consent banner
+---
+
+<div
+  id="consent-banner"
+  class="fixed bottom-0 inset-x-0 z-50 translate-y-full transition-transform duration-500 ease-in-out"
+  role="dialog"
+  aria-label="Cookie consent"
+>
+  <div class="bg-white shadow-[0_-2px_16px_rgba(0,0,0,0.08)] px-4 py-3 sm:px-6 sm:py-4">
+    <div class="max-w-3xl mx-auto flex items-center justify-between gap-4 flex-wrap sm:flex-nowrap">
+      <p class="text-base text-[var(--color-brand-primary-text)] font-sans">
+        🍪 Cookies oké?
+      </p>
+      <div class="flex items-center gap-3">
+        <button
+          id="consent-accept"
+          class="px-5 py-2 rounded-full text-sm font-heading font-medium bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white transition-colors duration-200"
+        >
+          Ja
+        </button>
+        <button
+          id="consent-reject"
+          class="px-5 py-2 rounded-full text-sm font-heading font-medium border border-[var(--color-brand-muted)]/40 text-[var(--color-brand-muted)] hover:border-[var(--color-brand-muted)] hover:text-[var(--color-brand-primary-text)] transition-colors duration-200"
+        >
+          Nee
+        </button>
+        <a
+          href="/algemene-voorwaarden/"
+          class="text-sm text-[var(--color-brand-muted)] hover:text-[var(--color-brand-primary-text)] underline underline-offset-2 transition-colors duration-200 whitespace-nowrap"
+        >
+          Meer info
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  // Don't show banner if consent already stored and valid
+  try {
+    var stored = localStorage.getItem('cookie_consent');
+    if (stored) {
+      var data = JSON.parse(stored);
+      var sixMonths = 180 * 24 * 60 * 60 * 1000;
+      if (data.timestamp && (Date.now() - data.timestamp) < sixMonths) {
+        return; // Valid choice exists, don't show banner
+      }
+    }
+  } catch(e) {}
+
+  var banner = document.getElementById('consent-banner');
+  if (!banner) return;
+
+  // Show banner after 2 seconds OR first scroll, whichever comes first
+  var shown = false;
+  function showBanner() {
+    if (shown) return;
+    shown = true;
+    banner.classList.remove('translate-y-full');
+    banner.classList.add('translate-y-0');
+    window.removeEventListener('scroll', onScroll);
+  }
+
+  var timer = setTimeout(showBanner, 2000);
+
+  function onScroll() {
+    clearTimeout(timer);
+    showBanner();
+  }
+  window.addEventListener('scroll', onScroll, { once: true, passive: true });
+
+  function hideBanner() {
+    banner.classList.remove('translate-y-0');
+    banner.classList.add('translate-y-full');
+  }
+
+  function storeChoice(choice) {
+    try {
+      localStorage.setItem('cookie_consent', JSON.stringify({
+        choice: choice,
+        timestamp: Date.now()
+      }));
+    } catch(e) {}
+  }
+
+  document.getElementById('consent-accept').addEventListener('click', function() {
+    gtag('consent', 'update', {
+      'ad_storage': 'granted',
+      'ad_user_data': 'granted',
+      'ad_personalization': 'granted',
+      'analytics_storage': 'granted'
+    });
+    storeChoice('granted');
+    hideBanner();
+  });
+
+  document.getElementById('consent-reject').addEventListener('click', function() {
+    storeChoice('denied');
+    hideBanner();
+  });
+})();
+</script>
