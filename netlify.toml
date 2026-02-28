@@ -5,7 +5,7 @@
 # Redirect root to current landing page
 [[redirects]]
   from = "/"
-  to = "/gnm-begeleiding/"
+  to = "/germaanse-geneeskunde-begeleiding/"
   status = 302
   force = true
 
