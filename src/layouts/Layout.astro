@@ -48,6 +48,7 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } = As
 		  'wait_for_update': 500
 		});
 		// Restore previous consent choice if still valid (6 months)
+		// NOTE: Same validation logic exists in ConsentBanner.astro — keep both in sync
 		(function() {
 		  try {
 		    var stored = localStorage.getItem('cookie_consent');

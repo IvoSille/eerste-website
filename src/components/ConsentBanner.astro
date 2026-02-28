@@ -39,7 +39,12 @@
 
 <script is:inline>
 (function() {
+  // Ensure gtag is available (defined in Layout.astro consent defaults script)
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+
   // Don't show banner if consent already stored and valid
+  // NOTE: Same validation logic exists in Layout.astro consent defaults script — keep both in sync
   try {
     var stored = localStorage.getItem('cookie_consent');
     if (stored) {
