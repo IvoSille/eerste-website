@@ -83,12 +83,22 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 			Cal("on", {
 				action: "bookingSuccessful",
 				callback: function () {
+					var redirectUrl = "/germaanse-geneeskunde-begeleiding/bedankt/";
+					var hasRedirected = false;
+					function doRedirect() {
+						if (!hasRedirected) {
+							hasRedirected = true;
+							window.location.href = redirectUrl;
+						}
+					}
 					window.dataLayer = window.dataLayer || [];
 					window.dataLayer.push({
 						event: "generate_lead",
 						lead_source: "cal_booking",
+						eventCallback: doRedirect,
+						eventTimeout: 2000,
 					});
-					window.location.href = "/germaanse-geneeskunde-begeleiding/bedankt/";
+					setTimeout(doRedirect, 2500);
 				},
 			});
 		</script>

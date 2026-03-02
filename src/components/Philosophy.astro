@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import foto2 from '../assets/images/foto_2.jpg';
 ---
 
@@ -36,7 +36,7 @@ import foto2 from '../assets/images/foto_2.jpg';
 		{/* Right Column — Photo */}
 		<div class="w-full lg:w-1/2 relative">
 			<div class="relative w-full aspect-[16/9] md:aspect-[3/2] rounded-[2rem] overflow-hidden shadow-2xl shadow-[var(--color-brand-secondary)]/30 transform hover:scale-[1.02] transition-transform duration-500">
-				<Image src={foto2} alt="Biologische Natuurwetten in de praktijk" class="absolute inset-0 w-full h-full object-cover" />
+				<Picture src={foto2} alt="Biologische Natuurwetten in de praktijk" widths={[480, 640, 960]} sizes="(max-width: 1024px) 100vw, 50vw" class="absolute inset-0 w-full h-full object-cover" />
 			</div>
 		</div>
 	</div>

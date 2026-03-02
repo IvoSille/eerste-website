@@ -1,6 +1,6 @@
 ---
 import Button from './Button.astro';
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 import foto1 from '../assets/images/foto_1.jpg';
 ---
 
@@ -31,7 +31,7 @@ import foto1 from '../assets/images/foto_1.jpg';
 			<div class="absolute inset-0 bg-gradient-to-tr from-[#E8D1C5] via-[#f0ddd4] to-[#fdfbf9] rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-2xl shadow-[var(--color-brand-accent)]/25 transform rotate-[-2deg] transition-transform duration-700 hover:rotate-0"></div>
 			
 			{/* Foto 1 - The main heroic photo */}
-			<Image src={foto1} alt="Crystal GNM begeleiding" class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]" style="object-position: center 20%;" fetchpriority="high" loading="eager" />
+			<Picture src={foto1} alt="Crystal GNM begeleiding" widths={[320, 480, 640, 960]} sizes="(max-width: 640px) 220px, (max-width: 768px) 320px, (max-width: 1024px) 448px, 640px" class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]" style="object-position: center 20%;" fetchpriority="high" loading="eager" />
 			
 		</div>
 	</div>
