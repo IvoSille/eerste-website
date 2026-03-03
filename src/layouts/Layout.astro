@@ -58,7 +58,7 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 
 		<title>{title}</title>
 
-		<!-- Cal.com Embed Script -->
+		<!-- Cal.com Embed Script (deferred until first user interaction) -->
 		<script is:inline>
 			(function (C, A, L) {
 				let p = function (a, ar) { a.q.push(ar); };
@@ -69,7 +69,6 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 					if (!cal.loaded) {
 						cal.ns = {};
 						cal.q = cal.q || [];
-						d.head.appendChild(d.createElement("script")).src = A;
 						cal.loaded = true;
 					}
 					if (ar[0] === L) {
@@ -85,6 +84,18 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 					}
 					p(cal, ar);
 				};
+				var el = false;
+				function load() {
+					if (el) return;
+					el = true;
+					d.head.appendChild(d.createElement("script")).src = A;
+					["mousemove","touchstart","scroll","keydown"].forEach(function(e) {
+						d.removeEventListener(e, load, true);
+					});
+				}
+				["mousemove","touchstart","scroll","keydown"].forEach(function(e) {
+					d.addEventListener(e, load, { capture: true, passive: true });
+				});
 			})(window, "https://app.cal.com/embed/embed.js", "init");
 			Cal("init", { origin: "https://app.cal.com" });
 			Cal("on", {
