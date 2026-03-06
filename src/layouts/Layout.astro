@@ -98,6 +98,7 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 				});
 			})(window, "https://app.cal.com/embed/embed.js", "init");
 			Cal("init", { origin: "https://app.cal.com" });
+			Cal("preload", { calLink: "crystalhelder/kennismakingsgesprek" });
 			Cal("on", {
 				action: "bookingSuccessful",
 				callback: function () {
