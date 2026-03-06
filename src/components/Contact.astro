@@ -75,6 +75,27 @@
 									calLink: "crystalhelder/kennismakingsgesprek",
 									config: { layout: "month_view", theme: "light" },
 								});
+								// Prevent internal scroll: once Cal.com creates the iframe,
+								// enforce a minimum height so all content fits without scrolling.
+								var container = document.getElementById("cal-inline");
+								if (container) {
+									new MutationObserver(function (mutations, obs) {
+										var iframe = container.querySelector("iframe");
+										if (!iframe) return;
+										obs.disconnect();
+										function enforceHeight() {
+											var h = parseInt(iframe.style.height) || 0;
+											if (h > 0 && h < 920) {
+												iframe.style.height = "920px";
+											}
+										}
+										enforceHeight();
+										new MutationObserver(enforceHeight).observe(iframe, {
+											attributes: true,
+											attributeFilter: ["style"],
+										});
+									}).observe(container, { childList: true });
+								}
 							} else {
 								setTimeout(init, 100);
 							}
