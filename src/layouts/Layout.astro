@@ -110,6 +110,15 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 							window.location.href = redirectUrl;
 						}
 					}
+					// Notify n8n → ntfy (fire-and-forget, mag redirect niet blokkeren)
+					try {
+						fetch("https://n8n.reconnectnow.nl/webhook/cal-booking", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({ event: "booking_successful", source: "crystalhelder.nl", timestamp: new Date().toISOString() }),
+							keepalive: true
+						}).catch(function() {});
+					} catch(e) {}
 					window.dataLayer = window.dataLayer || [];
 					window.dataLayer.push({
 						event: "generate_lead",
