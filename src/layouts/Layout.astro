@@ -5,9 +5,10 @@ import ConsentBanner from "../components/ConsentBanner.astro";
 interface Props {
 	title: string;
 	description?: string;
+	includeCal?: boolean;
 }
 
-const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
+const { title, description = "Persoonlijke GNM-Begeleiding door Crystal.", includeCal = true } =
 	Astro.props;
 ---
 
@@ -58,7 +59,8 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 
 		<title>{title}</title>
 
-		<!-- Cal.com Embed Script (deferred until first user interaction) -->
+		{/* Cal.com Embed Script (deferred until first user interaction) */}
+		{includeCal &&
 		<script is:inline>
 			(function (C, A, L) {
 				let p = function (a, ar) { a.q.push(ar); };
@@ -130,6 +132,7 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal." } =
 				},
 			});
 		</script>
+		}
 
 		<!-- Google Consent Mode v2 defaults (MUST load before GTM) -->
 		<script is:inline>
