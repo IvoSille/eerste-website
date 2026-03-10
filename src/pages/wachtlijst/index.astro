@@ -256,9 +256,8 @@ import fotoCrystal from "../../assets/images/foto_bedankt.jpg";
 			submitBtn.textContent = "Even geduld...";
 
 			try {
-				// Send to n8n webhook (fire-and-forget pattern)
-				// TODO: Replace with actual n8n webhook URL once workflow is created
-				const webhookUrl = "https://n8n.reconnectnow.nl/webhook/wachtlijst";
+				// Send to n8n webhook
+				const webhookUrl = "https://n8n.reconnectnow.nl/webhook/crystal-wachtlijst";
 				await fetch(webhookUrl, {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
