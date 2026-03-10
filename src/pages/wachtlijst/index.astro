@@ -232,6 +232,12 @@ import fotoCrystal from "../../assets/images/foto_bedankt.jpg";
 		const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
 		const originalText = submitBtn.textContent;
 
+		// Capture UTM parameters on page load (before form submit)
+		const urlParams = new URLSearchParams(window.location.search);
+		const utmSource = urlParams.get("utm_source") || "";
+		const utmMedium = urlParams.get("utm_medium") || "";
+		const utmCampaign = urlParams.get("utm_campaign") || "";
+
 		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
 			errorEl.classList.add("hidden");
@@ -265,6 +271,9 @@ import fotoCrystal from "../../assets/images/foto_bedankt.jpg";
 						name,
 						email,
 						source: "wachtlijst",
+						utm_source: utmSource,
+						utm_medium: utmMedium,
+						utm_campaign: utmCampaign,
 						timestamp: new Date().toISOString(),
 					}),
 					keepalive: true,
