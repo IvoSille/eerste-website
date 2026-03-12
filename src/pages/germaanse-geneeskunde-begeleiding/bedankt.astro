@@ -1,36 +1,80 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Button from "../../components/Button.astro";
-import { Image } from "astro:assets";
+import { Image, Picture } from "astro:assets";
 import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
+import bgIllustration from "../../assets/images/bedankt_hero.png";
 ---
 
 <Layout
   title="Je afspraak is ingepland — Crystal Helder"
   description="Je ontvangt een bevestiging per e-mail met een Google Meet link."
 >
+  {/* Petals container — positioned fixed over viewport */}
+  <div id="petals-container" class="fixed inset-0 pointer-events-none z-50 overflow-hidden" aria-hidden="true"></div>
+
   <div
     class="min-h-screen flex items-center justify-center px-6 py-24 relative overflow-hidden"
   >
-    {/* Background blobs */}
+    {/* Background: blobs + botanical illustration */}
     <div
       class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
     >
       <div
-        class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-70"
+        id="blob-1"
+        class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-0"
       >
       </div>
       <div
-        class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-50"
+        id="blob-2"
+        class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-0"
       >
+      </div>
+      {/* Subtle botanical background illustration */}
+      <div id="bg-illustration" class="absolute inset-0 flex items-center justify-center opacity-0">
+        <Picture
+          src={bgIllustration}
+          alt=""
+          widths={[600, 1000, 1400]}
+          sizes="100vw"
+          class="w-full max-w-5xl h-auto opacity-60 scale-130"
+        />
+      </div>
+    </div>
+
+    {/* Decorative corner illustrations — cropped versions of the watercolor */}
+    <div class="absolute pointer-events-none inset-0 overflow-hidden" aria-hidden="true">
+      {/* Top-right corner */}
+      <div id="deco-tr" class="absolute -top-[10%] -right-[8%] w-[350px] md:w-[550px] opacity-0 rotate-[15deg]">
+        <Picture
+          src={bgIllustration}
+          alt=""
+          widths={[350, 550]}
+          sizes="550px"
+          class="w-full h-auto opacity-70"
+        />
+      </div>
+      {/* Bottom-left corner */}
+      <div id="deco-bl" class="absolute -bottom-[10%] -left-[8%] w-[320px] md:w-[500px] opacity-0 rotate-[195deg]">
+        <Picture
+          src={bgIllustration}
+          alt=""
+          widths={[320, 500]}
+          sizes="500px"
+          class="w-full h-auto opacity-65"
+        />
       </div>
     </div>
 
     <div class="max-w-2xl mx-auto text-center">
-      {/* Animated checkmark circle */}
+      {/* Animated checkmark circle with glow ring */}
       <div
-        class="w-24 h-24 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[var(--color-brand-sage)]/30"
+        id="checkmark-circle"
+        class="relative w-24 h-24 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[var(--color-brand-sage)]/30"
+        style="opacity: 0; transform: scale(0);"
       >
+        {/* Pulsing glow ring */}
+        <div id="glow-ring" class="absolute inset-[-6px] rounded-full border-2 border-[var(--color-brand-sage)] opacity-0"></div>
         <svg
           class="w-12 h-12 text-[var(--color-brand-primary-text)]"
           fill="none"
@@ -39,20 +83,26 @@ import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
           stroke-width="2.5"
         >
           <path
+            id="checkmark-path"
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M5 13l4 4L19 7"></path>
+            d="M5 13l4 4L19 7"
+          ></path>
         </svg>
       </div>
 
       <div
+        id="badge"
         class="inline-block px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-white mb-6 text-xs font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] shadow-sm"
+        style="opacity: 0;"
       >
         Afspraak Bevestigd
       </div>
 
       <h1
+        id="heading"
         class="text-4xl md:text-6xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight"
+        style="opacity: 0;"
       >
         Je afspraak is <span class="text-[var(--color-brand-accent)]"
           >ingepland</span
@@ -60,7 +110,9 @@ import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
       </h1>
 
       <p
+        id="subtext"
         class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto"
+        style="opacity: 0;"
       >
         Je ontvangt binnen enkele minuten een bevestiging per e-mail met een
         Google Meet link.
@@ -68,7 +120,9 @@ import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
 
       {/* Foto Crystal + persoonlijk woord */}
       <div
+        id="quote-card"
         class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left flex flex-col md:flex-row items-center gap-6 md:gap-8"
+        style="opacity: 0;"
       >
         <div
           class="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-secondary)] shadow-lg"
@@ -95,7 +149,9 @@ import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
 
       {/* Wat je kunt verwachten */}
       <div
+        id="expect-card"
         class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left"
+        style="opacity: 0;"
       >
         <h2
           class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
@@ -113,7 +169,9 @@ import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
 
       {/* Ter voorbereiding */}
       <div
+        id="prep-card"
         class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-12 text-left"
+        style="opacity: 0;"
       >
         <h2
           class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
@@ -138,12 +196,230 @@ import fotoBedankt from "../../assets/images/foto_bedankt.jpg";
         </p>
       </div>
 
-      <Button
-        href="/germaanse-geneeskunde-begeleiding/"
-        className="text-lg px-10 py-5"
-      >
-        Terug naar de homepagina
-      </Button>
+      <div id="cta-button" style="opacity: 0;">
+        <Button
+          href="/germaanse-geneeskunde-begeleiding/"
+          className="text-lg px-10 py-5"
+        >
+          Terug naar de homepagina
+        </Button>
+      </div>
     </div>
   </div>
 </Layout>
+
+<script>
+  import gsap from "gsap";
+
+  // Respect reduced motion preference
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (prefersReducedMotion) {
+    // Show everything immediately
+    document.querySelectorAll("[style*='opacity: 0']").forEach((el) => {
+      (el as HTMLElement).style.opacity = "1";
+      (el as HTMLElement).style.transform = "none";
+    });
+  } else {
+    // ===== ENTRANCE TIMELINE =====
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    // 1. Background blobs + illustration fade in
+    tl.to("#blob-1", { opacity: 0.7, scale: 1, duration: 1 }, 0)
+      .to("#blob-2", { opacity: 0.5, scale: 1, duration: 1 }, 0.2)
+      .to("#bg-illustration", { opacity: 1, duration: 1.5, ease: "power1.out" }, 0)
+
+      // 2. Checkmark circle — scale in with bounce
+      .to("#checkmark-circle", {
+        opacity: 1,
+        scale: 1,
+        duration: 0.6,
+        ease: "back.out(1.7)",
+      }, 0.6)
+
+      // 4. Checkmark stroke draw
+      .fromTo("#checkmark-path", {
+        strokeDasharray: 30,
+        strokeDashoffset: 30,
+      }, {
+        strokeDashoffset: 0,
+        duration: 0.5,
+        ease: "power2.inOut",
+      }, 0.9)
+
+      // 5. Badge — fade + slide down
+      .fromTo("#badge", {
+        opacity: 0,
+        y: -20,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+      }, 1.1)
+
+      // 6. Heading — fade + slide up
+      .fromTo("#heading", {
+        opacity: 0,
+        y: 30,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+      }, 1.3)
+
+      // 7. Subtext
+      .fromTo("#subtext", {
+        opacity: 0,
+        y: 20,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+      }, 1.5)
+
+      // 8. Quote card
+      .fromTo("#quote-card", {
+        opacity: 0,
+        y: 40,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+      }, 1.7)
+
+      // 9. Expect card
+      .fromTo("#expect-card", {
+        opacity: 0,
+        y: 40,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+      }, 2.0)
+
+      // 10. Prep card
+      .fromTo("#prep-card", {
+        opacity: 0,
+        y: 40,
+      }, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+      }, 2.3)
+
+      // 11. CTA button — fade + scale
+      .fromTo("#cta-button", {
+        opacity: 0,
+        scale: 0.9,
+      }, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.5,
+        ease: "back.out(1.4)",
+      }, 2.6);
+
+    // ===== FALLING PETALS =====
+    // Start petals when checkmark is drawn
+    tl.call(createPetals, [], 1.0);
+
+    function createPetals() {
+      const container = document.getElementById("petals-container");
+      if (!container) return;
+
+      const petalCount = window.innerWidth < 768 ? 15 : 25;
+      const colors = ["#C8664D", "#D3DEC6", "#EADAD3", "#E8A090", "#A8533D"];
+
+      // SVG leaf/petal shapes
+      const petalShapes = [
+        // Simple leaf
+        `<path d="M0 0 C5 -8, 3 -16, 0 -20 C-3 -16, -5 -8, 0 0Z" fill="FILL"/>`,
+        // Round petal
+        `<path d="M0 0 C6 -5, 6 -15, 0 -20 C-6 -15, -6 -5, 0 0Z" fill="FILL"/>`,
+        // Slim leaf
+        `<path d="M0 0 C3 -7, 2 -16, 0 -18 C-2 -16, -3 -7, 0 0Z" fill="FILL"/>`,
+      ];
+
+      for (let i = 0; i < petalCount; i++) {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "-8 -22 16 24");
+        svg.style.position = "absolute";
+        svg.style.pointerEvents = "none";
+
+        const size = 16 + Math.random() * 20;
+        svg.style.width = `${size}px`;
+        svg.style.height = `${size}px`;
+
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const shape = petalShapes[Math.floor(Math.random() * petalShapes.length)];
+        svg.innerHTML = shape.replace("FILL", color);
+
+        // Random start position across viewport width
+        const startX = Math.random() * window.innerWidth;
+        svg.style.left = `${startX}px`;
+        svg.style.top = `-30px`;
+
+        container.appendChild(svg);
+
+        // Animate each petal with random parameters
+        const duration = 2.5 + Math.random() * 2.5;
+        const delay = Math.random() * 1.5;
+        const drift = (Math.random() - 0.5) * 200;
+        const rotations = 360 + Math.random() * 720;
+
+        gsap.to(svg, {
+          y: window.innerHeight + 50,
+          x: drift,
+          rotation: rotations,
+          opacity: 0,
+          duration: duration,
+          delay: delay,
+          ease: "power1.in",
+          onComplete: () => svg.remove(),
+        });
+      }
+
+      // Clean up container after all petals are done
+      gsap.delayedCall(6, () => {
+        if (container) container.remove();
+      });
+    }
+
+    // ===== DECORATIVE CORNER ILLUSTRATIONS =====
+    gsap.fromTo("#deco-tr", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 1.5, ease: "power2.out", delay: 1.5 });
+    gsap.fromTo("#deco-bl", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 1.5, ease: "power2.out", delay: 2.0 });
+
+    // Gentle floating sway
+    gsap.to("#deco-tr", { y: 10, rotation: "+=2", duration: 8, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 3 });
+    gsap.to("#deco-bl", { y: -10, rotation: "-=2", duration: 7, ease: "sine.inOut", yoyo: true, repeat: -1, delay: 3.5 });
+
+    // ===== CHECKMARK GLOW PULSE =====
+    gsap.to("#glow-ring", {
+      opacity: 0.5,
+      scale: 1.15,
+      duration: 2,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: 1.5,
+    });
+
+    // ===== CONTINUOUS BLOB FLOAT =====
+    gsap.to("#blob-1", {
+      y: 20,
+      duration: 7,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: 1.5,
+    });
+
+    gsap.to("#blob-2", {
+      y: -20,
+      duration: 6,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+      delay: 2,
+    });
+  }
+</script>
