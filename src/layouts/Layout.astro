@@ -49,6 +49,9 @@ const {
 		<meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site)} />
 		<link rel="canonical" href={Astro.url} />
 
+		<!-- Preconnect to Stape sGTM (DNS + TLS early, before GTM script tag) -->
+		<link rel="preconnect" href="https://ss.crystalhelder.nl" crossorigin />
+
 		<!-- Preload critical self-hosted fonts -->
 		<link
 			rel="preload"
