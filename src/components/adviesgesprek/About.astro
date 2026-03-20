@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import foto3 from '../../assets/images/foto_3.jpg';
+---
+
+{/* SECTIE 5 - OVER MIJ (zonder traject-blok) */}
+<section id="over" class="py-20 md:py-24 lg:py-32 px-6 lg:px-8 bg-gradient-to-br from-[var(--color-brand-primary-text)] to-[#3A302D] text-white relative overflow-hidden fade-in-section">
+	{/* Decorative elements for dark section */}
+	<div class="hidden lg:block absolute top-0 right-0 w-[400px] xl:w-[600px] h-[400px] xl:h-[600px] bg-[var(--color-brand-accent)] rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+
+	<div class="max-w-4xl mx-auto">
+		<div class="space-y-6 lg:space-y-10">
+			<div class="flex flex-col items-center gap-4 lg:hidden mb-2 sm:mb-6">
+				<div class="w-48 h-48 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-accent)]/80">
+					<Image src={foto3} alt="Portret Crystal" class="w-full h-full object-cover" style="object-position: center 22%;" />
+				</div>
+				<h2 class="text-4xl font-semibold leading-tight text-center mt-2 text-white">Mijn naam is Crystal.</h2>
+			</div>
+
+			<div class="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+				<div class="flex-1 space-y-6">
+					<h2 class="hidden lg:block text-5xl font-semibold mb-8 leading-tight text-white">Mijn naam is Crystal.</h2>
+
+					<div class="space-y-6 text-lg text-[#D5C2B9] font-light">
+						<p>
+							Mijn broer overleed toen hij vijf maanden oud was. Hij had een hartafwijking. Mijn moeder voelde dat er iets mis was en trok aan de bel — maar het consultatiebureau wilde niet luisteren. De diagnose kwam te laat. Op de dag dat hij zijn harttransplantatie zou krijgen, was het voorbij.
+						</p>
+						<p>
+							Dat heeft me gevormd. Ik ben opgegroeid met het gevoel: ze weten het niet altijd. Ze luisteren niet altijd. En soms heeft dat gevolgen die niet meer terug te draaien zijn.
+						</p>
+						<p>
+							Die ervaring heeft me op een zoektocht gezet die nooit meer stopte. Niet uit wantrouwen naar de reguliere zorg — maar uit de overtuiging dat er meer te begrijpen valt dan wat de standaardroute biedt. Toen ik de 5 biologische natuurwetten leerde kennen, viel alles op zijn plek. Niet omdat iemand me een pilletje gaf, maar omdat ik voor het eerst begreep waarom een lichaam doet wat het doet.
+						</p>
+						<p>
+							Inmiddels werk ik al meer dan tien jaar dagelijks met dit kader en heb ik honderden conflictanalyses gedaan — van chronische pijn tot huidproblemen, van hormonale klachten tot darmissues. Daarnaast breng ik twintig jaar ervaring mee in emotieregulatie, pedagogie en lichaamswerk. Dat betekent dat ik niet alleen kan achterhalen wat er speelt, maar je ook de tools geef om er daadwerkelijk mee aan de slag te gaan.
+						</p>
+						<p class="text-white text-lg md:text-xl font-medium pt-4 border-l-[5px] border-[var(--color-brand-accent)] pl-6">
+							Ik ben niet de goeroe die zegt hoe het moet. Ik ben de ervaren begeleider die samen met jou uitzoekt wat er speelt — en wat jij ermee kunt doen.
+						</p>
+					</div>
+				</div>
+
+				{/* Desktop layout for Photo 3 */}
+				<div class="hidden lg:block w-full max-w-sm aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative group shrink-0">
+					<Image src={foto3} alt="Portret Crystal" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" style="object-position: center 15%;" />
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

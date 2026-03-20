@@ -1,0 +1,65 @@
+---
+import { Picture } from 'astro:assets';
+import foto2 from '../../assets/images/foto_2.jpg';
+---
+
+{/* SECTIE 2 - HERKENNING (aangepaste intro) */}
+<div class="bg-gradient-to-b from-transparent via-white to-white py-16 md:py-32 px-6 lg:px-8 fade-in-section">
+	<div class="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 lg:gap-20 items-center">
+
+		{/* Left text column */}
+		<div class="w-full lg:w-1/2 space-y-10 md:space-y-12">
+			<div>
+				<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-6 md:mb-8 leading-tight tracking-tight">
+					Je hebt de theorie gelezen. Je begrijpt de logica.
+				</h2>
+				<div class="space-y-4 md:space-y-6 text-lg text-[var(--color-brand-muted)]">
+					<p>
+						Je weet dat klachten niet willekeurig zijn, maar een biologisch programma volgen. Maar dan staat je eigen situatie voor je.
+					</p>
+					<p>
+						Welk conflict is het precies? Zit ik in de stressfase of de herstelfase? Wanneer is het begonnen — was dat echt dat moment, of lag het eerder? En als ik het weet: wat doe ik er dan mee?
+					</p>
+					<p>
+						Precies dat gat — tussen de theorie die klopt en de vertaalslag naar jouw eigen klacht, jouw eigen geschiedenis — is waar mensen vastlopen. Niet omdat ze het niet begrijpen, maar omdat het toepassen op jezelf een ander niveau vraagt.
+					</p>
+					<p>
+						Daarom bied ik een persoonlijk adviesgesprek aan. In 30 minuten kijk ik met je mee naar jouw situatie — en geef ik je niet alleen inzicht in wat er speelt, maar ook een eerlijk beeld van hoe je hiermee verder kunt.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		{/* Right Column — Photo */}
+		<div class="w-full lg:w-1/2 relative">
+			<div class="relative w-full aspect-[16/9] md:aspect-[3/2] rounded-[2rem] overflow-hidden shadow-2xl shadow-[var(--color-brand-secondary)]/30 transform hover:scale-[1.02] transition-transform duration-500">
+				<Picture src={foto2} alt="Biologische Natuurwetten in de praktijk" widths={[480, 640, 960]} sizes="(max-width: 1024px) 100vw, 50vw" class="absolute inset-0 w-full h-full object-cover" />
+			</div>
+		</div>
+	</div>
+</div>
+
+{/* SECTIE 3 - DE BIOLOGISCHE NATUURWETTEN (ongewijzigd) */}
+<div class="bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 py-16 md:py-24 px-6 lg:px-8 fade-in-section">
+	<div class="max-w-3xl mx-auto">
+		<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold mb-8 md:mb-10 leading-tight text-center">
+			Klachten volgen een patroon. Dat patroon is te begrijpen.
+		</h2>
+		<div class="space-y-5 md:space-y-6 text-lg text-[var(--color-brand-muted)] leading-relaxed">
+			<p>
+				De 5 biologische natuurwetten beschrijven hoe je lichaam reageert op ingrijpende gebeurtenissen. Niet willekeurig, maar volgens vaste patronen die in elk menselijk lichaam hetzelfde werken.
+			</p>
+			<p>
+				Elke klacht — van huidproblemen tot darmklachten, van rugpijn tot hormonale verstoringen — is terug te voeren op een specifiek biologisch programma dat is geactiveerd door iets wat je hebt meegemaakt. Iets dat indruk heeft gemaakt. Een conflict, een schok, een situatie die je niet zag aankomen.
+			</p>
+			<p>
+				Als je weet welk conflict er speelt, begrijp je waarom je lichaam doet wat het doet. En pas dan kun je gericht iets veranderen.
+			</p>
+		</div>
+		<div class="mt-8 md:mt-10 pl-6 md:pl-8 border-l-[5px] border-[var(--color-brand-accent)] py-3">
+			<p class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-snug italic">
+				Dit is geen alternatieve geneeskunde. Dit is een systematisch kader dat je helpt de taal van je lichaam te leren lezen.
+			</p>
+		</div>
+	</div>
+</div>

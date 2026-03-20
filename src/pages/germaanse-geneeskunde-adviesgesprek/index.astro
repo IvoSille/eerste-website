@@ -1,16 +1,26 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import Hero from "../../components/Hero.astro";
-import Philosophy from "../../components/Philosophy.astro";
-import Methodology from "../../components/Methodology.astro";
-import About from "../../components/About.astro";
+import Hero from "../../components/adviesgesprek/Hero.astro";
+import Philosophy from "../../components/adviesgesprek/Philosophy.astro";
+import WatJeKrijgt from "../../components/adviesgesprek/WatJeKrijgt.astro";
+import ZoWerktHet from "../../components/adviesgesprek/ZoWerktHet.astro";
+import Methodology from "../../components/adviesgesprek/Methodology.astro";
+import About from "../../components/adviesgesprek/About.astro";
 import Testimonials from "../../components/Testimonials.astro";
-import FAQ from "../../components/FAQ.astro";
-import Contact from "../../components/Contact.astro";
+import FAQ from "../../components/adviesgesprek/FAQ.astro";
+import Contact from "../../components/adviesgesprek/Contact.astro";
 import Nav from "../../components/Nav.astro";
 ---
 
-<Layout title="Crystal Helder - Germaanse Geneeskunde Begeleiding">
+<Layout
+	title="Crystal Helder - Adviesgesprek Germaanse Geneeskunde"
+	description="In een persoonlijk adviesgesprek van 30 minuten kijk ik met je mee naar jouw specifieke situatie op basis van de vijf biologische natuurwetten."
+	calLink="crystalhelder/adviesgesprek"
+	bedanktUrl="/germaanse-geneeskunde-adviesgesprek/bedankt/"
+	conversionEvent="purchase"
+	conversionValue={47}
+	conversionCurrency="EUR"
+>
 	<Nav />
 
 	{
@@ -34,6 +44,8 @@ import Nav from "../../components/Nav.astro";
 	{/* WRAPPER FOR FLOWING SECTIONS */}
 	<div class="relative w-full mt-2 md:mt-20">
 		<Philosophy />
+		<WatJeKrijgt />
+		<ZoWerktHet />
 		<Methodology />
 		<About />
 		<Testimonials />
@@ -76,7 +88,7 @@ import Nav from "../../components/Nav.astro";
 				window.dataLayer.push({
 					event: "cta_click",
 					cta_text: text,
-					cta_destination: calLink ? "kennismaking" : href.replace("#", ""),
+					cta_destination: calLink ? "adviesgesprek" : href.replace("#", ""),
 					cta_location: location,
 				});
 			}
@@ -133,7 +145,6 @@ import Nav from "../../components/Nav.astro";
 					entries.forEach((entry) => {
 						if (entry.isIntersecting) {
 							entry.target.classList.add("is-visible");
-							// Optional: Stop observing once it has animated in to keep it visible
 							observer.unobserve(entry.target);
 						}
 					});
@@ -141,7 +152,7 @@ import Nav from "../../components/Nav.astro";
 				{
 					root: null,
 					rootMargin: "0px",
-					threshold: 0.15, // Trigger when 15% of the element is visible
+					threshold: 0.15,
 				}
 			);
 
@@ -149,7 +160,6 @@ import Nav from "../../components/Nav.astro";
 			elements.forEach((el) => observer.observe(el));
 		};
 
-		// Run immediately or when Astro view transitions fire
 		animateOnScroll();
 		document.addEventListener("astro:page-load", animateOnScroll);
 	});

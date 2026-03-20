@@ -1,0 +1,143 @@
+---
+---
+
+{/* SECTIE 9 - CLOSING CTA & FOOTER */}
+<section
+	id="kennismaking"
+	class="py-24 md:py-32 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] to-[#f4ebe6] relative fade-in-section"
+>
+	<div
+		class="absolute inset-0 opacity-[0.12]"
+		style="background-image: url(\"
+		data:image
+		svg+xml,%3Csvg
+		xmlns="http://www.w3.org/2000/svg"
+		width="300"
+		height="300"
+		%3E%3Cfilter
+		id="n"
+		%3E%3CfeTurbulence
+		type="fractalNoise"
+		baseFrequency="0.75"
+		numOctaves="4"
+		stitchTiles="stitch"
+		%3E%3C
+		filter%3E%3Crect
+		width="300"
+		height="300"
+		filter="url(%23n)"
+		opacity="0.15"
+		%3E%3C
+		svg%3E\");"
+	>
+	</div>
+	<div class="max-w-4xl mx-auto text-center relative z-10 w-full">
+		<h2 class="text-3xl md:text-5xl font-semibold mb-6 tracking-tight">
+			Wil je weten wat jouw klacht je vertelt?
+		</h2>
+		<p
+			class="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-[var(--color-brand-primary-text)] leading-relaxed"
+		>
+			Plan een adviesgesprek van 30 minuten. Ik kijk met je mee naar jouw specifieke situatie, laat je zien wat er speelt, en geef je een eerlijk beeld van hoe je hiermee verder kunt.
+		</p>
+
+		<div
+			class="bg-gradient-to-b from-white/90 to-white/70 backdrop-blur-xl p-8 md:p-14 rounded-3xl md:rounded-[3rem] shadow-2xl shadow-[var(--color-brand-accent)]/15 border border-white max-w-2xl mx-auto w-full"
+		>
+			<h3
+				class="text-2xl font-bold mb-6 md:mb-8 text-center text-[var(--color-brand-accent)]"
+			>
+				Plan je adviesgesprek
+			</h3>
+
+			{/* Cal.com inline embed — deferred mount after initial paint */}
+			<div id="cal-inline" style="width:100%;min-height:400px;"></div>
+			<script is:inline>
+				(function () {
+					var mounted = false;
+					function mountCal() {
+						if (mounted) return;
+						mounted = true;
+						function init() {
+							if (typeof Cal !== "undefined") {
+								Cal("inline", {
+									elementOrSelector: "#cal-inline",
+									calLink: "crystalhelder/adviesgesprek",
+									config: { layout: "month_view", theme: "light" },
+								});
+								var container = document.getElementById("cal-inline");
+								if (container) {
+									new MutationObserver(function (mutations, obs) {
+										var iframe = container.querySelector("iframe");
+										if (!iframe) return;
+										obs.disconnect();
+										function enforceHeight() {
+											var h = parseInt(iframe.style.height) || 0;
+											if (h > 0 && h < 920) {
+												iframe.style.height = "920px";
+											}
+										}
+										enforceHeight();
+										new MutationObserver(enforceHeight).observe(iframe, {
+											attributes: true,
+											attributeFilter: ["style"],
+										});
+									}).observe(container, { childList: true });
+								}
+							} else {
+								setTimeout(init, 100);
+							}
+						}
+						init();
+					}
+					setTimeout(mountCal, 1500);
+				})();
+			</script>
+		</div>
+
+		{/* FOOTER */}
+		<footer
+			class="pt-16 md:pt-24 mt-16 md:mt-20 text-xs md:text-sm text-[var(--color-brand-muted)] max-w-3xl mx-auto space-y-6 relative"
+		>
+			<div
+				class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-brand-accent)]/30 to-transparent"
+			>
+			</div>
+			<p class="leading-relaxed">
+				<strong>Disclaimer:</strong> De begeleiding die ik bied is educatief
+				en coachend van aard. Het is geen medische behandeling en vervangt
+				geen advies van een arts of specialist. Ik stel geen diagnoses, schrijf
+				geen medicatie voor, en adviseer nooit om lopende medische behandelingen
+				te stoppen. Bij acute klachten of twijfel raad ik altijd aan om contact
+				op te nemen met je huisarts.
+			</p>
+
+			<div
+				class="flex flex-col sm:flex-row sm:justify-between gap-4 pt-4"
+			>
+				<div class="space-y-1">
+					<p
+						class="font-semibold text-[var(--color-brand-primary-text)]"
+					>
+						Crystal Helder
+					</p>
+					<p>KVK 70630879</p>
+					<p>Tienhoven / Utrecht</p>
+				</div>
+				<div class="space-y-1 sm:text-right">
+					<a
+						href="/algemene-voorwaarden/"
+						class="hover:text-[var(--color-brand-accent)] transition-colors duration-300 underline underline-offset-2"
+						>Algemene voorwaarden & privacy</a
+					>
+				</div>
+			</div>
+
+			<p
+				class="text-center pt-6 font-medium border-t border-[var(--color-brand-secondary)]"
+			>
+				&copy; {new Date().getFullYear()} Crystal Helder. Alle rechten voorbehouden.
+			</p>
+		</footer>
+	</div>
+</section>

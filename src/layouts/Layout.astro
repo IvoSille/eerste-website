@@ -6,10 +6,23 @@ interface Props {
 	title: string;
 	description?: string;
 	includeCal?: boolean;
+	calLink?: string;
+	bedanktUrl?: string;
+	conversionEvent?: string;
+	conversionValue?: number;
+	conversionCurrency?: string;
 }
 
-const { title, description = "Persoonlijke GNM-Begeleiding door Crystal.", includeCal = true } =
-	Astro.props;
+const {
+	title,
+	description = "Persoonlijke begeleiding bij klachten en symptomen op basis van de Germaanse Geneeskunde.",
+	includeCal = true,
+	calLink = "crystalhelder/kennismaking",
+	bedanktUrl = "/germaanse-geneeskunde-begeleiding/bedankt/",
+	conversionEvent = "generate_lead",
+	conversionValue = 0,
+	conversionCurrency = "EUR",
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -29,9 +42,11 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal.", inclu
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url} />
+		<meta property="og:image" content={new URL('/og-image.jpg', Astro.site)} />
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site)} />
 		<link rel="canonical" href={Astro.url} />
 
 		<!-- Preload critical self-hosted fonts -->
@@ -61,7 +76,7 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal.", inclu
 
 		{/* Cal.com Embed Script (deferred until first user interaction) */}
 		{includeCal &&
-		<script is:inline>
+		<script is:inline define:vars={{ __calLink: calLink, __bedanktUrl: bedanktUrl, __conversionEvent: conversionEvent, __conversionValue: conversionValue, __conversionCurrency: conversionCurrency }}>
 			(function (C, A, L) {
 				let p = function (a, ar) { a.q.push(ar); };
 				let d = C.document;
@@ -100,11 +115,11 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal.", inclu
 				});
 			})(window, "https://app.cal.com/embed/embed.js", "init");
 			Cal("init", { origin: "https://app.cal.com" });
-			Cal("preload", { calLink: "crystalhelder/kennismaking" });
+			Cal("preload", { calLink: __calLink });
 			Cal("on", {
 				action: "bookingSuccessful",
 				callback: function () {
-					var redirectUrl = "/germaanse-geneeskunde-begeleiding/bedankt/";
+					var redirectUrl = __bedanktUrl;
 					var hasRedirected = false;
 					function doRedirect() {
 						if (!hasRedirected) {
@@ -122,12 +137,18 @@ const { title, description = "Persoonlijke GNM-Begeleiding door Crystal.", inclu
 						}).catch(function() {});
 					} catch(e) {}
 					window.dataLayer = window.dataLayer || [];
-					window.dataLayer.push({
-						event: "generate_lead",
+					var eventData = {
+						event: __conversionEvent,
 						lead_source: "cal_booking",
 						eventCallback: doRedirect,
 						eventTimeout: 2000,
-					});
+					};
+					if (__conversionValue > 0) {
+						eventData.value = __conversionValue;
+						eventData.currency = __conversionCurrency;
+						eventData.transaction_id = __conversionEvent + "_" + Date.now();
+					}
+					window.dataLayer.push(eventData);
 					setTimeout(doRedirect, 2500);
 				},
 			});
