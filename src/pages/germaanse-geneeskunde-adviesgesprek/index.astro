@@ -14,7 +14,7 @@ import Nav from "../../components/Nav.astro";
 
 <Layout
 	title="Crystal Helder - Adviesgesprek Germaanse Geneeskunde"
-	description="In een persoonlijk adviesgesprek van 30 minuten kijk ik met je mee naar jouw specifieke situatie op basis van de vijf biologische natuurwetten."
+	description="Je klacht is niet willekeurig. In een persoonlijk adviesgesprek kijk ik met je mee naar jouw specifieke situatie op basis van de vijf biologische natuurwetten."
 	calLink="crystalhelder/adviesgesprek"
 	bedanktUrl="/germaanse-geneeskunde-adviesgesprek/bedankt/"
 	conversionEvent="purchase"
@@ -44,11 +44,11 @@ import Nav from "../../components/Nav.astro";
 	{/* WRAPPER FOR FLOWING SECTIONS */}
 	<div class="relative w-full mt-2 md:mt-20">
 		<Philosophy />
+		<Testimonials />
 		<WatJeKrijgt />
 		<ZoWerktHet />
-		<Methodology />
 		<About />
-		<Testimonials />
+		<Methodology />
 		<FAQ />
 		<Contact />
 	</div>
@@ -83,7 +83,7 @@ import Nav from "../../components/Nav.astro";
 			const section = el.closest("section");
 			const location = section?.id || "hero";
 
-			if (href === "#kennismaking" || href === "#aanpak" || calLink) {
+			if (href === "#kennismaking" || href === "#aanpak" || href === "#wat-je-krijgt" || calLink) {
 				window.dataLayer = window.dataLayer || [];
 				window.dataLayer.push({
 					event: "cta_click",
