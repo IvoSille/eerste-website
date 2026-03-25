@@ -67,96 +67,7 @@ const {
 			type="font/woff2"
 			crossorigin
 		/>
-		<link
-			rel="preload"
-			href="/fonts/lato-700-latin.woff2"
-			as="font"
-			type="font/woff2"
-			crossorigin
-		/>
-
 		<title>{title}</title>
-
-		{/* Cal.com Embed Script (deferred until first user interaction) */}
-		{includeCal &&
-		<script is:inline define:vars={{ __calLink: calLink, __bedanktUrl: bedanktUrl, __conversionEvent: conversionEvent, __conversionValue: conversionValue, __conversionCurrency: conversionCurrency }}>
-			(function (C, A, L) {
-				let p = function (a, ar) { a.q.push(ar); };
-				let d = C.document;
-				C.Cal = C.Cal || function () {
-					let cal = C.Cal;
-					let ar = arguments;
-					if (!cal.loaded) {
-						cal.ns = {};
-						cal.q = cal.q || [];
-						cal.loaded = true;
-					}
-					if (ar[0] === L) {
-						const api = function () { p(api, arguments); };
-						const namespace = ar[1];
-						api.q = api.q || [];
-						if (typeof namespace === "string") {
-							cal.ns[namespace] = cal.ns[namespace] || api;
-							p(cal.ns[namespace], ar);
-							p(cal, ["initNamespace", namespace]);
-						} else p(cal, ar);
-						return;
-					}
-					p(cal, ar);
-				};
-				var el = false;
-				function load() {
-					if (el) return;
-					el = true;
-					d.head.appendChild(d.createElement("script")).src = A;
-					["mousemove","touchstart","scroll","keydown"].forEach(function(e) {
-						d.removeEventListener(e, load, true);
-					});
-				}
-				["mousemove","touchstart","scroll","keydown"].forEach(function(e) {
-					d.addEventListener(e, load, { capture: true, passive: true });
-				});
-			})(window, "https://app.cal.com/embed/embed.js", "init");
-			Cal("init", { origin: "https://app.cal.com" });
-			Cal("preload", { calLink: __calLink });
-			Cal("on", {
-				action: "bookingSuccessful",
-				callback: function () {
-					var redirectUrl = __bedanktUrl;
-					var hasRedirected = false;
-					function doRedirect() {
-						if (!hasRedirected) {
-							hasRedirected = true;
-							window.location.href = redirectUrl;
-						}
-					}
-					// Notify n8n → ntfy (fire-and-forget, mag redirect niet blokkeren)
-					try {
-						fetch("https://n8n.reconnectnow.nl/webhook/cal-booking", {
-							method: "POST",
-							headers: { "Content-Type": "application/json" },
-							body: JSON.stringify({ event: "booking_successful", source: "crystalhelder.nl", timestamp: new Date().toISOString() }),
-							keepalive: true
-						}).catch(function() {});
-					} catch(e) {}
-					window.dataLayer = window.dataLayer || [];
-					var eventData = {
-						event: __conversionEvent,
-						lead_source: "cal_booking",
-						eventCallback: doRedirect,
-						eventTimeout: 2000,
-					};
-					if (__conversionValue > 0) {
-						eventData.value = __conversionValue;
-						eventData.currency = __conversionCurrency;
-						eventData.transaction_id = __conversionEvent + "_" + Date.now();
-					}
-					window.dataLayer.push(eventData);
-					setTimeout(doRedirect, 2500);
-				},
-			});
-		</script>
-		}
 
 		<!-- Google Consent Mode v2 defaults (MUST load before GTM) -->
 		<script is:inline>
@@ -164,6 +75,7 @@ const {
 			function gtag() {
 				dataLayer.push(arguments);
 			}
+			gtag("set", "url_passthrough", true);
 			gtag("consent", "default", {
 				ad_storage: "denied",
 				ad_user_data: "denied",
@@ -235,5 +147,84 @@ const {
 		</noscript>
 		<slot />
 		<ConsentBanner />
+		{/* Cal.com Embed Script (deferred until first user interaction) */}
+		{includeCal &&
+		<script is:inline define:vars={{ __calLink: calLink, __bedanktUrl: bedanktUrl, __conversionEvent: conversionEvent, __conversionValue: conversionValue, __conversionCurrency: conversionCurrency }}>
+			(function (C, A, L) {
+				let p = function (a, ar) { a.q.push(ar); };
+				let d = C.document;
+				C.Cal = C.Cal || function () {
+					let cal = C.Cal;
+					let ar = arguments;
+					if (!cal.loaded) {
+						cal.ns = {};
+						cal.q = cal.q || [];
+						cal.loaded = true;
+					}
+					if (ar[0] === L) {
+						const api = function () { p(api, arguments); };
+						const namespace = ar[1];
+						api.q = api.q || [];
+						if (typeof namespace === "string") {
+							cal.ns[namespace] = cal.ns[namespace] || api;
+							p(cal.ns[namespace], ar);
+							p(cal, ["initNamespace", namespace]);
+						} else p(cal, ar);
+						return;
+					}
+					p(cal, ar);
+				};
+				var el = false;
+				function load() {
+					if (el) return;
+					el = true;
+					d.head.appendChild(d.createElement("script")).src = A;
+					["mousemove","touchstart","scroll","keydown"].forEach(function(e) {
+						d.removeEventListener(e, load, true);
+					});
+				}
+				["mousemove","touchstart","scroll","keydown"].forEach(function(e) {
+					d.addEventListener(e, load, { capture: true, passive: true });
+				});
+			})(window, "https://app.cal.com/embed/embed.js", "init");
+			Cal("init", { origin: "https://app.cal.com" });
+			Cal("preload", { calLink: __calLink });
+			Cal("on", {
+				action: "bookingSuccessful",
+				callback: function () {
+					var redirectUrl = __bedanktUrl;
+					var hasRedirected = false;
+					function doRedirect() {
+						if (!hasRedirected) {
+							hasRedirected = true;
+							window.location.href = redirectUrl;
+						}
+					}
+					try {
+						fetch("https://n8n.reconnectnow.nl/webhook/cal-booking", {
+							method: "POST",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({ event: "booking_successful", source: "crystalhelder.nl", timestamp: new Date().toISOString() }),
+							keepalive: true
+						}).catch(function() {});
+					} catch(e) {}
+					window.dataLayer = window.dataLayer || [];
+					var eventData = {
+						event: __conversionEvent,
+						lead_source: "cal_booking",
+						eventCallback: doRedirect,
+						eventTimeout: 2000,
+					};
+					if (__conversionValue > 0) {
+						eventData.value = __conversionValue;
+						eventData.currency = __conversionCurrency;
+						eventData.transaction_id = __conversionEvent + "_" + Date.now();
+					}
+					window.dataLayer.push(eventData);
+					setTimeout(doRedirect, 2500);
+				},
+			});
+		</script>
+		}
 	</body>
 </html>
