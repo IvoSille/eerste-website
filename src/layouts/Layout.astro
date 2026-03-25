@@ -49,6 +49,24 @@ const {
 		<meta name="twitter:image" content={new URL('/og-image.jpg', Astro.site)} />
 		<link rel="canonical" href={Astro.url} />
 
+		<!-- Structured Data (JSON-LD) -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "ProfessionalService",
+			"name": "Crystal Helder",
+			"description": description,
+			"url": "https://go.crystalhelder.nl",
+			"provider": {
+				"@type": "Person",
+				"name": "Crystal"
+			},
+			"serviceType": "Germaanse Geneeskunde begeleiding",
+			"areaServed": {
+				"@type": "Country",
+				"name": "NL"
+			}
+		})} />
+
 		<!-- Preconnect to Stape sGTM (DNS + TLS early, before GTM script tag) -->
 		<link rel="preconnect" href="https://ss.crystalhelder.nl" crossorigin />
 

@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -7,6 +8,11 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://go.crystalhelder.nl',
   trailingSlash: 'always',
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/bedankt/'),
+    }),
+  ],
   build: {
     inlineStylesheets: 'always',
   },
