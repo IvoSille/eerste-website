@@ -1,5 +1,11 @@
 ---
 import Button from '../Button.astro';
+
+interface Props {
+	calLink?: string;
+}
+
+const { calLink } = Astro.props;
 ---
 
 <section id="faq-cta" class="py-16 md:py-20 px-6 lg:px-8 bg-gradient-to-b from-white to-[var(--color-brand-base)] text-center fade-in-section">
@@ -10,8 +16,14 @@ import Button from '../Button.astro';
 		<p class="text-lg text-[var(--color-brand-muted)] mb-8 leading-relaxed">
 			Plan je adviesgesprek en ontdek wat er achter jouw klacht zit.
 		</p>
-		<Button href="#kennismaking" className="text-base md:text-lg px-8 py-4">
-			Plan je adviesgesprek
-		</Button>
+		{calLink ? (
+			<Button data-cal-link={calLink} data-cal-config='{"layout":"month_view","theme":"light"}' className="text-base md:text-lg px-8 py-4 cursor-pointer">
+				Plan je adviesgesprek
+			</Button>
+		) : (
+			<Button href="#kennismaking" className="text-base md:text-lg px-8 py-4">
+				Plan je adviesgesprek
+			</Button>
+		)}
 	</div>
 </section>

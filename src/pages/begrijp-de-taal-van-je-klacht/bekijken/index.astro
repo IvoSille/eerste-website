@@ -2,13 +2,20 @@
 import Layout from "../../../layouts/Layout.astro";
 import Button from "../../../components/Button.astro";
 import Testimonials from "../../../components/Testimonials.astro";
+import WatJeKrijgt from "../../../components/adviesgesprek/WatJeKrijgt.astro";
+import FAQ from "../../../components/adviesgesprek/FAQ.astro";
+import FaqCta from "../../../components/adviesgesprek/FaqCta.astro";
 import Footer from "../../../components/Footer.astro";
 ---
 
 <Layout
 	title="Bekijk de video — Crystal Helder"
-	includeCal={false}
 	robots="noindex, nofollow"
+	calLink="crystalhelder/adviesgesprek"
+	bedanktUrl="/germaanse-geneeskunde-adviesgesprek/bedankt/"
+	conversionEvent="purchase"
+	conversionValue={27}
+	conversionCurrency="EUR"
 >
 	{/* SECTIE 1 — HERO */}
 	<section class="pt-16 pb-8 md:pt-28 md:pb-12 px-6 lg:px-8">
@@ -70,15 +77,17 @@ import Footer from "../../../components/Footer.astro";
 
 			{/* Prijsblok */}
 			<div class="inline-block bg-[var(--color-brand-base)] border border-[var(--color-brand-secondary)] rounded-2xl px-8 py-5 mb-8">
+				<p class="text-sm md:text-base font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] mb-1">Tijdelijk</p>
 				<p class="text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)]">
-					€47 <span class="text-base md:text-lg font-normal text-[var(--color-brand-muted)]">— 30 minuten — online of in Tienhoven/Utrecht</span>
+					<s class="text-lg md:text-xl text-[var(--color-brand-muted)] font-normal">€47</s> €27 <span class="text-base md:text-lg font-normal text-[var(--color-brand-muted)]">— 30 minuten — online of in Tienhoven/Utrecht</span>
 				</p>
 			</div>
 
 			<div>
 				<Button
-					href="https://cal.com/crystalhelder/adviesgesprek"
-					className="text-base md:text-lg px-10 py-5 cta-adviesgesprek"
+					data-cal-link="crystalhelder/adviesgesprek"
+					data-cal-config='{"layout":"month_view","theme":"light"}'
+					className="text-base md:text-lg px-10 py-5 cta-adviesgesprek cursor-pointer"
 				>
 					Plan je adviesgesprek
 				</Button>
@@ -90,8 +99,17 @@ import Footer from "../../../components/Footer.astro";
 		</div>
 	</section>
 
-	{/* SECTIE 4 — TESTIMONIALS */}
+	{/* SECTIE 4 — WAT JE KRIJGT */}
+	<WatJeKrijgt />
+
+	{/* SECTIE 5 — TESTIMONIALS */}
 	<Testimonials />
+
+	{/* SECTIE 6 — FAQ */}
+	<FAQ />
+
+	{/* SECTIE 7 — AFSLUITENDE CTA */}
+	<FaqCta calLink="crystalhelder/adviesgesprek" />
 
 	<Footer />
 </Layout>
@@ -136,19 +154,57 @@ import Footer from "../../../components/Footer.astro";
 		);
 	});
 
-	// CTA click tracking
+	// CTA click tracking (alle CTA buttons op de pagina)
 	document.addEventListener("DOMContentLoaded", () => {
-		const ctaBtn = document.querySelector(".cta-adviesgesprek");
-		if (ctaBtn) {
-			ctaBtn.addEventListener("click", () => {
-				window.dataLayer = window.dataLayer || [];
-				window.dataLayer.push({
-					event: "cta_click",
-					cta_text: "Plan je adviesgesprek",
-					cta_destination: "https://cal.com/crystalhelder/adviesgesprek",
-					cta_location: "watch_page_cta",
-				});
+		document.addEventListener("click", (e) => {
+			const el = (e.target as Element).closest('[data-cal-link], a[href="#kennismaking"]');
+			if (!el) return;
+
+			const calLink = el.getAttribute("data-cal-link");
+			const text = el.textContent?.trim() || "";
+			const section = el.closest("section");
+			const location = section?.id || "watch_page";
+
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				event: "cta_click",
+				cta_text: text,
+				cta_destination: calLink ? "adviesgesprek" : "unknown",
+				cta_location: location,
 			});
-		}
+		});
+	});
+</script>
+
+{/* Scroll animation for fade-in-section components */}
+<style is:global>
+	:global(html.js) .fade-in-section {
+		opacity: 0;
+		transform: translateY(20px);
+		visibility: hidden;
+		transition: opacity 600ms ease-out, transform 600ms ease-out;
+		will-change: opacity, visibility, transform;
+	}
+	:global(html.js) .fade-in-section.is-visible {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+</style>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const observer = new IntersectionObserver(
+			(entries, obs) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-visible");
+						obs.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.15 }
+		);
+		document.querySelectorAll(".fade-in-section").forEach((el) => observer.observe(el));
 	});
 </script>
