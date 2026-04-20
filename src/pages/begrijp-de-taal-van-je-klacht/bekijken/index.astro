@@ -1,0 +1,154 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Button from "../../../components/Button.astro";
+import Testimonials from "../../../components/Testimonials.astro";
+import Footer from "../../../components/Footer.astro";
+---
+
+<Layout
+	title="Bekijk de video — Crystal Helder"
+	includeCal={false}
+	robots="noindex, nofollow"
+>
+	{/* SECTIE 1 — HERO */}
+	<section class="pt-16 pb-8 md:pt-28 md:pb-12 px-6 lg:px-8">
+		<div class="max-w-3xl mx-auto text-center">
+			<h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-none md:leading-[1.05] tracking-tight">
+				Welkom. Hier is je video.
+			</h1>
+			<p class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] max-w-2xl mx-auto leading-relaxed">
+				Neem de tijd. Kijk hem in één keer als je kunt — de uitleg bouwt op. Je kunt hem ook altijd terugvinden in de mail die ik je heb gestuurd.
+			</p>
+		</div>
+	</section>
+
+	{/* SECTIE 2 — VIDEO PLACEHOLDER */}
+	<section class="pb-12 md:pb-20 px-6 lg:px-8">
+		<div class="max-w-[900px] mx-auto">
+			{/*
+				VIDEO PLACEHOLDER — Later vervangen door Bunny Stream iframe:
+				<div style="position:relative;padding-top:56.25%;">
+					<iframe
+						src="https://iframe.mediadelivery.net/embed/LIBRARY_ID/VIDEO_ID"
+						loading="lazy"
+						style="border:0;position:absolute;top:0;height:100%;width:100%;"
+						allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture;"
+						allowfullscreen="true">
+					</iframe>
+				</div>
+			*/}
+			<div class="relative w-full rounded-2xl md:rounded-3xl overflow-hidden shadow-xl shadow-[var(--color-brand-muted)]/10 bg-gradient-to-br from-[var(--color-brand-primary-text)] to-[#3A302D]" style="padding-top: 56.25%;">
+				<div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+					{/* Play icon */}
+					<div class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 border border-white/30">
+						<svg class="w-8 h-8 md:w-10 md:h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M8 5v14l11-7z"/>
+						</svg>
+					</div>
+					<p class="text-base md:text-lg font-medium text-white/80">Video binnenkort beschikbaar</p>
+				</div>
+			</div>
+
+			<p class="text-base md:text-lg text-[var(--color-brand-muted)] mt-6 text-center">
+				Vragen tijdens of na het kijken? Je kunt altijd reageren op een van mijn mails — ik lees ze zelf.
+			</p>
+		</div>
+	</section>
+
+	{/* SECTIE 3 — CTA ADVIESGESPREK */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white">
+		<div class="max-w-3xl mx-auto text-center">
+			<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8">
+				Wil je weten welk conflict er bij jou speelt?
+			</h2>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8 max-w-2xl mx-auto">
+				In de video leg ik uit hoe de vijf biologische natuurwetten werken. De vertaalslag naar jouw specifieke situatie — welk conflict er actief is, in welke fase je zit, wat dat betekent voor jouw klacht — dat doe ik in een persoonlijk adviesgesprek.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-10 max-w-2xl mx-auto">
+				In 30 minuten kijk ik met je mee naar jouw situatie. Je krijgt helderheid over wat er speelt en een eerlijk advies over hoe je hiermee verder kunt.
+			</p>
+
+			{/* Prijsblok */}
+			<div class="inline-block bg-[var(--color-brand-base)] border border-[var(--color-brand-secondary)] rounded-2xl px-8 py-5 mb-8">
+				<p class="text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)]">
+					€47 <span class="text-base md:text-lg font-normal text-[var(--color-brand-muted)]">— 30 minuten — online of in Tienhoven/Utrecht</span>
+				</p>
+			</div>
+
+			<div>
+				<Button
+					href="https://cal.com/crystalhelder/adviesgesprek"
+					className="text-base md:text-lg px-10 py-5 cta-adviesgesprek"
+				>
+					Plan je adviesgesprek
+				</Button>
+			</div>
+
+			<p class="text-sm text-[var(--color-brand-muted)] mt-4">
+				Of neem eerst de tijd — je krijgt de komende dagen nog een paar mails van me met verdieping en praktijkvoorbeelden.
+			</p>
+		</div>
+	</section>
+
+	{/* SECTIE 4 — TESTIMONIALS */}
+	<Testimonials />
+
+	<Footer />
+</Layout>
+
+<script>
+	// Scroll depth tracking
+	document.addEventListener("DOMContentLoaded", () => {
+		const thresholds = [25, 50, 75, 90];
+		const fired = new Set<number>();
+
+		const checkScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+			thresholds.forEach((threshold) => {
+				if (scrollPercent >= threshold && !fired.has(threshold)) {
+					fired.add(threshold);
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "scroll_depth",
+						scroll_percentage: threshold,
+					});
+				}
+			});
+		};
+
+		let ticking = false;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						checkScroll();
+						ticking = false;
+					});
+					ticking = true;
+				}
+			},
+			{ passive: true }
+		);
+	});
+
+	// CTA click tracking
+	document.addEventListener("DOMContentLoaded", () => {
+		const ctaBtn = document.querySelector(".cta-adviesgesprek");
+		if (ctaBtn) {
+			ctaBtn.addEventListener("click", () => {
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({
+					event: "cta_click",
+					cta_text: "Plan je adviesgesprek",
+					cta_destination: "https://cal.com/crystalhelder/adviesgesprek",
+					cta_location: "watch_page_cta",
+				});
+			});
+		}
+	});
+</script>

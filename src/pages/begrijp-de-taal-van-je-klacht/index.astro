@@ -1,0 +1,537 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import Footer from "../../components/Footer.astro";
+import { Picture } from "astro:assets";
+import foto1 from "../../assets/images/foto_1.jpg";
+import foto3 from "../../assets/images/foto_3.jpg";
+---
+
+<Layout
+	title="Begrijp de taal van je klacht — Crystal Helder"
+	description="Krijg gratis toegang tot de video waarin ik uitleg hoe de vijf biologische natuurwetten werken — en hoe je ermee kunt begrijpen wat jouw lichaam je probeert te vertellen."
+	includeCal={false}
+>
+	{/* DECORATIVE BACKGROUND BLOBS */}
+	<div
+		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+	>
+		<div
+			class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"
+		></div>
+		<div
+			class="absolute top-[40%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"
+		></div>
+	</div>
+
+	{/* SECTIE 1 — HERO */}
+	<section class="relative pt-12 pb-8 md:pt-24 md:pb-16 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0">
+		<div class="w-full lg:w-[55%] relative z-20 text-center lg:text-left mt-2 md:mt-8 lg:mt-0 xl:-mr-24 bg-white/80 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none p-5 md:p-6 lg:p-0 rounded-3xl lg:rounded-none">
+			<div class="inline-block px-4 py-2 rounded-full bg-[var(--color-brand-secondary)]/60 backdrop-blur-md border border-[var(--color-brand-secondary)] mb-3 md:mb-6 text-xs md:text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm">
+				Germaanse geneeskunde — gratis video
+			</div>
+			<h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] xl:text-[5.5rem] font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-none md:leading-[1.05] tracking-tight drop-shadow-sm">
+				Begrijp de taal van je klacht
+			</h1>
+			<p class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+				Je klacht is geen toeval. Er zit een logica achter. In deze gratis video leg ik uit hoe de vijf biologische natuurwetten werken — en hoe je ze kunt gebruiken om te begrijpen wat jouw lichaam je probeert te vertellen.
+			</p>
+
+			{/* Opt-in formulier */}
+			<form id="optin-form-hero" class="space-y-3 max-w-md mx-auto lg:mx-0" novalidate>
+				<input
+					type="text"
+					name="voornaam"
+					required
+					autocomplete="given-name"
+					class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+					placeholder="Je voornaam"
+				/>
+				<input
+					type="email"
+					name="email"
+					required
+					autocomplete="email"
+					class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+					placeholder="jouw@email.nl"
+				/>
+				<p class="form-error text-[var(--color-brand-accent)] text-sm hidden"></p>
+				<Button type="submit" className="w-full text-base md:text-lg py-4 cursor-pointer">
+					Bekijk de video direct
+				</Button>
+			</form>
+			<p class="text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
+				Geen spam, nooit. Je ontvangt de video direct én per mail.
+			</p>
+		</div>
+		<div class="w-full lg:w-[50%] relative z-10">
+			<div class="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto aspect-[3/4] sm:aspect-square md:aspect-square lg:aspect-[4/5]">
+				<div class="absolute inset-0 bg-gradient-to-tr from-[#E8D1C5] via-[#f0ddd4] to-[#fdfbf9] rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-2xl shadow-[var(--color-brand-accent)]/25 transform rotate-[-2deg] transition-transform duration-700 hover:rotate-0"></div>
+				<Picture src={foto1} alt="Crystal Helder" widths={[320, 480, 640, 960]} sizes="(max-width: 640px) 220px, (max-width: 768px) 320px, (max-width: 1024px) 448px, 640px" class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]" style="object-position: center 20%;" fetchpriority="high" loading="eager" />
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 2 — HERKENNING */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center">
+				Je zoekt. En je blijft zoeken.
+			</h2>
+			<div class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6">
+				<p>
+					Je hebt een klacht waar je arts geen raad mee weet — of een verklaring geeft die niet klopt met wat jij voelt. Je hebt gelezen over de germaanse geneeskunde. De theorie voelt logisch. Maar dan staat je eigen situatie voor je.
+				</p>
+				<p class="italic">
+					Wat betekent dit voor mijn knie? Mijn schildklier? Mijn darmen? Welk conflict is het precies, en hoe weet ik dat? Waarom gebeurt het nú, en niet drie jaar geleden?
+				</p>
+				<p>
+					Dat zijn de vragen waar ik in deze video op inga. Niet met een theoretische uitleg die je overal kunt lezen, maar met de vertaalslag naar hoe je dit op je eigen klacht toepast.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 3 — WAT JE LEERT IN DE VIDEO */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 fade-in-section">
+		<div class="max-w-5xl mx-auto">
+			<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-10 md:mb-14 text-center">
+				Wat je leert in deze video
+			</h2>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+				<div class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-xl shadow-[var(--color-brand-muted)]/5">
+					<h3 class="text-xl font-bold mb-4 text-[var(--color-brand-primary-text)]">Hoe de vijf biologische natuurwetten werken</h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">
+						De systematiek achter wat er in je lichaam gebeurt als je iets meemaakt. Geen theorie uit een boek, maar de kern zoals ik hem in meer dan tien jaar praktijk dagelijks toepas.
+					</p>
+				</div>
+				<div class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-xl shadow-[var(--color-brand-muted)]/5">
+					<h3 class="text-xl font-bold mb-4 text-[var(--color-brand-primary-text)]">Waarom je klacht geen toeval is</h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">
+						Elke klacht — van een eczeem tot een schildklierprobleem, van knieklachten tot darmissues — volgt een vast patroon. Als je dat patroon kent, begrijp je waarom je lichaam doet wat het doet.
+					</p>
+				</div>
+				<div class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-xl shadow-[var(--color-brand-muted)]/5">
+					<h3 class="text-xl font-bold mb-4 text-[var(--color-brand-primary-text)]">Hoe je dit op jouw situatie toepast</h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">
+						De vertaalslag van theorie naar praktijk. Welke vragen stel je jezelf? Waar kijk je naar? En vooral: waar begin je?
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 4 — VOOR WIE IS DEZE VIDEO */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center">
+				Voor wie is deze video
+			</h2>
+			<div class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6">
+				<p>
+					Voor jou als je al eens hebt gehoord van de germaanse geneeskunde of de vijf biologische natuurwetten — en je wilt begrijpen hoe dit werkt voor jouw situatie.
+				</p>
+				<p>
+					Voor jou als je ergens in je lichaam een klacht hebt waar je arts niet uitkomt, en je wilt weten of er een andere manier is om ernaar te kijken.
+				</p>
+				<p>
+					Voor jou als je niet nog meer losse theorieën wilt lezen, maar eindelijk de samenhang wilt zien.
+				</p>
+				<p class="font-medium text-[var(--color-brand-primary-text)]">
+					Geen voorkennis nodig. Wel de bereidheid om op een andere manier naar je lichaam te kijken.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 5 — OVER CRYSTAL */}
+	<section class="py-20 md:py-24 lg:py-32 px-6 lg:px-8 bg-gradient-to-br from-[var(--color-brand-primary-text)] to-[#3A302D] text-white relative overflow-hidden fade-in-section">
+		<div class="hidden lg:block absolute top-0 right-0 w-[400px] xl:w-[600px] h-[400px] xl:h-[600px] bg-[var(--color-brand-accent)] rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"></div>
+
+		<div class="max-w-4xl mx-auto">
+			<div class="flex flex-col items-center gap-4 lg:flex-row lg:items-start lg:gap-12">
+				<div class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-accent)]/80 shadow-lg">
+					<Picture src={foto3} alt="Portret Crystal" widths={[192, 384]} sizes="192px" class="w-full h-full object-cover" style="object-position: center 22%;" />
+				</div>
+				<div class="space-y-6 text-center lg:text-left">
+					<h2 class="text-4xl md:text-5xl font-semibold leading-tight text-white">Mijn naam is Crystal.</h2>
+					<div class="space-y-6 text-lg text-[#D5C2B9] font-light">
+						<p>
+							Mijn broer overleed toen hij vijf maanden oud was. Hij had een hartafwijking. Mijn moeder voelde dat er iets mis was en trok aan de bel — maar het consultatiebureau wilde niet luisteren. De diagnose kwam te laat. Op de dag dat hij zijn harttransplantatie zou krijgen, was het voorbij.
+						</p>
+						<p>
+							Dat heeft me gevormd. Ik ben opgegroeid met het gevoel: ze weten het niet altijd. Ze luisteren niet altijd. En soms heeft dat gevolgen die niet meer terug te draaien zijn.
+						</p>
+						<p>
+							Die ervaring heeft me op een zoektocht gezet die nooit meer stopte. Niet uit wantrouwen naar de reguliere zorg — maar uit de overtuiging dat er meer te begrijpen valt dan wat de standaardroute biedt. Toen ik de vijf biologische natuurwetten leerde kennen, viel alles op zijn plek. Niet omdat iemand me een pilletje gaf, maar omdat ik voor het eerst begreep waarom een lichaam doet wat het doet.
+						</p>
+						<p>
+							Inmiddels werk ik al meer dan tien jaar dagelijks met dit kader en heb ik honderden conflictanalyses gedaan — van chronische pijn tot huidproblemen, van hormonale klachten tot darmissues. Daarnaast breng ik twintig jaar ervaring mee in emotieregulatie, pedagogie en lichaamswerk. Dat betekent dat ik niet alleen kan achterhalen wat er speelt, maar je ook de tools geef om er daadwerkelijk mee aan de slag te gaan.
+						</p>
+						<p class="text-white text-lg md:text-xl font-medium pt-4 border-l-[5px] border-[var(--color-brand-accent)] pl-6">
+							Ik ben niet de goeroe die zegt hoe het moet. Ik ben de ervaren begeleider die samen met jou uitzoekt wat er speelt — en wat jij ermee kunt doen.
+						</p>
+						<p>
+							In deze video deel ik de kern van wat ik in meer dan tien jaar heb geleerd. Geen theorie om de theorie, maar de handvatten waarmee je zelf kunt beginnen met begrijpen.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 6 — TWEEDE OPT-IN */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] via-[#f4ebe6] to-[var(--color-brand-secondary)] fade-in-section">
+		<div class="max-w-xl mx-auto">
+			<div class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 shadow-xl shadow-[var(--color-brand-muted)]/5">
+				<h2 class="text-3xl sm:text-4xl font-semibold leading-tight tracking-tight mb-4 text-center">
+					Klaar om de taal van je klacht te leren lezen?
+				</h2>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8 text-center">
+					Vul je naam en e-mailadres in, en je krijgt direct toegang tot de video. Je ontvangt hem ook per mail, zodat je hem later terug kunt kijken.
+				</p>
+
+				<form id="optin-form-bottom" class="space-y-4" novalidate>
+					<input
+						type="text"
+						name="voornaam"
+						required
+						autocomplete="given-name"
+						class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+						placeholder="Je voornaam"
+					/>
+					<input
+						type="email"
+						name="email"
+						required
+						autocomplete="email"
+						class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+						placeholder="jouw@email.nl"
+					/>
+					<p class="form-error text-[var(--color-brand-accent)] text-sm hidden"></p>
+					<Button type="submit" className="w-full text-base md:text-lg py-4 cursor-pointer">
+						Bekijk de video direct
+					</Button>
+				</form>
+				<p class="text-xs text-[var(--color-brand-muted)] mt-4 text-center">
+					Geen spam, nooit. Je kunt je op elk moment uitschrijven. Door je aan te melden ga je akkoord met <a href="/algemene-voorwaarden/" class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300">onze privacyverklaring</a>.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 7 — FAQ */}
+	<section id="faq" class="py-24 md:py-32 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-4xl mx-auto">
+			<h2 class="text-3xl md:text-5xl font-semibold mb-12 md:mb-16 text-center tracking-tight">
+				Veelgestelde vragen
+			</h2>
+
+			<div class="space-y-6 md:space-y-8">
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:bg-white open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">Is deze video echt gratis?</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8">
+							<p>Ja. Je vult alleen je naam en e-mailadres in, en je krijgt direct toegang. Ik stuur je daarna nog een paar mails met verdieping en concrete voorbeelden, maar je kunt je op elk moment uitschrijven.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:bg-white open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">Hoe lang is de video?</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8">
+							<p>Tussen de 15 en 25 minuten. Genoeg tijd om de kern echt uit te leggen, kort genoeg om in één keer uit te kijken.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:bg-white open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">Ik ken de germaanse geneeskunde nog niet goed. Is deze video dan geschikt voor mij?</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8">
+							<p>Ja. Ik begin bij de basis. Je hoeft geen voorkennis te hebben — wel de bereidheid om op een andere manier naar je lichaam te kijken.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:bg-white open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">Is dit een vervanging voor medische zorg?</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8">
+							<p>Nee. Ik werk altijd naast de reguliere zorg, nooit ertegen. Wat ik uitleg is aanvullend: inzicht in de biologische processen achter klachten. Ik adviseer nooit om behandelingen te stoppen of medicatie af te bouwen.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:bg-white open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">Wat gebeurt er nadat ik de video heb bekeken?</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8">
+							<p>Je ontvangt over een periode van ongeveer tien dagen nog een aantal mails met verdieping, voorbeelden uit de praktijk, en antwoorden op veelgestelde vragen. Als je daarna wilt kijken wat er bij jouw specifieke situatie speelt, kun je een adviesgesprek plannen. Geen druk — alleen als jij dat wilt.</p>
+						</div>
+					</div>
+				</details>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>
+
+<style is:global>
+	/* Scroll Animation — only hide when JS is confirmed available */
+	:global(html.js) .fade-in-section {
+		opacity: 0;
+		transform: translateY(20px);
+		visibility: hidden;
+		transition: opacity 600ms ease-out, transform 600ms ease-out;
+		will-change: opacity, visibility, transform;
+	}
+	:global(html.js) .fade-in-section.is-visible {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+</style>
+
+<style>
+	/* FAQ Accordion Animation */
+	details > summary {
+		list-style: none;
+	}
+	details > summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-content {
+		display: grid;
+		grid-template-rows: 0fr;
+		opacity: 0;
+		transition: grid-template-rows 400ms ease-out, opacity 400ms ease-out;
+		will-change: grid-template-rows, opacity;
+	}
+
+	.faq-content > div {
+		overflow: hidden;
+	}
+
+	details[open] .faq-content {
+		grid-template-rows: 1fr;
+		opacity: 1;
+	}
+</style>
+
+<script>
+	// Scroll animation observer
+	document.addEventListener("DOMContentLoaded", () => {
+		const observer = new IntersectionObserver(
+			(entries, obs) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-visible");
+						obs.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.15 }
+		);
+		document.querySelectorAll(".fade-in-section").forEach((el) => observer.observe(el));
+	});
+
+	// Scroll depth tracking
+	document.addEventListener("DOMContentLoaded", () => {
+		const thresholds = [25, 50, 75, 90];
+		const fired = new Set<number>();
+
+		const checkScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+			thresholds.forEach((threshold) => {
+				if (scrollPercent >= threshold && !fired.has(threshold)) {
+					fired.add(threshold);
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "scroll_depth",
+						scroll_percentage: threshold,
+					});
+				}
+			});
+		};
+
+		let ticking = false;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						checkScroll();
+						ticking = false;
+					});
+					ticking = true;
+				}
+			},
+			{ passive: true }
+		);
+	});
+
+	// FAQ accordion
+	document.addEventListener("DOMContentLoaded", () => {
+		const detailsElements = document.querySelectorAll("details");
+		detailsElements.forEach((targetDetail) => {
+			targetDetail.addEventListener("click", (e) => {
+				const target = e.target as HTMLElement;
+				if (target.tagName !== "SUMMARY" && !target.closest("summary")) return;
+
+				e.preventDefault();
+
+				if (targetDetail.hasAttribute("open")) {
+					const content = targetDetail.querySelector(".faq-content") as HTMLElement;
+					content.style.opacity = "0";
+					content.style.gridTemplateRows = "0fr";
+					setTimeout(() => {
+						targetDetail.removeAttribute("open");
+					}, 400);
+				} else {
+					// Close others (accordion)
+					detailsElements.forEach((detail) => {
+						if (detail !== targetDetail && detail.hasAttribute("open")) {
+							const content = detail.querySelector(".faq-content") as HTMLElement;
+							content.style.opacity = "0";
+							content.style.gridTemplateRows = "0fr";
+							setTimeout(() => {
+								detail.removeAttribute("open");
+							}, 400);
+						}
+					});
+
+					targetDetail.setAttribute("open", "");
+
+					// Track FAQ open
+					const questionText = targetDetail.querySelector("summary span")?.textContent?.trim() || "";
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "faq_open",
+						faq_question: questionText,
+					});
+
+					const content = targetDetail.querySelector(".faq-content") as HTMLElement;
+					content.getBoundingClientRect();
+					content.style.opacity = "1";
+					content.style.gridTemplateRows = "1fr";
+				}
+			});
+		});
+	});
+
+	// Opt-in form submission (handles both forms)
+	document.addEventListener("DOMContentLoaded", () => {
+		const forms = document.querySelectorAll<HTMLFormElement>("#optin-form-hero, #optin-form-bottom");
+
+		// Capture UTM parameters on page load
+		const urlParams = new URLSearchParams(window.location.search);
+		const utmSource = urlParams.get("utm_source") || "";
+		const utmMedium = urlParams.get("utm_medium") || "";
+		const utmCampaign = urlParams.get("utm_campaign") || "";
+
+		forms.forEach((form) => {
+			form.addEventListener("submit", async (e) => {
+				e.preventDefault();
+				const errorEl = form.querySelector(".form-error") as HTMLElement;
+				const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+				errorEl.classList.add("hidden");
+
+				const name = (form.querySelector('input[name="voornaam"]') as HTMLInputElement).value.trim();
+				const email = (form.querySelector('input[name="email"]') as HTMLInputElement).value.trim();
+
+				// Validation
+				if (!name) {
+					errorEl.textContent = "Vul je voornaam in";
+					errorEl.classList.remove("hidden");
+					return;
+				}
+				if (!email) {
+					errorEl.textContent = "Vul je e-mailadres in";
+					errorEl.classList.remove("hidden");
+					return;
+				}
+				if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+					errorEl.textContent = "Dit lijkt geen geldig e-mailadres";
+					errorEl.classList.remove("hidden");
+					return;
+				}
+
+				// Loading state
+				submitBtn.disabled = true;
+				const originalText = submitBtn.textContent;
+				submitBtn.textContent = "Een moment…";
+
+				try {
+					await fetch("https://n8n.reconnectnow.nl/webhook/crystal-video-optin", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							name,
+							email,
+							source: "video_optin",
+							utm_source: utmSource,
+							utm_medium: utmMedium,
+							utm_campaign: utmCampaign,
+							timestamp: new Date().toISOString(),
+						}),
+						keepalive: true,
+					});
+				} catch {
+					// Don't block redirect on webhook failure
+				}
+
+				// Track generate_lead event before redirect
+				const redirectUrl = "/begrijp-de-taal-van-je-klacht/bekijken/";
+				let hasRedirected = false;
+				function doRedirect() {
+					if (!hasRedirected) {
+						hasRedirected = true;
+						window.location.href = redirectUrl;
+					}
+				}
+
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({
+					event: "generate_lead",
+					lead_source: "video_optin",
+					eventCallback: doRedirect,
+					eventTimeout: 2000,
+				});
+				setTimeout(doRedirect, 2500);
+			});
+		});
+	});
+</script>

@@ -5,6 +5,7 @@ import ConsentBanner from "../components/ConsentBanner.astro";
 interface Props {
 	title: string;
 	description?: string;
+	robots?: string;
 	includeCal?: boolean;
 	calLink?: string;
 	bedanktUrl?: string;
@@ -16,6 +17,7 @@ interface Props {
 const {
 	title,
 	description = "Persoonlijke begeleiding bij klachten en symptomen op basis van de Germaanse Geneeskunde.",
+	robots,
 	includeCal = true,
 	calLink = "crystalhelder/kennismaking",
 	bedanktUrl = "/germaanse-geneeskunde-begeleiding/bedankt/",
@@ -33,6 +35,7 @@ const {
 		</script>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
+		{robots && <meta name="robots" content={robots} />}
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
