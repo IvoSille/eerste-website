@@ -20,7 +20,7 @@ import Footer from "../../../components/Footer.astro";
 	{/* SECTIE 1 — HERO */}
 	<section class="pt-16 pb-8 md:pt-28 md:pb-12 px-6 lg:px-8">
 		<div class="max-w-3xl mx-auto text-center">
-			<h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-none md:leading-[1.05] tracking-tight">
+			<h1 id="hero-heading" class="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-none md:leading-[1.05] tracking-tight">
 				Welkom. Hier is je video.
 			</h1>
 			<p class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] max-w-2xl mx-auto leading-relaxed">
@@ -63,7 +63,7 @@ import Footer from "../../../components/Footer.astro";
 	</section>
 
 	{/* SECTIE 3 — CTA ADVIESGESPREK */}
-	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white">
+	<section class="pt-20 pb-8 md:pt-28 md:pb-12 px-6 lg:px-8 bg-white">
 		<div class="max-w-3xl mx-auto text-center">
 			<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8">
 				Wil je weten welk conflict er bij jou speelt?
@@ -115,6 +115,21 @@ import Footer from "../../../components/Footer.astro";
 </Layout>
 
 <script>
+	// Personalisatie: voornaam uit URL parameter
+	(function () {
+		const params = new URLSearchParams(window.location.search);
+		const naam = params.get("naam");
+		if (naam) {
+			const heading = document.getElementById("hero-heading");
+			if (heading) {
+				const clean = naam.trim().replace(/[<>"'&]/g, "");
+				if (clean) {
+					heading.textContent = `Welkom, ${clean}. Hier is je video.`;
+				}
+			}
+		}
+	})();
+
 	// Scroll depth tracking
 	document.addEventListener("DOMContentLoaded", () => {
 		const thresholds = [25, 50, 75, 90];
