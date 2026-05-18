@@ -1,0 +1,182 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import Footer from "../../components/Footer.astro";
+import { Picture } from "astro:assets";
+import ebookCover from "../../assets/images/ebook-cover.png";
+
+// Pad naar het e-book-PDF (statisch asset in /public).
+// Plaats het bestand als: public/e-book-de-taal-van-je-lichaam.pdf
+const EBOOK_PDF = "/e-book-de-taal-van-je-lichaam.pdf";
+---
+
+<Layout
+	title="Je e-book — De Taal van je Lichaam | Crystal Helder"
+	description="Je e-book De Taal van je Lichaam staat klaar om te lezen of te bewaren."
+	includeCal={false}
+	robots="noindex"
+>
+	{/* DECORATIVE BACKGROUND BLOBS */}
+	<div
+		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+		aria-hidden="true"
+	>
+		<div
+			class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"
+		>
+		</div>
+		<div
+			class="absolute top-[40%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"
+		>
+		</div>
+	</div>
+
+	<section
+		class="relative min-h-[80vh] flex items-center py-20 md:py-24 px-6 lg:px-8"
+	>
+		<div
+			class="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-10 md:gap-14 lg:gap-20"
+		>
+			{/* E-book cover mockup */}
+			<div class="w-full lg:w-[42%] flex justify-center">
+				<div class="ebook-3d">
+					<div class="ebook-3d__inner">
+						<div class="ebook-3d__pages" aria-hidden="true"></div>
+						<div class="ebook-3d__cover">
+							<Picture
+								src={ebookCover}
+								alt="Cover van het e-book De Taal van je Lichaam"
+								widths={[280, 340, 510, 680]}
+								sizes="340px"
+								class="block w-full h-auto rounded-[3px]"
+							/>
+						</div>
+						<div class="ebook-3d__shade" aria-hidden="true"></div>
+					</div>
+				</div>
+			</div>
+
+			{/* Tekst + acties */}
+			<div class="w-full lg:w-[58%] text-center lg:text-left">
+				<div
+					class="inline-block px-4 py-2 rounded-full bg-[var(--color-brand-secondary)]/60 backdrop-blur-md border border-[var(--color-brand-secondary)] mb-4 md:mb-6 text-xs md:text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm"
+				>
+					De Taal van je Lichaam
+				</div>
+				<h1
+					class="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 md:mb-6 text-[var(--color-brand-primary-text)] leading-tight tracking-tight"
+				>
+					Je e-book staat klaar
+				</h1>
+				<p
+					class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
+				>
+					Je kunt <em class="italic">De Taal van je Lichaam</em> nu meteen openen
+					of bewaren — twaalf pagina's, in gewone taal. Lees het in één keer door,
+					of pak het er later nog eens bij.
+				</p>
+
+				<div
+					class="flex flex-col items-center lg:items-start gap-4"
+				>
+					<Button
+						href={EBOOK_PDF}
+						id="ebook-download"
+						download="De Taal van je Lichaam.pdf"
+						className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5"
+					>
+						Download het e-book (PDF)
+					</Button>
+					<a
+						href={EBOOK_PDF}
+						id="ebook-read"
+						target="_blank"
+						rel="noopener"
+						class="text-sm md:text-base text-[var(--color-brand-accent-hover)] underline underline-offset-2 font-medium hover:text-[var(--color-brand-accent)] transition-colors duration-300"
+					>
+						Of lees het meteen in je browser
+					</a>
+				</div>
+				<p class="mt-5 text-xs text-[var(--color-brand-muted)]">
+					PDF · 12 pagina's · op je eigen tempo te lezen
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>
+
+<style>
+	/* E-book 3D cover mockup */
+	.ebook-3d {
+		perspective: 2200px;
+		width: 100%;
+		max-width: 340px;
+	}
+	.ebook-3d__inner {
+		position: relative;
+		transform-style: preserve-3d;
+		transform: rotateY(-26deg);
+		transition: transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+	}
+	.ebook-3d__inner:hover {
+		transform: rotateY(-13deg);
+	}
+	.ebook-3d__cover {
+		position: relative;
+		border-radius: 3px;
+		box-shadow: 0 24px 45px -12px rgba(44, 38, 36, 0.45);
+		z-index: 2;
+	}
+	.ebook-3d__pages {
+		position: absolute;
+		top: 2%;
+		bottom: 2%;
+		right: 0;
+		width: 30px;
+		border-radius: 0 2px 2px 0;
+		transform-origin: 100% 50%;
+		transform: rotateY(-90deg);
+		background: repeating-linear-gradient(
+			to bottom,
+			#f6efe6 0px,
+			#f6efe6 2px,
+			#d6c8b9 2px,
+			#d6c8b9 3px
+		);
+		z-index: 1;
+	}
+	.ebook-3d__shade {
+		position: absolute;
+		inset: 0;
+		border-radius: 3px;
+		background: linear-gradient(
+			to right,
+			rgba(44, 38, 36, 0.34) 0%,
+			rgba(44, 38, 36, 0.08) 7%,
+			rgba(255, 255, 255, 0) 18%,
+			rgba(255, 255, 255, 0) 92%,
+			rgba(255, 255, 255, 0.22) 100%
+		);
+		pointer-events: none;
+		z-index: 3;
+	}
+</style>
+
+<script>
+	// Tracking: e-book opgehaald (download of online lezen)
+	document.addEventListener("DOMContentLoaded", () => {
+		const dl = document.getElementById("ebook-download");
+		const rd = document.getElementById("ebook-read");
+
+		dl?.addEventListener("click", () => {
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({ event: "ebook_download" });
+		});
+		rd?.addEventListener("click", () => {
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({ event: "ebook_read_online" });
+		});
+	});
+</script>

@@ -10,7 +10,10 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/bedankt/') && !page.includes('/bekijken/'),
+      filter: (page) =>
+        !page.includes('/bedankt/') &&
+        !page.includes('/bekijken/') &&
+        !page.includes('/de-taal-van-je-lichaam/e-book/'),
     }),
   ],
   build: {
