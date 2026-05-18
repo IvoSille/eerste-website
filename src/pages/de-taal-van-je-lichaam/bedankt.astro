@@ -1,0 +1,449 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { Picture } from "astro:assets";
+import bgIllustration from "../../assets/images/bedankt_hero.png";
+
+// Bunny-gehoste bedankvideo van Crystal (9:16, max 10 sec).
+// Invullen zodra de clip op Bunny staat — bv. https://<zone>.b-cdn.net/.../bedankt-crystal.mp4
+// VIDEO_POSTER: posterframe-URL (Bunny of /public). Beide leeg => placeholder wordt getoond.
+const VIDEO_URL = "";
+const VIDEO_POSTER = "";
+---
+
+<Layout
+	title="Je e-book is onderweg — Crystal Helder"
+	description="Je aanmelding is gelukt. Het e-book De Taal van je Lichaam komt eraan in je mailbox."
+	includeCal={false}
+	robots="noindex"
+>
+	{/* Petals container — positioned fixed over viewport */}
+	<div
+		id="petals-container"
+		class="fixed inset-0 pointer-events-none z-50 overflow-hidden"
+		aria-hidden="true"
+	>
+	</div>
+
+	<div
+		class="min-h-screen flex items-center justify-center px-6 py-24 relative overflow-hidden"
+	>
+		{/* Background: blobs + botanical illustration */}
+		<div
+			class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+			aria-hidden="true"
+		>
+			<div
+				id="blob-1"
+				class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-0"
+			>
+			</div>
+			<div
+				id="blob-2"
+				class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-0"
+			>
+			</div>
+			<div
+				id="bg-illustration"
+				class="absolute inset-0 flex items-center justify-center opacity-0"
+			>
+				<Picture
+					src={bgIllustration}
+					alt=""
+					widths={[600, 1000, 1400]}
+					sizes="100vw"
+					class="w-full max-w-5xl h-auto opacity-60 scale-130"
+				/>
+			</div>
+		</div>
+
+		{/* Decorative corner illustrations */}
+		<div
+			class="absolute pointer-events-none inset-0 overflow-hidden"
+			aria-hidden="true"
+		>
+			<div
+				id="deco-tr"
+				class="absolute -top-[10%] -right-[8%] w-[350px] md:w-[550px] opacity-0 rotate-[15deg]"
+			>
+				<Picture
+					src={bgIllustration}
+					alt=""
+					widths={[350, 550]}
+					sizes="550px"
+					class="w-full h-auto opacity-70"
+				/>
+			</div>
+			<div
+				id="deco-bl"
+				class="absolute -bottom-[10%] -left-[8%] w-[320px] md:w-[500px] opacity-0 rotate-[195deg]"
+			>
+				<Picture
+					src={bgIllustration}
+					alt=""
+					widths={[320, 500]}
+					sizes="500px"
+					class="w-full h-auto opacity-65"
+				/>
+			</div>
+		</div>
+
+		<div class="max-w-2xl mx-auto text-center">
+			{/* Animated checkmark circle with glow ring */}
+			<div
+				id="checkmark-circle"
+				class="relative w-24 h-24 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[var(--color-brand-sage)]/30"
+				style="opacity: 0; transform: scale(0);"
+			>
+				<div
+					id="glow-ring"
+					class="absolute inset-[-6px] rounded-full border-2 border-[var(--color-brand-sage)] opacity-0"
+				>
+				</div>
+				<svg
+					class="w-12 h-12 text-[var(--color-brand-primary-text)]"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					stroke-width="2.5"
+					aria-hidden="true"
+				>
+					<path
+						id="checkmark-path"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M5 13l4 4L19 7"></path>
+				</svg>
+			</div>
+
+			<div
+				id="badge"
+				class="inline-block px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-white mb-6 text-xs font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm"
+				style="opacity: 0;"
+			>
+				Aanmelding bevestigd
+			</div>
+
+			<h1
+				id="heading"
+				class="text-4xl md:text-6xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight"
+				style="opacity: 0;"
+			>
+				Je e-book is <span class="text-[var(--color-brand-accent)]">onderweg</span>.
+			</h1>
+
+			<p
+				id="subtext"
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto"
+				style="opacity: 0;"
+			>
+				Het e-book <em class="italic">De Taal van je Lichaam</em> ligt zo in je
+				mailbox. Check ook even je spam- of reclamemap, voor de zekerheid.
+			</p>
+
+			{/* Persoonlijke video van Crystal */}
+			<div
+				id="video-card"
+				class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-5 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8"
+				style="opacity: 0;"
+			>
+				{
+					VIDEO_URL ? (
+						<>
+							<p class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed mb-5 max-w-md mx-auto">
+								Ik nam zelf een kort filmpje voor je op — een paar tellen, meer
+								niet. Bekijk je 'm even?
+							</p>
+							<div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-[var(--color-brand-primary-text)] shadow-lg">
+								<video
+									id="bedankt-video"
+									class="absolute inset-0 w-full h-full object-cover"
+									poster={VIDEO_POSTER}
+									playsinline
+									preload="none"
+								>
+									<source src={VIDEO_URL} type="video/mp4" />
+								</video>
+								<button
+									id="video-play"
+									type="button"
+									aria-label="Video van Crystal afspelen"
+									class="absolute inset-0 flex items-center justify-center bg-[var(--color-brand-primary-text)]/15 transition-opacity duration-300 cursor-pointer group"
+								>
+									<span class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[var(--color-brand-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-brand-accent)]/40 group-hover:bg-[var(--color-brand-accent-hover)] group-hover:scale-105 transition-all duration-300">
+										<svg
+											class="w-7 h-7 md:w-9 md:h-9 text-white translate-x-[2px]"
+											viewBox="0 0 24 24"
+											fill="currentColor"
+											aria-hidden="true"
+										>
+											<path d="M8 5v14l11-7z" />
+										</svg>
+									</span>
+								</button>
+							</div>
+						</>
+					) : (
+						<div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-[var(--color-brand-secondary)] to-[var(--color-brand-sage)]/50 flex items-center justify-center">
+							<p class="text-sm text-[var(--color-brand-muted)] px-8 text-center leading-relaxed">
+								Persoonlijke videoboodschap van Crystal — volgt
+							</p>
+						</div>
+					)
+				}
+			</div>
+
+			{/* Wat je nu kunt verwachten */}
+			<div
+				id="expect-card"
+				class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-12 text-left"
+				style="opacity: 0;"
+			>
+				<h2
+					class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
+				>
+					Wat je nu kunt verwachten
+				</h2>
+				<p
+					class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed"
+				>
+					De eerste mail met je e-book ligt binnen enkele minuten in je inbox. In
+					de weken erna ontvang je nog een paar mails met verdieping en
+					voorbeelden uit de praktijk — geen verkoop, wel inhoud die je verder
+					helpt.
+				</p>
+			</div>
+
+			<div id="cta-button" style="opacity: 0;">
+				<Button href="/de-taal-van-je-lichaam/" className="text-lg px-10 py-5">
+					Terug naar de pagina
+				</Button>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import gsap from "gsap";
+
+	// Respect reduced motion preference
+	const prefersReducedMotion = window.matchMedia(
+		"(prefers-reduced-motion: reduce)"
+	).matches;
+
+	if (prefersReducedMotion) {
+		// Show everything immediately
+		document.querySelectorAll("[style*='opacity: 0']").forEach((el) => {
+			(el as HTMLElement).style.opacity = "1";
+			(el as HTMLElement).style.transform = "none";
+		});
+	} else {
+		// ===== ENTRANCE TIMELINE =====
+		const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		tl.to("#blob-1", { opacity: 0.7, scale: 1, duration: 1 }, 0)
+			.to("#blob-2", { opacity: 0.5, scale: 1, duration: 1 }, 0.2)
+			.to(
+				"#bg-illustration",
+				{ opacity: 1, duration: 1.5, ease: "power1.out" },
+				0
+			)
+			.to(
+				"#checkmark-circle",
+				{ opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
+				0.6
+			)
+			.fromTo(
+				"#checkmark-path",
+				{ strokeDasharray: 30, strokeDashoffset: 30 },
+				{ strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" },
+				0.9
+			)
+			.fromTo(
+				"#badge",
+				{ opacity: 0, y: -20 },
+				{ opacity: 1, y: 0, duration: 0.5 },
+				1.1
+			)
+			.fromTo(
+				"#heading",
+				{ opacity: 0, y: 30 },
+				{ opacity: 1, y: 0, duration: 0.6 },
+				1.3
+			)
+			.fromTo(
+				"#subtext",
+				{ opacity: 0, y: 20 },
+				{ opacity: 1, y: 0, duration: 0.5 },
+				1.5
+			)
+			.fromTo(
+				"#video-card",
+				{ opacity: 0, y: 40 },
+				{ opacity: 1, y: 0, duration: 0.7 },
+				1.7
+			)
+			.fromTo(
+				"#expect-card",
+				{ opacity: 0, y: 40 },
+				{ opacity: 1, y: 0, duration: 0.7 },
+				2.0
+			)
+			.fromTo(
+				"#cta-button",
+				{ opacity: 0, scale: 0.9 },
+				{ opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" },
+				2.3
+			);
+
+		// ===== FALLING PETALS =====
+		tl.call(createPetals, [], 1.0);
+
+		function createPetals() {
+			const container = document.getElementById("petals-container");
+			if (!container) return;
+
+			const petalCount = window.innerWidth < 768 ? 15 : 25;
+			const colors = ["#C8664D", "#D3DEC6", "#EADAD3", "#E8A090", "#A8533D"];
+
+			const petalPaths = [
+				"M0 0 C5 -8, 3 -16, 0 -20 C-3 -16, -5 -8, 0 0Z",
+				"M0 0 C6 -5, 6 -15, 0 -20 C-6 -15, -6 -5, 0 0Z",
+				"M0 0 C3 -7, 2 -16, 0 -18 C-2 -16, -3 -7, 0 0Z",
+			];
+			const SVG_NS = "http://www.w3.org/2000/svg";
+
+			for (let i = 0; i < petalCount; i++) {
+				const svg = document.createElementNS(SVG_NS, "svg");
+				svg.setAttribute("viewBox", "-8 -22 16 24");
+				svg.style.position = "absolute";
+				svg.style.pointerEvents = "none";
+
+				const size = 16 + Math.random() * 20;
+				svg.style.width = `${size}px`;
+				svg.style.height = `${size}px`;
+
+				const color = colors[Math.floor(Math.random() * colors.length)];
+				const path = document.createElementNS(SVG_NS, "path");
+				path.setAttribute(
+					"d",
+					petalPaths[Math.floor(Math.random() * petalPaths.length)]
+				);
+				path.setAttribute("fill", color);
+				svg.appendChild(path);
+
+				const startX = Math.random() * window.innerWidth;
+				svg.style.left = `${startX}px`;
+				svg.style.top = `-30px`;
+
+				container.appendChild(svg);
+
+				const duration = 2.5 + Math.random() * 2.5;
+				const delay = Math.random() * 1.5;
+				const drift = (Math.random() - 0.5) * 200;
+				const rotations = 360 + Math.random() * 720;
+
+				gsap.to(svg, {
+					y: window.innerHeight + 50,
+					x: drift,
+					rotation: rotations,
+					opacity: 0,
+					duration: duration,
+					delay: delay,
+					ease: "power1.in",
+					onComplete: () => svg.remove(),
+				});
+			}
+
+			gsap.delayedCall(6, () => {
+				if (container) container.remove();
+			});
+		}
+
+		// ===== DECORATIVE CORNER ILLUSTRATIONS =====
+		gsap.fromTo(
+			"#deco-tr",
+			{ opacity: 0, x: 40 },
+			{ opacity: 1, x: 0, duration: 1.5, ease: "power2.out", delay: 1.5 }
+		);
+		gsap.fromTo(
+			"#deco-bl",
+			{ opacity: 0, x: -40 },
+			{ opacity: 1, x: 0, duration: 1.5, ease: "power2.out", delay: 2.0 }
+		);
+
+		gsap.to("#deco-tr", {
+			y: 10,
+			rotation: "+=2",
+			duration: 8,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 3,
+		});
+		gsap.to("#deco-bl", {
+			y: -10,
+			rotation: "-=2",
+			duration: 7,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 3.5,
+		});
+
+		// ===== CHECKMARK GLOW PULSE =====
+		gsap.to("#glow-ring", {
+			opacity: 0.5,
+			scale: 1.15,
+			duration: 2,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 1.5,
+		});
+
+		// ===== CONTINUOUS BLOB FLOAT =====
+		gsap.to("#blob-1", {
+			y: 20,
+			duration: 7,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 1.5,
+		});
+		gsap.to("#blob-2", {
+			y: -20,
+			duration: 6,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 2,
+		});
+	}
+</script>
+
+<script>
+	// Video — posterframe + afspeelknop (klik speelt af mét geluid)
+	document.addEventListener("DOMContentLoaded", () => {
+		const video = document.getElementById(
+			"bedankt-video"
+		) as HTMLVideoElement | null;
+		const playBtn = document.getElementById(
+			"video-play"
+		) as HTMLButtonElement | null;
+		if (!video || !playBtn) return;
+
+		playBtn.addEventListener("click", () => {
+			video.controls = true;
+			playBtn.style.display = "none";
+			video.currentTime = 0;
+			video.play();
+		});
+
+		video.addEventListener("ended", () => {
+			video.controls = false;
+			video.load(); // herstelt het posterframe
+			playBtn.style.display = "";
+		});
+	});
+</script>
