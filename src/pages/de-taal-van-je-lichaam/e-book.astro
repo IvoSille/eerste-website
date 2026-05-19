@@ -170,13 +170,38 @@ const EBOOK_PDF = "/e-book-de-taal-van-je-lichaam.pdf";
 		const dl = document.getElementById("ebook-download");
 		const rd = document.getElementById("ebook-read");
 
+		// download_token uit de e-maillink (?id=...) — daarna uit de adresbalk poetsen
+		const token = new URLSearchParams(window.location.search).get("id") || "";
+		if (token) {
+			window.history.replaceState(
+				null,
+				"",
+				window.location.pathname + window.location.hash
+			);
+		}
+
+		// Registreer bij n8n dat dit e-book is opgehaald (één keer per bezoek)
+		let beaconSent = false;
+		function registreerDownload() {
+			if (beaconSent || !token) return;
+			beaconSent = true;
+			fetch("https://n8n.reconnectnow.nl/webhook/crystal-ebook-downloaded", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify({ download_token: token }),
+				keepalive: true,
+			}).catch(() => {});
+		}
+
 		dl?.addEventListener("click", () => {
 			window.dataLayer = window.dataLayer || [];
 			window.dataLayer.push({ event: "ebook_download" });
+			registreerDownload();
 		});
 		rd?.addEventListener("click", () => {
 			window.dataLayer = window.dataLayer || [];
 			window.dataLayer.push({ event: "ebook_read_online" });
+			registreerDownload();
 		});
 	});
 </script>
