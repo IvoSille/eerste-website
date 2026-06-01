@@ -4,11 +4,14 @@ import Button from "../../components/Button.astro";
 import { Picture } from "astro:assets";
 import bgIllustration from "../../assets/images/bedankt_hero.png";
 
-// Bunny-gehoste bedankvideo van Crystal (9:16, max 10 sec).
-// Invullen zodra de clip op Bunny staat — bv. https://<zone>.b-cdn.net/.../bedankt-crystal.mp4
-// VIDEO_POSTER: posterframe-URL (Bunny of /public). Beide leeg => placeholder wordt getoond.
-const VIDEO_URL = "";
-const VIDEO_POSTER = "";
+// Bunny Stream-gehoste bedankvideo van Crystal (16:9).
+// Leeg laten => placeholder ("volgt") wordt getoond.
+const BUNNY_LIBRARY_ID = "674079";
+const BUNNY_VIDEO_ID = "4eeeca97-2b94-43d2-ab7d-98d8bc8bdd43";
+const VIDEO_EMBED =
+	BUNNY_LIBRARY_ID && BUNNY_VIDEO_ID
+		? `https://iframe.mediadelivery.net/embed/${BUNNY_LIBRARY_ID}/${BUNNY_VIDEO_ID}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`
+		: "";
 ---
 
 <Layout
@@ -148,39 +151,22 @@ const VIDEO_POSTER = "";
 				style="opacity: 0;"
 			>
 				{
-					VIDEO_URL ? (
+					VIDEO_EMBED ? (
 						<>
 							<p class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed mb-5 max-w-md mx-auto">
 								Ik nam zelf een kort filmpje voor je op — een paar tellen, meer
 								niet. Bekijk je 'm even?
 							</p>
 							<div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-[var(--color-brand-primary-text)] shadow-lg">
-								<video
-									id="bedankt-video"
-									class="absolute inset-0 w-full h-full object-cover"
-									poster={VIDEO_POSTER}
-									playsinline
-									preload="none"
-								>
-									<source src={VIDEO_URL} type="video/mp4" />
-								</video>
-								<button
-									id="video-play"
-									type="button"
-									aria-label="Video van Crystal afspelen"
-									class="absolute inset-0 flex items-center justify-center bg-[var(--color-brand-primary-text)]/15 transition-opacity duration-300 cursor-pointer group"
-								>
-									<span class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[var(--color-brand-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-brand-accent)]/40 group-hover:bg-[var(--color-brand-accent-hover)] group-hover:scale-105 transition-all duration-300">
-										<svg
-											class="w-7 h-7 md:w-9 md:h-9 text-white translate-x-[2px]"
-											viewBox="0 0 24 24"
-											fill="currentColor"
-											aria-hidden="true"
-										>
-											<path d="M8 5v14l11-7z" />
-										</svg>
-									</span>
-								</button>
+								<iframe
+									src={VIDEO_EMBED}
+									title="Persoonlijke videoboodschap van Crystal"
+									loading="lazy"
+									class="absolute inset-0 w-full h-full"
+									style="border: 0;"
+									allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+									allowfullscreen
+								/>
 							</div>
 						</>
 					) : (
@@ -420,30 +406,4 @@ const VIDEO_POSTER = "";
 			delay: 2,
 		});
 	}
-</script>
-
-<script>
-	// Video — posterframe + afspeelknop (klik speelt af mét geluid)
-	document.addEventListener("DOMContentLoaded", () => {
-		const video = document.getElementById(
-			"bedankt-video"
-		) as HTMLVideoElement | null;
-		const playBtn = document.getElementById(
-			"video-play"
-		) as HTMLButtonElement | null;
-		if (!video || !playBtn) return;
-
-		playBtn.addEventListener("click", () => {
-			video.controls = true;
-			playBtn.style.display = "none";
-			video.currentTime = 0;
-			video.play();
-		});
-
-		video.addEventListener("ended", () => {
-			video.controls = false;
-			video.load(); // herstelt het posterframe
-			playBtn.style.display = "";
-		});
-	});
 </script>
