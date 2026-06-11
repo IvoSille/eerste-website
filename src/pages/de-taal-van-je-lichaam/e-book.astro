@@ -165,7 +165,12 @@ const EBOOK_PDF = "/e-book-de-taal-van-je-lichaam.pdf";
 </style>
 
 <script>
-	// Tracking: e-book opgehaald (download of online lezen)
+	// Twee gescheiden sporen op de "haal op"-klik:
+	//   1. dataLayer → Google Ads/GA-conversie.
+	//   2. beacon → n8n (webhook crystal-ebook-downloaded) markeert de rij "Opgehaald" in de
+	//      funnel-Sheet, gematcht op download_token. Puur analytics/funnel-log.
+	// NB: de "nog niet gedownload"-reminder wordt in MailerLite onderdrukt op de e-mailklik
+	// (server-side, betrouwbaarder) — bewust NIET op dit beacon.
 	document.addEventListener("DOMContentLoaded", () => {
 		const dl = document.getElementById("ebook-download");
 		const rd = document.getElementById("ebook-read");
@@ -180,7 +185,7 @@ const EBOOK_PDF = "/e-book-de-taal-van-je-lichaam.pdf";
 			);
 		}
 
-		// Registreer bij n8n dat dit e-book is opgehaald (één keer per bezoek)
+		// Markeer in de funnel-Sheet dat dit e-book is opgehaald (één keer per bezoek)
 		let beaconSent = false;
 		function registreerDownload() {
 			if (beaconSent || !token) return;
