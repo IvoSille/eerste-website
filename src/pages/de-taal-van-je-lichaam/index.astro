@@ -1117,10 +1117,17 @@ import ebookCover from "../../assets/images/ebook-cover.png";
 				}
 			}
 
+			// user_data voor Enhanced Conversions: rauwe e-mail/voornaam mee in de
+			// dataLayer. GTM hasht (SHA-256) pas in de tag en stuurt het uitsluitend
+			// mee als ad_user_data-consent gegeven is — zie consent mode in Layout.astro.
 			window.dataLayer = window.dataLayer || [];
 			window.dataLayer.push({
 				event: "generate_lead",
 				lead_source: "ebook_optin",
+				user_data: {
+					email: email.toLowerCase(),
+					address: { first_name: name },
+				},
 				eventCallback: doRedirect,
 				eventTimeout: 2000,
 			});
