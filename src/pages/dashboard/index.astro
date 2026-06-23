@@ -1,0 +1,344 @@
+---
+// Funnel-dashboard e-bookfunnel (intern, voor Crystal).
+// Standalone pagina: bewust GEEN GTM/Cal/consent-banner. noindex + wachtwoord-gate.
+// Data komt client-side van /api/dashboard-data (Netlify Function, gated).
+import "../../styles/global.css";
+---
+
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Funnel-dashboard — Crystal Helder</title>
+  </head>
+  <body class="min-h-screen bg-brand-base text-brand-primary-text font-sans">
+    <!-- Wachtwoord-gate -->
+    <div
+      id="gate"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-brand-base px-6"
+    >
+      <form id="gate-form" class="w-full max-w-sm text-center">
+        <h1 class="font-heading text-2xl font-semibold mb-2">Funnel-dashboard</h1>
+        <p class="text-brand-muted mb-6 text-base">E-bookfunnel · Crystal Helder</p>
+        <input
+          id="gate-input"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Wachtwoord"
+          class="w-full rounded-xl border border-brand-secondary bg-white px-4 py-3 text-center outline-none focus:border-brand-accent"
+        />
+        <button
+          type="submit"
+          class="mt-3 w-full rounded-xl bg-brand-accent px-4 py-3 font-heading font-semibold text-white transition-colors hover:bg-brand-accent-hover"
+        >
+          Bekijken
+        </button>
+        <p id="gate-error" class="mt-3 hidden text-sm text-brand-accent"></p>
+      </form>
+    </div>
+
+    <!-- Dashboard -->
+    <main id="app" class="mx-auto hidden max-w-5xl px-5 py-8 md:py-12">
+      <header class="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 class="font-heading text-2xl font-semibold md:text-3xl">
+            Funnel-dashboard
+          </h1>
+          <p id="meta" class="mt-1 text-sm text-brand-muted">E-bookfunnel · Crystal Helder</p>
+        </div>
+        <div
+          id="range"
+          class="inline-flex overflow-hidden rounded-xl border border-brand-secondary bg-white text-sm"
+          role="group"
+          aria-label="Datumbereik"
+        >
+          <button data-days="7" class="px-3 py-2 font-heading">7d</button>
+          <button data-days="30" class="px-3 py-2 font-heading">30d</button>
+          <button data-days="90" class="px-3 py-2 font-heading">90d</button>
+        </div>
+      </header>
+
+      <div
+        id="sample-note"
+        class="mb-6 hidden rounded-xl border border-brand-accent-light bg-brand-secondary/40 px-4 py-3 text-sm"
+      >
+        ⚠️ Voorbeelddata — de n8n-feed is nog niet gekoppeld. Zodra die live is, tonen
+        deze cijfers de echte funnel.
+      </div>
+
+      <!-- Funnel-spine: scorecards -->
+      <section
+        id="spine"
+        class="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5"
+      ></section>
+
+      <!-- Afgeleide KPI's -->
+      <h2 class="mb-3 font-heading text-lg font-semibold">Sturende KPI's</h2>
+      <section id="kpis" class="mb-10 grid grid-cols-2 gap-3 lg:grid-cols-4"></section>
+
+      <!-- Funnel-trechter + tijdreeks -->
+      <div class="mb-10 grid gap-6 lg:grid-cols-2">
+        <section class="rounded-2xl border border-brand-secondary bg-white p-5">
+          <h2 class="mb-4 font-heading text-lg font-semibold">Trechter</h2>
+          <div id="funnel" class="space-y-3"></div>
+        </section>
+        <section class="rounded-2xl border border-brand-secondary bg-white p-5">
+          <h2 class="mb-4 font-heading text-lg font-semibold">Per dag</h2>
+          <div id="chart"></div>
+        </section>
+      </div>
+
+      <!-- E-mailsequence -->
+      <h2 class="mb-3 font-heading text-lg font-semibold">E-mailsequence</h2>
+      <section class="mb-10 overflow-x-auto rounded-2xl border border-brand-secondary bg-white">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-brand-secondary text-brand-muted">
+            <tr>
+              <th class="px-4 py-3 font-heading font-semibold">Mail</th>
+              <th class="px-4 py-3 text-right font-heading font-semibold">Verzonden</th>
+              <th class="px-4 py-3 text-right font-heading font-semibold">Open%</th>
+              <th class="px-4 py-3 text-right font-heading font-semibold">Klik%</th>
+            </tr>
+          </thead>
+          <tbody id="email-rows"></tbody>
+        </table>
+      </section>
+
+      <!-- Bron/campagne -->
+      <h2 class="mb-3 font-heading text-lg font-semibold">Per campagne</h2>
+      <section class="mb-10 overflow-x-auto rounded-2xl border border-brand-secondary bg-white">
+        <table class="w-full text-left text-sm">
+          <thead class="border-b border-brand-secondary text-brand-muted">
+            <tr>
+              <th class="px-4 py-3 font-heading font-semibold">Campagne</th>
+              <th class="px-4 py-3 text-right font-heading font-semibold">Leads</th>
+              <th class="px-4 py-3 text-right font-heading font-semibold">Boekingen</th>
+              <th class="px-4 py-3 text-right font-heading font-semibold">Lead→boeking</th>
+            </tr>
+          </thead>
+          <tbody id="source-rows"></tbody>
+        </table>
+      </section>
+
+      <footer class="pb-8 text-xs text-brand-muted">
+        Opt-in-ratio = leads ÷ clicks (proxy tot GA4-sessies beschikbaar zijn). Omzet =
+        boekingen × €27; het €1700-vervolgtraject valt buiten dit dashboard.
+      </footer>
+    </main>
+
+    <script is:inline>
+      (function () {
+        const KEY_STORE = "dashboard_key";
+        const gate = document.getElementById("gate");
+        const gateForm = document.getElementById("gate-form");
+        const gateInput = document.getElementById("gate-input");
+        const gateError = document.getElementById("gate-error");
+        const app = document.getElementById("app");
+
+        let DATA = null;
+        let days = 30;
+
+        const eur = (n) =>
+          new Intl.NumberFormat("nl-NL", {
+            style: "currency",
+            currency: (DATA && DATA.currency) || "EUR",
+            maximumFractionDigits: 2,
+          }).format(n || 0);
+        const num = (n) => new Intl.NumberFormat("nl-NL").format(n || 0);
+        const pct = (n) =>
+          (n == null || !isFinite(n) ? "—" : (n * 100).toFixed(1) + "%");
+        const div = (a, b) => (b ? a / b : 0);
+
+        function windowRows() {
+          const ts = (DATA && DATA.timeseries) || [];
+          if (!ts.length) return [];
+          const sorted = ts.slice().sort((a, b) => (a.date < b.date ? -1 : 1));
+          return sorted.slice(-days);
+        }
+
+        function totals(rows) {
+          const t = { spend: 0, impressions: 0, clicks: 0, leads: 0, downloads: 0, bookings: 0 };
+          rows.forEach((r) => {
+            for (const k in t) t[k] += Number(r[k]) || 0;
+          });
+          return t;
+        }
+
+        function card(label, value, sub) {
+          return (
+            '<div class="rounded-2xl border border-brand-secondary bg-white p-4">' +
+            '<div class="text-xs uppercase tracking-wide text-brand-muted">' + label + "</div>" +
+            '<div class="mt-1 font-heading text-2xl font-semibold">' + value + "</div>" +
+            (sub ? '<div class="mt-0.5 text-xs text-brand-muted">' + sub + "</div>" : "") +
+            "</div>"
+          );
+        }
+
+        function renderSpine(t) {
+          document.getElementById("spine").innerHTML =
+            card("Spend", eur(t.spend), num(t.clicks) + " clicks") +
+            card("Clicks", num(t.clicks), pct(div(t.clicks, t.impressions)) + " CTR") +
+            card("Leads", num(t.leads), "opt-ins") +
+            card("Downloads", num(t.downloads), pct(div(t.downloads, t.leads)) + " opgehaald") +
+            card("Boekingen", num(t.bookings), eur(t.bookings * (DATA.booking_value || 27)) + " omzet");
+        }
+
+        function renderKpis(t) {
+          document.getElementById("kpis").innerHTML =
+            card("Opt-in-ratio", pct(div(t.leads, t.clicks)), "leads ÷ clicks") +
+            card("Kost / lead", eur(div(t.spend, t.leads)), "") +
+            card("Lead → boeking", pct(div(t.bookings, t.leads)), "") +
+            card("Kost / boeking", eur(div(t.spend, t.bookings)), "= CAC adviesgesprek");
+        }
+
+        function renderFunnel(t) {
+          const steps = [
+            { label: "Clicks", value: t.clicks },
+            { label: "Leads", value: t.leads },
+            { label: "Downloads", value: t.downloads },
+            { label: "Boekingen", value: t.bookings },
+          ];
+          const max = Math.max.apply(null, steps.map((s) => s.value).concat([1]));
+          document.getElementById("funnel").innerHTML = steps
+            .map((s, i) => {
+              const w = Math.max(div(s.value, max) * 100, 2);
+              const prev = i > 0 ? steps[i - 1].value : null;
+              const conv = prev ? " · " + pct(div(s.value, prev)) : "";
+              return (
+                '<div>' +
+                '<div class="mb-1 flex justify-between text-sm"><span>' + s.label +
+                "</span><span class=\"text-brand-muted\">" + num(s.value) + conv + "</span></div>" +
+                '<div class="h-3 rounded-full bg-brand-secondary"><div class="h-3 rounded-full bg-brand-accent" style="width:' +
+                w + '%"></div></div>' +
+                "</div>"
+              );
+            })
+            .join("");
+        }
+
+        function renderChart(rows) {
+          const max = Math.max.apply(null, rows.map((r) => r.clicks).concat([1]));
+          const bars = rows
+            .map((r) => {
+              const h = Math.max(div(r.clicks, max) * 100, 3);
+              const title = r.date + ": " + r.clicks + " clicks, " + r.leads + " leads, " + r.bookings + " boekingen";
+              return (
+                '<div class="flex flex-1 flex-col items-center justify-end" title="' + title + '">' +
+                '<div class="w-full max-w-[14px] rounded-t bg-brand-accent-light" style="height:' + h + '%"></div>' +
+                "</div>"
+              );
+            })
+            .join("");
+          document.getElementById("chart").innerHTML =
+            '<div class="flex h-40 items-end gap-1">' + bars + "</div>" +
+            '<div class="mt-2 text-xs text-brand-muted">Clicks per dag (' + rows.length + " dgn)</div>";
+        }
+
+        function renderEmail() {
+          const rows = (DATA && DATA.email) || [];
+          document.getElementById("email-rows").innerHTML = rows
+            .map(
+              (m) =>
+                '<tr class="border-b border-brand-secondary/60 last:border-0">' +
+                '<td class="px-4 py-3">' + m.mail + "</td>" +
+                '<td class="px-4 py-3 text-right">' + num(m.sent) + "</td>" +
+                '<td class="px-4 py-3 text-right">' + pct(div(m.opens, m.sent)) + "</td>" +
+                '<td class="px-4 py-3 text-right">' + pct(div(m.clicks, m.sent)) + "</td>" +
+                "</tr>"
+            )
+            .join("") || '<tr><td class="px-4 py-3 text-brand-muted" colspan="4">Nog geen data.</td></tr>';
+        }
+
+        function renderSources() {
+          const rows = (DATA && DATA.sources) || [];
+          document.getElementById("source-rows").innerHTML = rows
+            .map(
+              (s) =>
+                '<tr class="border-b border-brand-secondary/60 last:border-0">' +
+                '<td class="px-4 py-3">' + s.campaign + "</td>" +
+                '<td class="px-4 py-3 text-right">' + num(s.leads) + "</td>" +
+                '<td class="px-4 py-3 text-right">' + num(s.bookings) + "</td>" +
+                '<td class="px-4 py-3 text-right">' + pct(div(s.bookings, s.leads)) + "</td>" +
+                "</tr>"
+            )
+            .join("") || '<tr><td class="px-4 py-3 text-brand-muted" colspan="4">Nog geen data.</td></tr>';
+        }
+
+        function renderRangeButtons() {
+          document.querySelectorAll("#range button").forEach((b) => {
+            const active = Number(b.dataset.days) === days;
+            b.className =
+              "px-3 py-2 font-heading " +
+              (active ? "bg-brand-accent text-white" : "text-brand-muted hover:bg-brand-secondary/50");
+          });
+        }
+
+        function renderAll() {
+          const rows = windowRows();
+          const t = totals(rows);
+          renderRangeButtons();
+          renderSpine(t);
+          renderKpis(t);
+          renderFunnel(t);
+          renderChart(rows);
+          renderEmail();
+          renderSources();
+          const note = document.getElementById("sample-note");
+          if (DATA && DATA.is_sample) note.classList.remove("hidden");
+          else note.classList.add("hidden");
+          if (DATA && DATA.generated_at) {
+            const d = new Date(DATA.generated_at);
+            document.getElementById("meta").textContent =
+              "E-bookfunnel · Crystal Helder · bijgewerkt " +
+              d.toLocaleString("nl-NL", { dateStyle: "medium", timeStyle: "short" });
+          }
+        }
+
+        async function load(key) {
+          const res = await fetch("/api/dashboard-data", {
+            headers: { "x-dashboard-key": key },
+          });
+          if (res.status === 401) {
+            sessionStorage.removeItem(KEY_STORE);
+            throw new Error("Onjuist wachtwoord.");
+          }
+          if (res.status === 503) {
+            throw new Error("Dashboard nog niet geconfigureerd (DASHBOARD_PASSWORD ontbreekt).");
+          }
+          if (!res.ok) throw new Error("Kon data niet laden (" + res.status + ").");
+          DATA = await res.json();
+          sessionStorage.setItem(KEY_STORE, key);
+          gate.classList.add("hidden");
+          app.classList.remove("hidden");
+          renderAll();
+        }
+
+        document.querySelectorAll("#range button").forEach((b) => {
+          b.addEventListener("click", () => {
+            days = Number(b.dataset.days);
+            renderAll();
+          });
+        });
+
+        gateForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          gateError.classList.add("hidden");
+          load(gateInput.value).catch((err) => {
+            gateError.textContent = err.message;
+            gateError.classList.remove("hidden");
+          });
+        });
+
+        const stored = sessionStorage.getItem(KEY_STORE);
+        if (stored) {
+          load(stored).catch(() => {
+            /* toon gate */
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
