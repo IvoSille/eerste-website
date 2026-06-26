@@ -1,0 +1,425 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { Picture } from "astro:assets";
+import bgIllustration from "../../assets/images/bedankt_hero.png";
+
+// ⚠️ TODO — VUL DE INVITE-LINK VAN HET BESLOTEN WHATSAPP-KANAAL IN.
+// Zolang dit leeg is ("") toont de pagina de boodschap dat de link in de
+// bevestigingsmail staat. Vul de echte kanaal-invitelink in en de
+// "Open het WhatsApp-kanaal"-knop verschijnt automatisch.
+const WHATSAPP_CHANNEL_INVITE = "";
+---
+
+<Layout
+	title="Je bent aangemeld — Je pijn is echt | Crystal Helder"
+	description="Je aanmelding voor de 5-daagse challenge is gelukt. De link naar het besloten WhatsApp-kanaal komt eraan."
+	includeCal={false}
+	robots="noindex"
+>
+	{/* Petals container — positioned fixed over viewport */}
+	<div
+		id="petals-container"
+		class="fixed inset-0 pointer-events-none z-50 overflow-hidden"
+		aria-hidden="true"
+	>
+	</div>
+
+	<div
+		class="min-h-screen flex items-center justify-center px-6 py-24 relative overflow-hidden"
+	>
+		{/* Background: blobs + botanical illustration */}
+		<div
+			class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+			aria-hidden="true"
+		>
+			<div
+				id="blob-1"
+				class="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[80px] opacity-0"
+			>
+			</div>
+			<div
+				id="blob-2"
+				class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-0"
+			>
+			</div>
+			<div
+				id="bg-illustration"
+				class="absolute inset-0 flex items-center justify-center opacity-0"
+			>
+				<Picture
+					src={bgIllustration}
+					alt=""
+					widths={[600, 1000, 1400]}
+					sizes="100vw"
+					class="w-full max-w-5xl h-auto opacity-60 scale-130"
+				/>
+			</div>
+		</div>
+
+		{/* Decorative corner illustrations */}
+		<div
+			class="absolute pointer-events-none inset-0 overflow-hidden"
+			aria-hidden="true"
+		>
+			<div
+				id="deco-tr"
+				class="absolute -top-[10%] -right-[8%] w-[350px] md:w-[550px] opacity-0 rotate-[15deg]"
+			>
+				<Picture
+					src={bgIllustration}
+					alt=""
+					widths={[350, 550]}
+					sizes="550px"
+					class="w-full h-auto opacity-70"
+				/>
+			</div>
+			<div
+				id="deco-bl"
+				class="absolute -bottom-[10%] -left-[8%] w-[320px] md:w-[500px] opacity-0 rotate-[195deg]"
+			>
+				<Picture
+					src={bgIllustration}
+					alt=""
+					widths={[320, 500]}
+					sizes="500px"
+					class="w-full h-auto opacity-65"
+				/>
+			</div>
+		</div>
+
+		<div class="max-w-2xl mx-auto text-center">
+			{/* Animated checkmark circle with glow ring */}
+			<div
+				id="checkmark-circle"
+				class="relative w-24 h-24 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-10 shadow-lg shadow-[var(--color-brand-sage)]/30"
+				style="opacity: 0; transform: scale(0);"
+			>
+				<div
+					id="glow-ring"
+					class="absolute inset-[-6px] rounded-full border-2 border-[var(--color-brand-sage)] opacity-0"
+				>
+				</div>
+				<svg
+					class="w-12 h-12 text-[var(--color-brand-primary-text)]"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					stroke-width="2.5"
+					aria-hidden="true"
+				>
+					<path
+						id="checkmark-path"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						d="M5 13l4 4L19 7"></path>
+				</svg>
+			</div>
+
+			<div
+				id="badge"
+				class="inline-block px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-white mb-6 text-xs font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm"
+				style="opacity: 0;"
+			>
+				Aanmelding bevestigd
+			</div>
+
+			<h1
+				id="heading"
+				class="text-4xl md:text-6xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight"
+				style="opacity: 0;"
+			>
+				Je doet <span class="text-[var(--color-brand-accent)]">mee</span>.
+			</h1>
+
+			<p
+				id="subtext"
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto"
+				style="opacity: 0;"
+			>
+				Wat fijn dat je deze stap zet. Je ontvangt nu een bevestigingsmail met de
+				link naar het besloten WhatsApp-kanaal. Check ook even je spam- of
+				reclamemap, voor de zekerheid.
+			</p>
+
+			{/* WhatsApp-kanaal kaart */}
+			<div
+				id="channel-card"
+				class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8"
+				style="opacity: 0;"
+			>
+				<div
+					class="w-14 h-14 rounded-2xl bg-[var(--color-brand-sage)]/50 flex items-center justify-center mx-auto mb-5"
+					aria-hidden="true"
+				>
+					<svg
+						class="w-8 h-8 text-[var(--color-brand-accent-hover)]"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+					>
+						<path
+							d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.25 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24zm-3.6 4.43c-.17 0-.45.06-.69.31-.24.25-.91.89-.91 2.18 0 1.28.93 2.52 1.06 2.7.13.17 1.83 2.79 4.43 3.91.62.27 1.1.43 1.48.55.62.2 1.19.17 1.64.1.5-.07 1.54-.63 1.76-1.24.22-.61.22-1.13.15-1.24-.07-.11-.24-.17-.5-.3-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.59.13-.17.25-.67.85-.83 1.02-.15.17-.3.19-.56.06-.26-.13-1.1-.41-2.1-1.3-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.12-.12.26-.3.4-.46.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.59-1.42-.81-1.94-.21-.51-.43-.44-.59-.45-.15-.01-.32-.01-.5-.01z"
+						></path>
+					</svg>
+				</div>
+				<h2
+					class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
+				>
+					Het besloten WhatsApp-kanaal
+				</h2>
+				{
+					WHATSAPP_CHANNEL_INVITE ? (
+						<>
+							<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6 max-w-md mx-auto">
+								Klik hieronder om direct in het kanaal te komen. Je
+								telefoonnummer blijft afgeschermd — niemand anders ziet het.
+							</p>
+							<Button
+								href={WHATSAPP_CHANNEL_INVITE}
+								className="text-base md:text-lg px-8 py-4"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Open het WhatsApp-kanaal →
+							</Button>
+						</>
+					) : (
+						<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed max-w-md mx-auto">
+							De link naar het kanaal staat in je bevestigingsmail. Klik daar op
+							de link en je zit erin — je telefoonnummer blijft afgeschermd,
+							niemand anders ziet het.
+						</p>
+					)
+				}
+			</div>
+
+			{/* Wat je nu kunt verwachten */}
+			<div
+				id="expect-card"
+				class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-12 text-left"
+				style="opacity: 0;"
+			>
+				<h2
+					class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
+				>
+					Wat je nu kunt verwachten
+				</h2>
+				<p
+					class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed"
+				>
+					De challenge start op <strong class="text-[var(--color-brand-primary-text)]"
+						>6 juli</strong
+					>. Vanaf dan ontvang je vijf dagen lang elke ochtend een kort, persoonlijk
+					bericht in het kanaal. Eén inzicht, één kleine oefening — tien tot
+					vijftien minuten, meer niet. Je doet het in je eigen tempo, niemand
+					kijkt mee.
+				</p>
+			</div>
+
+			<div id="cta-button" style="opacity: 0;">
+				<Button href="/je-pijn-is-echt/" variant="secondary" className="text-lg px-10 py-5">
+					Terug naar de pagina
+				</Button>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<script>
+	import gsap from "gsap";
+
+	// Respect reduced motion preference
+	const prefersReducedMotion = window.matchMedia(
+		"(prefers-reduced-motion: reduce)"
+	).matches;
+
+	if (prefersReducedMotion) {
+		// Show everything immediately
+		document.querySelectorAll("[style*='opacity: 0']").forEach((el) => {
+			(el as HTMLElement).style.opacity = "1";
+			(el as HTMLElement).style.transform = "none";
+		});
+	} else {
+		// ===== ENTRANCE TIMELINE =====
+		const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+		tl.to("#blob-1", { opacity: 0.7, scale: 1, duration: 1 }, 0)
+			.to("#blob-2", { opacity: 0.5, scale: 1, duration: 1 }, 0.2)
+			.to(
+				"#bg-illustration",
+				{ opacity: 1, duration: 1.5, ease: "power1.out" },
+				0
+			)
+			.to(
+				"#checkmark-circle",
+				{ opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
+				0.6
+			)
+			.fromTo(
+				"#checkmark-path",
+				{ strokeDasharray: 30, strokeDashoffset: 30 },
+				{ strokeDashoffset: 0, duration: 0.5, ease: "power2.inOut" },
+				0.9
+			)
+			.fromTo(
+				"#badge",
+				{ opacity: 0, y: -20 },
+				{ opacity: 1, y: 0, duration: 0.5 },
+				1.1
+			)
+			.fromTo(
+				"#heading",
+				{ opacity: 0, y: 30 },
+				{ opacity: 1, y: 0, duration: 0.6 },
+				1.3
+			)
+			.fromTo(
+				"#subtext",
+				{ opacity: 0, y: 20 },
+				{ opacity: 1, y: 0, duration: 0.5 },
+				1.5
+			)
+			.fromTo(
+				"#channel-card",
+				{ opacity: 0, y: 40 },
+				{ opacity: 1, y: 0, duration: 0.7 },
+				1.7
+			)
+			.fromTo(
+				"#expect-card",
+				{ opacity: 0, y: 40 },
+				{ opacity: 1, y: 0, duration: 0.7 },
+				2.0
+			)
+			.fromTo(
+				"#cta-button",
+				{ opacity: 0, scale: 0.9 },
+				{ opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.4)" },
+				2.3
+			);
+
+		// ===== FALLING PETALS =====
+		tl.call(createPetals, [], 1.0);
+
+		function createPetals() {
+			const container = document.getElementById("petals-container");
+			if (!container) return;
+
+			const petalCount = window.innerWidth < 768 ? 15 : 25;
+			const colors = ["#C8664D", "#D3DEC6", "#EADAD3", "#E8A090", "#A8533D"];
+
+			const petalPaths = [
+				"M0 0 C5 -8, 3 -16, 0 -20 C-3 -16, -5 -8, 0 0Z",
+				"M0 0 C6 -5, 6 -15, 0 -20 C-6 -15, -6 -5, 0 0Z",
+				"M0 0 C3 -7, 2 -16, 0 -18 C-2 -16, -3 -7, 0 0Z",
+			];
+			const SVG_NS = "http://www.w3.org/2000/svg";
+
+			for (let i = 0; i < petalCount; i++) {
+				const svg = document.createElementNS(SVG_NS, "svg");
+				svg.setAttribute("viewBox", "-8 -22 16 24");
+				svg.style.position = "absolute";
+				svg.style.pointerEvents = "none";
+
+				const size = 16 + Math.random() * 20;
+				svg.style.width = `${size}px`;
+				svg.style.height = `${size}px`;
+
+				const color = colors[Math.floor(Math.random() * colors.length)];
+				const path = document.createElementNS(SVG_NS, "path");
+				path.setAttribute(
+					"d",
+					petalPaths[Math.floor(Math.random() * petalPaths.length)]
+				);
+				path.setAttribute("fill", color);
+				svg.appendChild(path);
+
+				const startX = Math.random() * window.innerWidth;
+				svg.style.left = `${startX}px`;
+				svg.style.top = `-30px`;
+
+				container.appendChild(svg);
+
+				const duration = 2.5 + Math.random() * 2.5;
+				const delay = Math.random() * 1.5;
+				const drift = (Math.random() - 0.5) * 200;
+				const rotations = 360 + Math.random() * 720;
+
+				gsap.to(svg, {
+					y: window.innerHeight + 50,
+					x: drift,
+					rotation: rotations,
+					opacity: 0,
+					duration: duration,
+					delay: delay,
+					ease: "power1.in",
+					onComplete: () => svg.remove(),
+				});
+			}
+
+			gsap.delayedCall(6, () => {
+				if (container) container.remove();
+			});
+		}
+
+		// ===== DECORATIVE CORNER ILLUSTRATIONS =====
+		gsap.fromTo(
+			"#deco-tr",
+			{ opacity: 0, x: 40 },
+			{ opacity: 1, x: 0, duration: 1.5, ease: "power2.out", delay: 1.5 }
+		);
+		gsap.fromTo(
+			"#deco-bl",
+			{ opacity: 0, x: -40 },
+			{ opacity: 1, x: 0, duration: 1.5, ease: "power2.out", delay: 2.0 }
+		);
+
+		gsap.to("#deco-tr", {
+			y: 10,
+			rotation: "+=2",
+			duration: 8,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 3,
+		});
+		gsap.to("#deco-bl", {
+			y: -10,
+			rotation: "-=2",
+			duration: 7,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 3.5,
+		});
+
+		// ===== CHECKMARK GLOW PULSE =====
+		gsap.to("#glow-ring", {
+			opacity: 0.5,
+			scale: 1.15,
+			duration: 2,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 1.5,
+		});
+
+		// ===== CONTINUOUS BLOB FLOAT =====
+		gsap.to("#blob-1", {
+			y: 20,
+			duration: 7,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 1.5,
+		});
+		gsap.to("#blob-2", {
+			y: -20,
+			duration: 6,
+			ease: "sine.inOut",
+			yoyo: true,
+			repeat: -1,
+			delay: 2,
+		});
+	}
+</script>

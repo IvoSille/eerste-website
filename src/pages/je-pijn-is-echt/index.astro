@@ -1,0 +1,1455 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import Footer from "../../components/Footer.astro";
+import { Picture } from "astro:assets";
+import foto1 from "../../assets/images/foto_1.jpg";
+import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
+---
+
+<Layout
+	title="Je pijn is echt — gratis 5-daagse challenge | Crystal Helder"
+	description="Een gratis 5-daagse challenge via een besloten WhatsApp-kanaal, voor vrouwen die al jaren vechten tegen onbegrepen klachten in hun bekken of cyclus — en nergens echt gehoor vinden."
+	includeCal={false}
+>
+	{/* DECORATIVE BACKGROUND BLOBS */}
+	<div
+		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+		aria-hidden="true"
+	>
+		<div
+			class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"
+		>
+		</div>
+		<div
+			class="absolute top-[40%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"
+		>
+		</div>
+	</div>
+
+	{/* HERO */}
+	<section
+		class="relative pt-12 pb-8 md:pt-24 md:pb-16 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0"
+	>
+		<div
+			class="w-full lg:w-[55%] relative z-20 text-center lg:text-left mt-2 md:mt-8 lg:mt-0 xl:-mr-24 bg-white/80 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none p-5 md:p-6 lg:p-0 rounded-3xl lg:rounded-none"
+		>
+			<div
+				class="inline-block px-4 py-2 rounded-full bg-[var(--color-brand-secondary)]/60 backdrop-blur-md border border-[var(--color-brand-secondary)] mb-3 md:mb-6 text-xs md:text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm"
+			>
+				Gratis 5-daagse challenge · onbegrepen bekken- of cyclusklachten
+			</div>
+			<h1
+				class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4rem] font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-tight md:leading-[1.08] tracking-tight drop-shadow-sm"
+			>
+				Hoe ga je anders om met pijn die niemand kan verklaren?
+			</h1>
+			<p
+				class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+			>
+				Een gratis 5-daagse challenge via een besloten WhatsApp-kanaal, voor
+				vrouwen die al jaren vechten tegen onbegrepen klachten in hun bekken of
+				cyclus — en nergens echt gehoor vinden. Ook als je al jaren te horen
+				krijgt dat het tussen je oren zit.
+			</p>
+			<div class="flex justify-center lg:justify-start">
+				<Button
+					href="#doe-mee"
+					data-cta-location="hero"
+					className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5"
+				>
+					Ja, ik doe mee →
+				</Button>
+			</div>
+			<p
+				class="text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0"
+			>
+				Gratis · 10 min per dag · via WhatsApp · je telefoonnummer blijft
+				afgeschermd
+			</p>
+		</div>
+		<div class="w-full lg:w-[50%] relative z-10">
+			<div
+				class="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto aspect-[3/4] sm:aspect-square md:aspect-square lg:aspect-[4/5]"
+			>
+				<div
+					class="absolute inset-0 bg-gradient-to-tr from-[#E8D1C5] via-[#f0ddd4] to-[#fdfbf9] rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-2xl shadow-[var(--color-brand-accent)]/25 transform rotate-[-2deg] transition-transform duration-700 hover:rotate-0"
+					aria-hidden="true"
+				>
+				</div>
+				<Picture
+					src={foto1}
+					alt="Crystal Helder"
+					widths={[320, 480, 640, 960]}
+					sizes="(max-width: 640px) 220px, (max-width: 768px) 320px, (max-width: 1024px) 448px, 640px"
+					class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]"
+					style="object-position: center 20%;"
+					fetchpriority="high"
+					loading="eager"
+				/>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 1 — DE SCÈNE (herkenning vóór alles) */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<div
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
+			>
+				<p>
+					Het is geen goede dag. Je voelde het vanochtend al toen je wakker
+					werd.
+				</p>
+				<p>
+					De warmwaterkruik ligt alweer klaar. Je hebt je afspraak van
+					vanmiddag afgezegd — de derde deze maand. Je verzint een smoes, want
+					"ik heb pijn" snapt niemand meer.
+				</p>
+				<p>
+					Bij de huisarts heb je het zó vaak uitgelegd. De pil mee. Een
+					paracetamol. "Kijk het nog maar even aan." En die ene zin die je niet
+					meer uit je hoofd krijgt: <em class="italic"
+						>het zit waarschijnlijk tussen je oren.</em
+					>
+				</p>
+				<p>
+					Je hebt een lege scan gekregen alsof dat goed nieuws was. Je bent gaan
+					twijfelen aan jezelf. <em class="italic"
+						>Stel ik me aan? Ben ik gek?</em
+					>
+				</p>
+				<p>
+					En tegelijk weet je, dieper dan welke uitslag ook: dit is echt. Je
+					voelt het. Elke keer weer.
+				</p>
+				<p>
+					Op een verjaardag zegt iemand: "Je ziet er anders prima uit, hoor." Ze
+					zien een gewone vrouw. Ze zien niet hoe je je dag plant rond de
+					volgende pijngolf. Hoe je je schrap zet, nog voor het begint.
+				</p>
+				<p>Niemand ziet dat. En dat maakt het dubbel zo zwaar.</p>
+				<p
+					class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] not-italic"
+				>
+					Herken je dit? Dan is deze challenge voor jou.
+				</p>
+			</div>
+			<div class="mt-10 md:mt-12 flex justify-center">
+				<Button
+					href="#doe-mee"
+					data-cta-location="de-scene"
+					className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5"
+				>
+					Ja, ik doe mee →
+				</Button>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 2 — DE SPIEGEL (de belofte, voelbaar zonder claim) */}
+	<section
+		class="bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 py-20 md:py-28 px-6 lg:px-8 fade-in-section"
+	>
+		<div class="max-w-3xl mx-auto">
+			<div
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
+			>
+				<p>
+					De pijn verdwijnt niet in vijf dagen. Dat beloof ik je niet — daar heb
+					je al genoeg lege beloftes over gehad.
+				</p>
+				<p
+					class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)]"
+				>
+					Maar hoe jij erin staat, dat verschuift wél.
+				</p>
+				<p>
+					Dezelfde dag. Dezelfde kruik. Misschien dezelfde golf die opkomt.
+				</p>
+				<p>
+					En toch sta je er anders bij. Je merkt dat je je niet meteen schrap
+					zet. Dat de paniek — <em class="italic"
+						>wordt dit erger? stopt dit ooit?</em
+					> — niet automatisch de regie pakt.
+				</p>
+				<p>
+					Voor het eerst voel je: ik ben hier niet volledig aan overgeleverd. Ik
+					heb meer ruimte dan ik dacht.
+				</p>
+				<p>
+					Dat is wat ik je deze vijf dagen wil laten voelen. Geen "denk
+					positiever". Iets dat je in je eigen lijf merkt.
+				</p>
+			</div>
+			<div class="mt-10 md:mt-12 flex justify-center">
+				<Button
+					href="#doe-mee"
+					data-cta-location="de-spiegel"
+					className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5"
+				>
+					Ik wil dat voelen →
+				</Button>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 3 — DE GNM-BRUG */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
+			>
+				Misschien heb je al eens van Germaanse geneeskunde gehoord.
+			</h2>
+			<div
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
+			>
+				<p>
+					Misschien kwam je hier via iemand die er warm voor is. Of misschien
+					zegt de term je nog niets — dat hoeft ook niet.
+				</p>
+				<p>
+					Want deze vijf dagen gaan niet over een methode die je moet snappen. Ze
+					gaan niet over begrijpen waaróm je lichaam dit doet — hoe waardevol dat
+					ook is, dat is werk voor later, samen, in alle rust.
+				</p>
+				<p>
+					Deze week doen we iets anders. We zakken van je hoofd naar je lijf. Je
+					hoeft niets te weten, niets te geloven, geen theorie te leren. Je gaat
+					alleen iets vóélen verschuiven in hoe je met je pijn omgaat. Daar heb je
+					geen voorkennis voor nodig — alleen vijf dagen en een beetje
+					nieuwsgierigheid.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 4 — WAT DE CHALLENGE IS */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 fade-in-section">
+		<div class="max-w-4xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
+			>
+				De challenge "Je pijn is echt" — 5 dagen, via WhatsApp
+			</h2>
+			<div
+				class="max-w-3xl mx-auto text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6 mb-12 md:mb-16"
+			>
+				<p>
+					Vijf dagen lang stuur ik je elke ochtend een kort, persoonlijk bericht
+					in een besloten WhatsApp-kanaal. Eerlijk, rustig, recht uit mijn
+					praktijk en mijn eigen leven.
+				</p>
+				<p>
+					Elke dag één inzicht en één kleine oefening. Tien tot vijftien minuten,
+					meer niet. Geen werkboek, geen huiswerkberg, geen extra ding op je
+					to-do lijst dat je toch niet redt. Je bent al moe genoeg.
+				</p>
+			</div>
+
+			<p
+				class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] text-center mb-10 md:mb-12"
+			>
+				Dit is wat er in vijf dagen verschuift:
+			</p>
+
+			<ol class="space-y-5 md:space-y-6 max-w-3xl mx-auto">
+				<li
+					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
+				>
+					<span
+						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
+						aria-hidden="true">1</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						<strong>Je ziet het voor het eerst.</strong> Niet alleen de pijn — ook
+						alles wat je eromheen doet. En je voelt: hier zit ruimte die ik nooit
+						zag.
+					</p>
+				</li>
+				<li
+					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
+				>
+					<span
+						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
+						aria-hidden="true">2</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						<strong>Het lag nooit aan jou.</strong> Niet aan je instelling, niet
+						aan te weinig je best doen. Vandaag voel je dat je iets dóet bovenop de
+						pijn — en dat dat geen schuld is.
+					</p>
+				</li>
+				<li
+					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
+				>
+					<span
+						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
+						aria-hidden="true">3</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						<strong>Je krijgt grip op het moment zelf.</strong> Als een golf
+						opkomt, schiet je niet meer automatisch weg in angst. Voor het eerst
+						kun je erbij blijven.
+					</p>
+				</li>
+				<li
+					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
+				>
+					<span
+						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
+						aria-hidden="true">4</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						<strong>Je gaat van wegkrampen naar contact.</strong> Rustig, in jouw
+						tempo, geen stap eerder dan jij wilt. En je merkt: ik kan erbij zijn
+						zonder dat het escaleert.
+					</p>
+				</li>
+				<li
+					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
+				>
+					<span
+						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
+						aria-hidden="true">5</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						<strong>Er is iets verschoven.</strong> Niet alles. Maar genoeg om te
+						voelen: dit kan ik vasthouden. En je merkt dat hier méér onder ligt dan
+						vijf dagen.
+					</p>
+				</li>
+			</ol>
+
+			<p
+				class="mt-10 md:mt-12 max-w-2xl mx-auto text-center text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-relaxed"
+			>
+				En op dag 5 merk je dat dit pas het begin is.
+			</p>
+		</div>
+	</section>
+
+	{/* SECTIE 5 — WAT NA DAG 5 MOGELIJK IS */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
+			>
+				En dan?
+			</h2>
+			<div
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
+			>
+				<p>
+					Op dag 5 voel je wat er verschoven is. En waarschijnlijk voel je ook
+					iets anders: dat hier méér onder ligt dan deze vijf dagen konden raken.
+				</p>
+				<p>
+					Want wat je deze week aanraakt is je verhouding tot de pijn — de
+					buitenste laag. Daaronder zit de vraag waaróm je lichaam dit doet. Die
+					vraag kun je niet in vijf dagen, en niet alleen, beantwoorden. Dat is
+					geen toeval — het is precies waar het echte werk begint.
+				</p>
+				<p>
+					Daarom nodig ik je aan het eind van de challenge uit voor een gratis,
+					persoonlijk gesprek, waarin we samen naar jouw situatie kijken. Geen
+					verkooppraatje — een eerlijk gesprek. Maar dat is voor later. Eerst deze
+					vijf dagen.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 6 — VOOR WIE DIT IS */}
+	<section
+		class="bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 py-20 md:py-28 px-6 lg:px-8 fade-in-section"
+	>
+		<div class="max-w-3xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
+			>
+				Misschien herken je jezelf hierin.
+			</h2>
+			<p
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8"
+			>
+				Dit is voor jou als je al jaren worstelt met onbegrepen klachten in je
+				bekken of je cyclus. Bijvoorbeeld:
+			</p>
+			<ul class="space-y-4 mb-8">
+				<li class="flex items-start">
+					<span
+						class="w-6 h-6 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mr-3 mt-0.5 shrink-0"
+						aria-hidden="true"
+					>
+						<svg
+							class="h-3 w-3 text-[var(--color-brand-accent-hover)]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="3"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M5 13l4 4L19 7"></path></svg
+						>
+					</span>
+					<span
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						Je menstruatie legt je dagen plat — en van buiten ziet niemand hoe
+						zwaar dat is.
+					</span>
+				</li>
+				<li class="flex items-start">
+					<span
+						class="w-6 h-6 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mr-3 mt-0.5 shrink-0"
+						aria-hidden="true"
+					>
+						<svg
+							class="h-3 w-3 text-[var(--color-brand-accent-hover)]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="3"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M5 13l4 4L19 7"></path></svg
+						>
+					</span>
+					<span
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						Endometriose of adenomyose, en het gevoel dat je elke keer opnieuw
+						moet bewijzen dat de pijn echt is.
+					</span>
+				</li>
+				<li class="flex items-start">
+					<span
+						class="w-6 h-6 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mr-3 mt-0.5 shrink-0"
+						aria-hidden="true"
+					>
+						<svg
+							class="h-3 w-3 text-[var(--color-brand-accent-hover)]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="3"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M5 13l4 4L19 7"></path></svg
+						>
+					</span>
+					<span
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						Je bekken dat "op slot" zit, pijn bij intimiteit, en de stille schaamte
+						daaromheen.
+					</span>
+				</li>
+				<li class="flex items-start">
+					<span
+						class="w-6 h-6 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mr-3 mt-0.5 shrink-0"
+						aria-hidden="true"
+					>
+						<svg
+							class="h-3 w-3 text-[var(--color-brand-accent-hover)]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="3"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M5 13l4 4L19 7"></path></svg
+						>
+					</span>
+					<span
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						Blaaspijn en aandrang die je hele leven rondom het toilet organiseren.
+					</span>
+				</li>
+				<li class="flex items-start">
+					<span
+						class="w-6 h-6 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mr-3 mt-0.5 shrink-0"
+						aria-hidden="true"
+					>
+						<svg
+							class="h-3 w-3 text-[var(--color-brand-accent-hover)]"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+							stroke-width="3"
+							><path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M5 13l4 4L19 7"></path></svg
+						>
+					</span>
+					<span
+						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
+					>
+						Twee weken per maand waarin je jezelf niet herkent.
+					</span>
+				</li>
+			</ul>
+			<div
+				class="pl-6 md:pl-8 border-l-[5px] border-[var(--color-brand-accent)] py-3"
+			>
+				<p
+					class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-snug"
+				>
+					Eén ding hebben deze vrouwen gemeen: ze plannen hun leven rond de
+					volgende pijnaanval, en ze voelen zich er vaak alleen in. Als dat klopt
+					— dan is dit voor jou.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 7 — WAAROM IK DIT DOE (OVER CRYSTAL) */}
+	<section
+		class="py-20 md:py-24 lg:py-32 px-6 lg:px-8 bg-gradient-to-br from-[var(--color-brand-primary-text)] to-[#3A302D] text-white relative overflow-hidden fade-in-section"
+	>
+		<div
+			class="hidden lg:block absolute top-0 right-0 w-[400px] xl:w-[600px] h-[400px] xl:h-[600px] bg-[var(--color-brand-accent)] rounded-full mix-blend-screen filter blur-[150px] opacity-20 pointer-events-none"
+			aria-hidden="true"
+		>
+		</div>
+
+		<div class="max-w-4xl mx-auto">
+			<div
+				class="flex flex-col items-center gap-4 lg:flex-row lg:items-start lg:gap-12"
+			>
+				<div
+					class="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-accent)]/80 shadow-lg"
+				>
+					<Picture
+						src={portretCrystal}
+						alt="Portret Crystal"
+						widths={[192, 384]}
+						sizes="192px"
+						class="w-full h-full object-cover"
+						style="object-position: center 15%;"
+					/>
+				</div>
+				<div class="space-y-6 text-center lg:text-left">
+					<h2
+						class="text-4xl md:text-5xl font-semibold leading-tight text-white"
+					>
+						Waarom ik dit doe
+					</h2>
+					<div class="space-y-6 text-lg text-[#D5C2B9] font-light">
+						<p>
+							Mijn broer overleed toen hij vijf maanden oud was. Mijn moeder
+							voelde dat er iets mis was en trok aan de bel — maar er werd niet
+							geluisterd. De diagnose kwam te laat.
+						</p>
+						<p>
+							Dat heeft me gevormd. Ik groeide op met het besef: ze weten het niet
+							altijd, en ze luisteren niet altijd. Niet uit wantrouwen naar de
+							zorg — maar uit de overtuiging dat er méér te begrijpen valt dan wat
+							de standaardroute biedt.
+						</p>
+						<p>
+							Die overtuiging zette me op een zoektocht die nooit meer stopte.
+							Inmiddels werk ik al meer dan tien jaar dagelijks met vrouwen die
+							vastlopen met onbegrepen klachten — vrouwen aan wie, net als jou,
+							werd verteld dat het tussen hun oren zat.
+						</p>
+						<p
+							class="text-white text-lg md:text-xl font-medium pt-2 border-l-[5px] border-[var(--color-brand-accent)] pl-6"
+						>
+							Ik ben niet de goeroe die zegt hoe het moet. Ik ben degene die naast
+							je zit, luistert, en samen met jou uitzoekt wat je lichaam je
+							probeert te vertellen.
+						</p>
+						<p>Deze vijf dagen zijn mijn manier om je dat alvast te laten voelen.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 8 — SOCIAL PROOF (testimonials) */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 fade-in-section">
+		<div class="max-w-5xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-4 text-center"
+			>
+				Dit zeggen vrouwen die ik begeleidde
+			</h2>
+			<p
+				class="text-sm md:text-base text-[var(--color-brand-muted)] text-center mb-10 md:mb-14"
+			>
+				Uit mijn 1-op-1 begeleidingstraject.
+			</p>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+				<figure
+					class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 flex flex-col"
+				>
+					<svg
+						class="h-8 w-8 text-[var(--color-brand-accent)]/40 mb-4"
+						fill="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+						><path
+							d="M9.5 8c-2.5 0-4.5 2-4.5 4.5S7 17 9.5 17c.3 0 .6 0 .9-.1-.6 1.3-1.9 2.3-3.4 2.6v2.5c3.9-.5 7-3.9 7-8V12.5C14 9.5 12 8 9.5 8zm9 0c-2.5 0-4.5 2-4.5 4.5S16 17 18.5 17c.3 0 .6 0 .9-.1-.6 1.3-1.9 2.3-3.4 2.6v2.5c3.9-.5 7-3.9 7-8V12.5C23 9.5 21 8 18.5 8z"
+						></path></svg
+					>
+					<blockquote
+						class="text-base text-[var(--color-brand-muted)] leading-relaxed italic flex-1"
+					>
+						"Ik vond Crystal zeer scherp in verbanden leggen, heel helder in
+						uitleg over wat ik te doen had en met welke thema's mijn klachten
+						verbonden waren in mijn leven. Vooral werd me duidelijk hoe ik moest
+						navigeren in wat er in mijn leven gebeurde. Ze is een heel fijn, open
+						en compassievol mens."
+					</blockquote>
+					<figcaption
+						class="mt-6 font-semibold text-[var(--color-brand-primary-text)]"
+					>
+						— Kinga Sidor
+					</figcaption>
+				</figure>
+				<figure
+					class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 flex flex-col"
+				>
+					<svg
+						class="h-8 w-8 text-[var(--color-brand-accent)]/40 mb-4"
+						fill="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+						><path
+							d="M9.5 8c-2.5 0-4.5 2-4.5 4.5S7 17 9.5 17c.3 0 .6 0 .9-.1-.6 1.3-1.9 2.3-3.4 2.6v2.5c3.9-.5 7-3.9 7-8V12.5C14 9.5 12 8 9.5 8zm9 0c-2.5 0-4.5 2-4.5 4.5S16 17 18.5 17c.3 0 .6 0 .9-.1-.6 1.3-1.9 2.3-3.4 2.6v2.5c3.9-.5 7-3.9 7-8V12.5C23 9.5 21 8 18.5 8z"
+						></path></svg
+					>
+					<blockquote
+						class="text-base text-[var(--color-brand-muted)] leading-relaxed italic flex-1"
+					>
+						"Crystal is heerlijk nuchter maar enorm doortastend. Ze kan me op een
+						bepaalde manier 'lezen' waardoor ze heel snel concreet kan maken waar
+						ik zelf de woorden nog niet voor kan vinden. Ik merk dat ik veel meer
+						bij mezelf kan blijven en mezelf een stuk beter begrijp."
+					</blockquote>
+					<figcaption
+						class="mt-6 font-semibold text-[var(--color-brand-primary-text)]"
+					>
+						— Tessa van Beek
+					</figcaption>
+				</figure>
+				<figure
+					class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 flex flex-col"
+				>
+					<svg
+						class="h-8 w-8 text-[var(--color-brand-accent)]/40 mb-4"
+						fill="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+						><path
+							d="M9.5 8c-2.5 0-4.5 2-4.5 4.5S7 17 9.5 17c.3 0 .6 0 .9-.1-.6 1.3-1.9 2.3-3.4 2.6v2.5c3.9-.5 7-3.9 7-8V12.5C14 9.5 12 8 9.5 8zm9 0c-2.5 0-4.5 2-4.5 4.5S16 17 18.5 17c.3 0 .6 0 .9-.1-.6 1.3-1.9 2.3-3.4 2.6v2.5c3.9-.5 7-3.9 7-8V12.5C23 9.5 21 8 18.5 8z"
+						></path></svg
+					>
+					<blockquote
+						class="text-base text-[var(--color-brand-muted)] leading-relaxed italic flex-1"
+					>
+						"De inzichten die ze me gaf werkten meteen door. Sinds mijn consult
+						schrijf ik elke dag in mijn dagboekje naar aanleiding van haar
+						verslag."
+					</blockquote>
+					<figcaption
+						class="mt-6 font-semibold text-[var(--color-brand-primary-text)]"
+					>
+						— Ester Hagoort
+					</figcaption>
+				</figure>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 9 — HOE WERKT HET */}
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-10 md:mb-12 text-center"
+			>
+				Hoe werkt het?
+			</h2>
+			<ol class="space-y-5 md:space-y-6 mb-10">
+				<li class="flex items-start gap-4">
+					<span
+						class="shrink-0 w-9 h-9 rounded-full bg-[var(--color-brand-sage)] text-[var(--color-brand-primary-text)] font-bold flex items-center justify-center tabular-nums"
+						aria-hidden="true">1</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
+					>
+						Je schrijft je in met je voornaam, e-mailadres en telefoonnummer.
+					</p>
+				</li>
+				<li class="flex items-start gap-4">
+					<span
+						class="shrink-0 w-9 h-9 rounded-full bg-[var(--color-brand-sage)] text-[var(--color-brand-primary-text)] font-bold flex items-center justify-center tabular-nums"
+						aria-hidden="true">2</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
+					>
+						Je ontvangt een bevestiging met de link naar het besloten
+						WhatsApp-kanaal.
+					</p>
+				</li>
+				<li class="flex items-start gap-4">
+					<span
+						class="shrink-0 w-9 h-9 rounded-full bg-[var(--color-brand-sage)] text-[var(--color-brand-primary-text)] font-bold flex items-center justify-center tabular-nums"
+						aria-hidden="true">3</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
+					>
+						Je klikt op de link en zit in het kanaal — je telefoonnummer blijft
+						afgeschermd. Niemand anders ziet het, en niemand ziet of jij iets
+						terugstuurt.
+					</p>
+				</li>
+				<li class="flex items-start gap-4">
+					<span
+						class="shrink-0 w-9 h-9 rounded-full bg-[var(--color-brand-sage)] text-[var(--color-brand-primary-text)] font-bold flex items-center justify-center tabular-nums"
+						aria-hidden="true">4</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
+					>
+						Vijf dagen lang ontvang je elke ochtend een kort bericht. Je luistert,
+						doet de oefening (10–15 min), klaar.
+					</p>
+				</li>
+				<li class="flex items-start gap-4">
+					<span
+						class="shrink-0 w-9 h-9 rounded-full bg-[var(--color-brand-sage)] text-[var(--color-brand-primary-text)] font-bold flex items-center justify-center tabular-nums"
+						aria-hidden="true">5</span
+					>
+					<p
+						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
+					>
+						Op dag 5 nodig ik je uit voor een gratis persoonlijk gesprek — alleen
+						als jij dat wilt.
+					</p>
+				</li>
+			</ol>
+			<div
+				class="bg-[var(--color-brand-base)] rounded-[1.5rem] p-6 md:p-8 space-y-4 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed"
+			>
+				<p>
+					<strong class="text-[var(--color-brand-primary-text)]"
+						>Het is gratis.</strong
+					> Geen kosten, geen verplichtingen, geen verborgen verkoop op dag 2.
+				</p>
+				<p>
+					En misschien wel het belangrijkste bij een onderwerp dat zo dichtbij
+					komt: dit is een besloten kanaal waarin ik zend. Jouw nummer is
+					afgeschermd, je hoeft niets te delen, niemand kijkt mee. Je doet dit
+					veilig, in je eentje, in je eigen tempo. En je houdt je reguliere zorg
+					gewoon — wat we hier doen komt ernaast, nooit in plaats daarvan.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 10 — FAQ */}
+	<section
+		id="faq"
+		class="py-24 md:py-32 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/25 to-transparent fade-in-section"
+	>
+		<div class="max-w-4xl mx-auto">
+			<h2
+				class="text-3xl md:text-5xl font-semibold mb-12 md:mb-16 text-center tracking-tight"
+			>
+				Misschien denk je nu…
+			</h2>
+
+			<div class="space-y-6 md:space-y-8">
+				<details
+					class="group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300"
+				>
+					<summary
+						class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl"
+					>
+						<span class="pr-6">"Ik heb hier geen tijd en geen energie voor."</span>
+						<span
+							class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0"
+						>
+							<svg
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								width="24"
+								aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg
+							>
+						</span>
+					</summary>
+					<div
+						class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed"
+					>
+						<div class="pb-6 md:pb-8">
+							<p>
+								Dat snap ik — en juist daarom is dit zo licht gehouden. Tien tot
+								vijftien minuten per dag, via WhatsApp, die je toch al open hebt.
+								Geen werkboek, geen avond die je vrij moet maken. Als je het gevoel
+								hebt dat je er de energie niet voor hebt: dit is precies de week die
+								laat zien dat het ook anders kan.
+							</p>
+						</div>
+					</div>
+				</details>
+
+				<details
+					class="group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300"
+				>
+					<summary
+						class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl"
+					>
+						<span class="pr-6">"Wordt dit weer zo'n zweverig gedoe?"</span>
+						<span
+							class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0"
+						>
+							<svg
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								width="24"
+								aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg
+							>
+						</span>
+					</summary>
+					<div
+						class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed"
+					>
+						<div class="pb-6 md:pb-8">
+							<p>
+								Nee. Geen "denk positiever", geen wierook. Ik ben nuchter, en ik
+								leg dingen uit in gewone taal. Je intelligentie wordt hier niet
+								beledigd. We werken met wat je voelt, niet met wat je zou moeten
+								geloven.
+							</p>
+						</div>
+					</div>
+				</details>
+
+				<details
+					class="group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300"
+				>
+					<summary
+						class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl"
+					>
+						<span class="pr-6">"Vijf dagen gaan mijn pijn niet oplossen."</span>
+						<span
+							class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0"
+						>
+							<svg
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								width="24"
+								aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg
+							>
+						</span>
+					</summary>
+					<div
+						class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed"
+					>
+						<div class="pb-6 md:pb-8">
+							<p>
+								Klopt. En dat beloof ik je ook niet. Wat ik je wél beloof: na vijf
+								dagen sta je anders tegenover je pijn dan nu. Niet genezen — maar
+								minder overgeleverd. En je weet wat er daarna nodig is.
+							</p>
+						</div>
+					</div>
+				</details>
+
+				<details
+					class="group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300"
+				>
+					<summary
+						class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl"
+					>
+						<span class="pr-6"
+							>"Ik ben al zo vaak teleurgesteld. Waarom zou dit anders zijn?"</span
+						>
+						<span
+							class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0"
+						>
+							<svg
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								width="24"
+								aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg
+							>
+						</span>
+					</summary>
+					<div
+						class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed"
+					>
+						<div class="pb-6 md:pb-8">
+							<p>
+								Terecht dat je sceptisch bent — alles wat je probeerde zat
+								waarschijnlijk op symptoomniveau. Ik beloof je geen wonder. Ik bied
+								je een andere plek om te kijken. En vijf dagen gratis is een kleine,
+								eerlijke manier om zelf te merken of dit klopt.
+							</p>
+						</div>
+					</div>
+				</details>
+
+				<details
+					class="group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-sm shadow-[var(--color-brand-muted)]/5 open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300"
+				>
+					<summary
+						class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl"
+					>
+						<span class="pr-6"
+							>"Ik ken de Germaanse geneeskunde nog niet. Kan ik dan
+							meedoen?"</span
+						>
+						<span
+							class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0"
+						>
+							<svg
+								fill="none"
+								height="24"
+								stroke="currentColor"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								viewBox="0 0 24 24"
+								width="24"
+								aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg
+							>
+						</span>
+					</summary>
+					<div
+						class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-lg leading-relaxed"
+					>
+						<div class="pb-6 md:pb-8">
+							<p>
+								Ja. Je hoeft niets te weten vooraf. Deze challenge gaat niet over
+								theorie, maar over wat je voelt. Het enige wat je nodig hebt is de
+								bereidheid om vijf dagen anders naar je lijf te kijken.
+							</p>
+						</div>
+					</div>
+				</details>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 11 — LAATSTE CTA + INSCHRIJFFORMULIER */}
+	<section
+		id="doe-mee"
+		class="py-20 md:py-28 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] via-[#f4ebe6] to-[var(--color-brand-secondary)] fade-in-section scroll-mt-8"
+	>
+		<div class="max-w-5xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-10 md:mb-12 text-center"
+			>
+				Doe je mee?
+			</h2>
+
+			<div
+				class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start"
+			>
+				{/* Praktische details + afsluitende body */}
+				<div>
+					<dl
+						class="bg-white/60 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 divide-y divide-[var(--color-brand-secondary)]/60"
+					>
+						<div class="flex justify-between gap-4 py-3 first:pt-0">
+							<dt class="font-semibold text-[var(--color-brand-primary-text)]">
+								Wat
+							</dt>
+							<dd class="text-right text-[var(--color-brand-muted)]">
+								5-daagse challenge "Je pijn is echt"
+							</dd>
+						</div>
+						<div class="flex justify-between gap-4 py-3">
+							<dt class="font-semibold text-[var(--color-brand-primary-text)]">
+								Wanneer
+							</dt>
+							<dd class="text-right text-[var(--color-brand-muted)]">
+								start 6 juli
+							</dd>
+						</div>
+						<div class="flex justify-between gap-4 py-3">
+							<dt class="font-semibold text-[var(--color-brand-primary-text)]">
+								Waar
+							</dt>
+							<dd class="text-right text-[var(--color-brand-muted)]">
+								besloten WhatsApp-kanaal (je nummer blijft afgeschermd)
+							</dd>
+						</div>
+						<div class="flex justify-between gap-4 py-3">
+							<dt class="font-semibold text-[var(--color-brand-primary-text)]">
+								Hoeveel tijd
+							</dt>
+							<dd class="text-right text-[var(--color-brand-muted)]">
+								10 tot 15 minuten per dag
+							</dd>
+						</div>
+						<div class="flex justify-between gap-4 py-3 last:pb-0">
+							<dt class="font-semibold text-[var(--color-brand-primary-text)]">
+								Kosten
+							</dt>
+							<dd class="text-right text-[var(--color-brand-muted)]">gratis</dd>
+						</div>
+					</dl>
+
+					<div
+						class="mt-8 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-5"
+					>
+						<p>
+							Je hoeft niet klaar te zijn. Je hoeft niet te weten of het gaat
+							werken. Je hoeft alleen te besluiten dat je het vijf dagen gaat
+							proberen.
+						</p>
+						<p
+							class="text-xl md:text-2xl font-medium text-[var(--color-brand-primary-text)]"
+						>
+							Vijf dagen. Tien minuten. Via je telefoon. De rest komt vanzelf.
+						</p>
+						<p class="font-medium text-[var(--color-brand-primary-text)]">
+							— Crystal
+						</p>
+					</div>
+				</div>
+
+				{/* Inschrijfformulier */}
+				<div
+					class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5"
+				>
+					<h3
+						class="text-2xl md:text-3xl font-semibold leading-tight tracking-tight mb-2 text-center"
+					>
+						Ja, ik doe mee
+					</h3>
+					<p
+						class="text-sm md:text-base text-[var(--color-brand-muted)] leading-relaxed mb-7 text-center"
+					>
+						Vul je gegevens in en je ontvangt de link naar het besloten kanaal.
+					</p>
+
+					<form id="optin-form" class="space-y-5" novalidate>
+						<div>
+							<label
+								for="voornaam"
+								class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+								>Voornaam</label
+							>
+							<input
+								type="text"
+								id="voornaam"
+								name="voornaam"
+								required
+								autocomplete="given-name"
+								class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+								placeholder="Je voornaam"
+							/>
+						</div>
+						<div>
+							<label
+								for="email"
+								class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+								>E-mailadres</label
+							>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								required
+								autocomplete="email"
+								class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+								placeholder="jouw@email.nl"
+							/>
+						</div>
+						<div>
+							<label
+								for="telefoon"
+								class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+								>Telefoonnummer</label
+							>
+							<div class="flex gap-2">
+								<select
+									id="landcode"
+									name="landcode"
+									aria-label="Landcode"
+									class="shrink-0 rounded-xl border border-[var(--color-brand-secondary)] px-3 py-3 bg-white text-[var(--color-brand-primary-text)] focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300 cursor-pointer"
+								>
+									<option value="+31">🇳🇱 +31</option>
+									<option value="+32">🇧🇪 +32</option>
+								</select>
+								<input
+									type="tel"
+									id="telefoon"
+									name="telefoon"
+									required
+									autocomplete="tel-national"
+									inputmode="tel"
+									class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+									placeholder="6 12345678"
+								/>
+							</div>
+						</div>
+						<p id="form-error" class="text-[var(--color-brand-accent)] text-sm hidden">
+						</p>
+						<Button
+							type="submit"
+							className="w-full text-base md:text-lg py-4 cursor-pointer"
+						>
+							Ja, ik doe mee →
+						</Button>
+					</form>
+					<p class="text-xs text-[var(--color-brand-muted)] mt-4 leading-relaxed">
+						Je gegevens zijn veilig. Ik gebruik je nummer en e-mail alleen voor
+						deze challenge. Je nummer is in het kanaal afgeschermd voor andere
+						deelnemers. Je kunt op elk moment stoppen. Door je aan te melden ga je
+						akkoord met <a
+							href="/algemene-voorwaarden/"
+							class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300"
+							>onze privacyverklaring</a
+						>.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>
+
+<style is:global>
+	/* Scroll Animation — only hide when JS is confirmed available */
+	:global(html.js) .fade-in-section {
+		opacity: 0;
+		transform: translateY(20px);
+		visibility: hidden;
+		transition:
+			opacity 600ms ease-out,
+			transform 600ms ease-out;
+		will-change: opacity, visibility, transform;
+	}
+	:global(html.js) .fade-in-section.is-visible {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+</style>
+
+<style>
+	/* FAQ Accordion Animation */
+	details > summary {
+		list-style: none;
+	}
+	details > summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-content {
+		display: grid;
+		grid-template-rows: 0fr;
+		opacity: 0;
+		transition:
+			grid-template-rows 400ms ease-out,
+			opacity 400ms ease-out;
+		will-change: grid-template-rows, opacity;
+	}
+
+	.faq-content > div {
+		overflow: hidden;
+	}
+
+	details[open] .faq-content {
+		grid-template-rows: 1fr;
+		opacity: 1;
+	}
+</style>
+
+<script>
+	// Scroll animation observer
+	document.addEventListener("DOMContentLoaded", () => {
+		const observer = new IntersectionObserver(
+			(entries, obs) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-visible");
+						obs.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.15 }
+		);
+		document
+			.querySelectorAll(".fade-in-section")
+			.forEach((el) => observer.observe(el));
+	});
+
+	// Scroll depth tracking
+	document.addEventListener("DOMContentLoaded", () => {
+		const thresholds = [25, 50, 75, 90];
+		const fired = new Set<number>();
+
+		const checkScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight =
+				document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+			thresholds.forEach((threshold) => {
+				if (scrollPercent >= threshold && !fired.has(threshold)) {
+					fired.add(threshold);
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "scroll_depth",
+						scroll_percentage: threshold,
+					});
+				}
+			});
+		};
+
+		let ticking = false;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						checkScroll();
+						ticking = false;
+					});
+					ticking = true;
+				}
+			},
+			{ passive: true }
+		);
+	});
+
+	// CTA click tracking (alle "doe mee"-knoppen → opt-in sectie)
+	document.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("click", (e) => {
+			const el = (e.target as HTMLElement).closest('a[href="#doe-mee"]');
+			if (!el) return;
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				event: "cta_click",
+				cta_text: el.textContent?.trim() || "",
+				cta_destination: "doe-mee",
+				cta_location:
+					el.getAttribute("data-cta-location") ||
+					el.closest("section")?.id ||
+					"hero",
+			});
+		});
+	});
+
+	// FAQ accordion
+	document.addEventListener("DOMContentLoaded", () => {
+		const detailsElements = document.querySelectorAll("details");
+		detailsElements.forEach((targetDetail) => {
+			targetDetail.addEventListener("click", (e) => {
+				const target = e.target as HTMLElement;
+				if (target.tagName !== "SUMMARY" && !target.closest("summary")) return;
+
+				e.preventDefault();
+
+				if (targetDetail.hasAttribute("open")) {
+					const content = targetDetail.querySelector(
+						".faq-content"
+					) as HTMLElement;
+					content.style.opacity = "0";
+					content.style.gridTemplateRows = "0fr";
+					setTimeout(() => {
+						targetDetail.removeAttribute("open");
+					}, 400);
+				} else {
+					// Close others (accordion)
+					detailsElements.forEach((detail) => {
+						if (detail !== targetDetail && detail.hasAttribute("open")) {
+							const content = detail.querySelector(
+								".faq-content"
+							) as HTMLElement;
+							content.style.opacity = "0";
+							content.style.gridTemplateRows = "0fr";
+							setTimeout(() => {
+								detail.removeAttribute("open");
+							}, 400);
+						}
+					});
+
+					targetDetail.setAttribute("open", "");
+
+					// Track FAQ open
+					const questionText =
+						targetDetail.querySelector("summary span")?.textContent?.trim() ||
+						"";
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "faq_open",
+						faq_question: questionText,
+					});
+
+					const content = targetDetail.querySelector(
+						".faq-content"
+					) as HTMLElement;
+					content.getBoundingClientRect();
+					content.style.opacity = "1";
+					content.style.gridTemplateRows = "1fr";
+				}
+			});
+		});
+	});
+
+	// Opt-in form submission
+	document.addEventListener("DOMContentLoaded", () => {
+		const form = document.getElementById("optin-form") as HTMLFormElement | null;
+		if (!form) return;
+		const errorEl = document.getElementById("form-error") as HTMLElement;
+		const submitBtn = form.querySelector(
+			'button[type="submit"]'
+		) as HTMLButtonElement;
+
+		// Capture UTM parameters on page load
+		const urlParams = new URLSearchParams(window.location.search);
+		const utmSource = urlParams.get("utm_source") || "";
+		const utmMedium = urlParams.get("utm_medium") || "";
+		const utmCampaign = urlParams.get("utm_campaign") || "";
+
+		form.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			errorEl.classList.add("hidden");
+
+			const name = (
+				form.querySelector("#voornaam") as HTMLInputElement
+			).value.trim();
+			const email = (
+				form.querySelector("#email") as HTMLInputElement
+			).value.trim();
+			const landcode = (
+				form.querySelector("#landcode") as HTMLSelectElement
+			).value;
+			const phoneLocalRaw = (
+				form.querySelector("#telefoon") as HTMLInputElement
+			).value.trim();
+
+			// Validation
+			if (!name) {
+				errorEl.textContent = "Vul je voornaam in";
+				errorEl.classList.remove("hidden");
+				return;
+			}
+			if (!email) {
+				errorEl.textContent = "Vul je e-mailadres in";
+				errorEl.classList.remove("hidden");
+				return;
+			}
+			if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+				errorEl.textContent = "Dit lijkt geen geldig e-mailadres";
+				errorEl.classList.remove("hidden");
+				return;
+			}
+			// Normaliseer telefoonnummer: strip alles behalve cijfers, haal evt.
+			// leidende 0 weg (lokale notatie) en plak de gekozen landcode ervoor.
+			const phoneDigits = phoneLocalRaw.replace(/\D/g, "").replace(/^0+/, "");
+			if (phoneDigits.length < 8) {
+				errorEl.textContent = "Vul een geldig telefoonnummer in";
+				errorEl.classList.remove("hidden");
+				return;
+			}
+			const phone = landcode + phoneDigits;
+
+			// Loading state
+			submitBtn.disabled = true;
+			submitBtn.textContent = "Een moment…";
+
+			try {
+				await fetch(
+					"https://n8n.reconnectnow.nl/webhook/crystal-challenge-optin",
+					{
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							name,
+							email,
+							phone,
+							source: "challenge_optin",
+							utm_source: utmSource,
+							utm_medium: utmMedium,
+							utm_campaign: utmCampaign,
+							timestamp: new Date().toISOString(),
+						}),
+						keepalive: true,
+					}
+				);
+			} catch {
+				// Don't block redirect on webhook failure
+			}
+
+			// Track generate_lead event before redirect
+			const redirectUrl = "/je-pijn-is-echt/bedankt/";
+			let hasRedirected = false;
+			function doRedirect() {
+				if (!hasRedirected) {
+					hasRedirected = true;
+					window.location.href = redirectUrl;
+				}
+			}
+
+			// user_data voor Enhanced Conversions: rauwe e-mail/voornaam/telefoon mee
+			// in de dataLayer. GTM hasht (SHA-256) pas in de tag en stuurt het
+			// uitsluitend mee als ad_user_data-consent gegeven is — zie consent mode
+			// in Layout.astro.
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				event: "generate_lead",
+				lead_source: "challenge_optin",
+				user_data: {
+					email: email.toLowerCase(),
+					phone_number: phone,
+					address: { first_name: name },
+				},
+				eventCallback: doRedirect,
+				eventTimeout: 2000,
+			});
+			setTimeout(doRedirect, 2500);
+		});
+	});
+</script>
