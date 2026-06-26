@@ -40,7 +40,7 @@ const WHATSAPP_CHANNEL_INVITE = "";
 			</div>
 			<div
 				id="blob-2"
-				class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[100px] opacity-0"
+				class="absolute bottom-[-10%] left-[-5%] w-[350px] h-[350px] bg-[var(--color-brand-accent-light)] rounded-full mix-blend-multiply filter blur-[100px] opacity-0"
 			>
 			</div>
 			<div
@@ -214,6 +214,20 @@ const WHATSAPP_CHANNEL_INVITE = "";
 					vijftien minuten, meer niet. Je doet het in je eigen tempo, niemand
 					kijkt mee.
 				</p>
+
+				{/* Mini dag-strip — sluit aan op het 5-dagen-pad van de LP */}
+				<div class="mt-5 flex items-center gap-0" aria-hidden="true">
+					{[1, 2, 3, 4, 5].map((d) => (
+						<>
+							<span class="w-8 h-8 shrink-0 rounded-full bg-[var(--color-brand-accent)] text-white font-heading font-semibold text-xs flex items-center justify-center tabular-nums">
+								{d}
+							</span>
+							{d < 5 && (
+								<span class="h-[2px] w-4 sm:w-6 bg-gradient-to-r from-[var(--color-brand-accent)] to-[var(--color-brand-accent-light)]" />
+							)}
+						</>
+					))}
+				</div>
 			</div>
 
 			<div id="cta-button" style="opacity: 0;">

@@ -5,6 +5,30 @@ import Footer from "../../components/Footer.astro";
 import { Picture } from "astro:assets";
 import foto1 from "../../assets/images/foto_1.jpg";
 import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
+
+// De vijf gevoels-uitkomsten — gerenderd als één samenhangend 5-dagen-pad.
+const dagen = [
+	{
+		kop: "Je ziet het voor het eerst.",
+		rest: "Niet alleen de pijn — ook alles wat je eromheen doet. En je voelt: hier zit ruimte die ik nooit zag.",
+	},
+	{
+		kop: "Het lag nooit aan jou.",
+		rest: "Niet aan je instelling, niet aan te weinig je best doen. Vandaag voel je dat je iets dóet bovenop de pijn — en dat dat geen schuld is.",
+	},
+	{
+		kop: "Je krijgt grip op het moment zelf.",
+		rest: "Als een golf opkomt, schiet je niet meer automatisch weg in angst. Voor het eerst kun je erbij blijven.",
+	},
+	{
+		kop: "Je gaat van wegkrampen naar contact.",
+		rest: "Rustig, in jouw tempo, geen stap eerder dan jij wilt. En je merkt: ik kan erbij zijn zonder dat het escaleert.",
+	},
+	{
+		kop: "Er is iets verschoven.",
+		rest: "Niet alles. Maar genoeg om te voelen: dit kan ik vasthouden. En je merkt dat hier méér onder ligt dan vijf dagen.",
+	},
+];
 ---
 
 <Layout
@@ -22,7 +46,7 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 		>
 		</div>
 		<div
-			class="absolute top-[40%] left-[-10%] w-[500px] h-[500px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"
+			class="absolute top-[35%] left-[-10%] w-[520px] h-[520px] bg-[var(--color-brand-accent-light)] rounded-full mix-blend-multiply filter blur-[120px] opacity-40"
 		>
 		</div>
 	</div>
@@ -67,6 +91,33 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 				Gratis · 10 min per dag · via WhatsApp · je telefoonnummer blijft
 				afgeschermd
 			</p>
+
+			{/* Dag-strip — visualiseert "5-daagse" */}
+			<div
+				class="day-strip mt-6 md:mt-8 flex items-center justify-center lg:justify-start gap-0"
+				aria-label="Vijf dagen, elke ochtend een bericht"
+			>
+				{[1, 2, 3, 4, 5].map((d) => (
+					<>
+						<span
+							class="relative z-10 w-9 h-9 md:w-10 md:h-10 shrink-0 rounded-full bg-[var(--color-brand-accent)] text-white font-heading font-semibold text-sm flex items-center justify-center shadow-sm shadow-[var(--color-brand-accent)]/25 tabular-nums"
+						>
+							{d}
+						</span>
+						{d < 5 && (
+							<span
+								class="h-[2px] w-5 sm:w-7 md:w-9 bg-gradient-to-r from-[var(--color-brand-accent)] to-[var(--color-brand-accent-light)]"
+								aria-hidden="true"
+							></span>
+						)}
+					</>
+				))}
+			</div>
+			<p
+				class="mt-2 text-xs text-[var(--color-brand-muted)] text-center lg:text-left"
+			>
+				Vijf dagen · elke ochtend een kort bericht
+			</p>
 		</div>
 		<div class="w-full lg:w-[50%] relative z-10">
 			<div
@@ -87,12 +138,48 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 					fetchpriority="high"
 					loading="eager"
 				/>
+
+				{/* Zwevende WhatsApp-bubbel-badge — laat het kanaal voelen */}
+				<div
+					class="hidden sm:block absolute -bottom-5 -left-4 md:-left-8 z-20 w-[15rem] md:w-[16.5rem] bg-white/95 backdrop-blur-md rounded-2xl rounded-bl-md p-3.5 shadow-[0_16px_40px_-12px_rgba(44,38,36,0.35)] border border-white"
+				>
+					<div class="flex items-center gap-2 mb-2">
+						<span
+							class="w-6 h-6 rounded-full bg-[var(--color-brand-sage)]/60 flex items-center justify-center shrink-0"
+							aria-hidden="true"
+						>
+							<svg
+								class="w-3.5 h-3.5 text-[var(--color-brand-accent-hover)]"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+							>
+								<path
+									d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.25 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24zm-3.6 4.43c-.17 0-.45.06-.69.31-.24.25-.91.89-.91 2.18 0 1.28.93 2.52 1.06 2.7.13.17 1.83 2.79 4.43 3.91.62.27 1.1.43 1.48.55.62.2 1.19.17 1.64.1.5-.07 1.54-.63 1.76-1.24.22-.61.22-1.13.15-1.24-.07-.11-.24-.17-.5-.3-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.59.13-.17.25-.67.85-.83 1.02-.15.17-.3.19-.56.06-.26-.13-1.1-.41-2.1-1.3-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.12-.12.26-.3.4-.46.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.59-1.42-.81-1.94-.21-.51-.43-.44-.59-.45-.15-.01-.32-.01-.5-.01z"
+								></path>
+							</svg>
+						</span>
+						<span
+							class="text-[0.7rem] font-semibold text-[var(--color-brand-primary-text)] leading-tight"
+							>Crystal · besloten kanaal</span
+						>
+					</div>
+					<p
+						class="text-[0.8rem] text-[var(--color-brand-primary-text)] leading-snug"
+					>
+						Goedemorgen. Vandaag iets kleins — tien minuten, meer niet.
+					</p>
+					<p
+						class="text-[0.65rem] text-[var(--color-brand-muted)] text-right mt-1 tabular-nums"
+					>
+						08:01
+					</p>
+				</div>
 			</div>
 		</div>
 	</section>
 
 	{/* SECTIE 1 — DE SCÈNE (herkenning vóór alles) */}
-	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-accent-light)]/10 to-white fade-in-section">
 		<div class="max-w-3xl mx-auto">
 			<div
 				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
@@ -149,7 +236,7 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 
 	{/* SECTIE 2 — DE SPIEGEL (de belofte, voelbaar zonder claim) */}
 	<section
-		class="bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 py-20 md:py-28 px-6 lg:px-8 fade-in-section"
+		class="bg-gradient-to-b from-[var(--color-brand-accent-light)]/15 via-[var(--color-brand-accent-light)]/30 to-[var(--color-brand-accent-light)]/15 py-20 md:py-28 px-6 lg:px-8 fade-in-section"
 	>
 		<div class="max-w-3xl mx-auto">
 			<div
@@ -195,7 +282,7 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 	</section>
 
 	{/* SECTIE 3 — DE GNM-BRUG */}
-	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 fade-in-section">
 		<div class="max-w-3xl mx-auto">
 			<h2
 				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
@@ -248,88 +335,98 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 				</p>
 			</div>
 
+			{/* WhatsApp-bericht-motief — laat het kanaal voelen (op-merk, geen WhatsApp-groen) */}
+			<div class="max-w-md mx-auto mb-14 md:mb-20">
+				<div
+					class="bg-[var(--color-brand-base)] border border-white rounded-[1.5rem] p-4 md:p-5 shadow-xl shadow-[var(--color-brand-muted)]/10"
+				>
+					<div
+						class="flex items-center gap-2.5 pb-3 mb-4 border-b border-[var(--color-brand-secondary)]/70"
+					>
+						<span
+							class="w-9 h-9 rounded-full bg-[var(--color-brand-sage)]/60 flex items-center justify-center shrink-0"
+							aria-hidden="true"
+						>
+							<svg
+								class="w-5 h-5 text-[var(--color-brand-accent-hover)]"
+								viewBox="0 0 24 24"
+								fill="currentColor"
+							>
+								<path
+									d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 1.67c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.42 5.82c0 4.54-3.7 8.24-8.25 8.24-1.48 0-2.93-.4-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24zm-3.6 4.43c-.17 0-.45.06-.69.31-.24.25-.91.89-.91 2.18 0 1.28.93 2.52 1.06 2.7.13.17 1.83 2.79 4.43 3.91.62.27 1.1.43 1.48.55.62.2 1.19.17 1.64.1.5-.07 1.54-.63 1.76-1.24.22-.61.22-1.13.15-1.24-.07-.11-.24-.17-.5-.3-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.59.13-.17.25-.67.85-.83 1.02-.15.17-.3.19-.56.06-.26-.13-1.1-.41-2.1-1.3-.78-.69-1.3-1.55-1.45-1.81-.15-.26-.02-.4.11-.53.12-.12.26-.3.4-.46.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.59-1.42-.81-1.94-.21-.51-.43-.44-.59-.45-.15-.01-.32-.01-.5-.01z"
+								></path>
+							</svg>
+						</span>
+						<div class="leading-tight">
+							<p
+								class="text-sm font-semibold text-[var(--color-brand-primary-text)]"
+							>
+								Crystal · besloten kanaal
+							</p>
+							<p class="text-xs text-[var(--color-brand-muted)]">
+								jij leest mee — niemand ziet of jij reageert
+							</p>
+						</div>
+					</div>
+					<div
+						class="chat-bubble relative bg-white rounded-2xl rounded-tl-md p-3.5 shadow-sm shadow-[var(--color-brand-muted)]/10 max-w-[90%]"
+					>
+						<p
+							class="text-[0.95rem] text-[var(--color-brand-primary-text)] leading-snug"
+						>
+							Goedemorgen. Vandaag iets kleins — geen huiswerk, geen theorie. Even
+							tien minuten met je lijf. Klaar voor je je koffie ophebt.
+						</p>
+						<p
+							class="text-[0.65rem] text-[var(--color-brand-muted)] text-right mt-1 tabular-nums"
+						>
+							08:01
+						</p>
+					</div>
+				</div>
+				<p class="text-center text-sm text-[var(--color-brand-muted)] mt-3">
+					Zo voelt een ochtend in de challenge.
+				</p>
+			</div>
+
 			<p
 				class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] text-center mb-10 md:mb-12"
 			>
 				Dit is wat er in vijf dagen verschuift:
 			</p>
 
-			<ol class="space-y-5 md:space-y-6 max-w-3xl mx-auto">
-				<li
-					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
-				>
-					<span
-						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
-						aria-hidden="true">1</span
-					>
-					<p
-						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
-					>
-						<strong>Je ziet het voor het eerst.</strong> Niet alleen de pijn — ook
-						alles wat je eromheen doet. En je voelt: hier zit ruimte die ik nooit
-						zag.
-					</p>
-				</li>
-				<li
-					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
-				>
-					<span
-						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
-						aria-hidden="true">2</span
-					>
-					<p
-						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
-					>
-						<strong>Het lag nooit aan jou.</strong> Niet aan je instelling, niet
-						aan te weinig je best doen. Vandaag voel je dat je iets dóet bovenop de
-						pijn — en dat dat geen schuld is.
-					</p>
-				</li>
-				<li
-					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
-				>
-					<span
-						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
-						aria-hidden="true">3</span
-					>
-					<p
-						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
-					>
-						<strong>Je krijgt grip op het moment zelf.</strong> Als een golf
-						opkomt, schiet je niet meer automatisch weg in angst. Voor het eerst
-						kun je erbij blijven.
-					</p>
-				</li>
-				<li
-					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
-				>
-					<span
-						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
-						aria-hidden="true">4</span
-					>
-					<p
-						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
-					>
-						<strong>Je gaat van wegkrampen naar contact.</strong> Rustig, in jouw
-						tempo, geen stap eerder dan jij wilt. En je merkt: ik kan erbij zijn
-						zonder dat het escaleert.
-					</p>
-				</li>
-				<li
-					class="flex items-start gap-4 md:gap-5 bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-6 md:p-7 shadow-xl shadow-[var(--color-brand-muted)]/5"
-				>
-					<span
-						class="shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-full bg-[var(--color-brand-accent)] text-white font-bold flex items-center justify-center text-lg tabular-nums"
-						aria-hidden="true">5</span
-					>
-					<p
-						class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed"
-					>
-						<strong>Er is iets verschoven.</strong> Niet alles. Maar genoeg om te
-						voelen: dit kan ik vasthouden. En je merkt dat hier méér onder ligt dan
-						vijf dagen.
-					</p>
-				</li>
+			{/* 5-dagen-pad — de vijf uitkomsten als één samenhangende reis */}
+			<ol class="relative max-w-2xl mx-auto">
+				{dagen.map((dag, i) => (
+					<li class="flex gap-4 md:gap-6">
+						{/* Rail: dag-knoop + verbindingslijn */}
+						<div class="flex flex-col items-center">
+							<span
+								class="shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-full bg-[var(--color-brand-accent)] text-white font-heading font-bold flex items-center justify-center text-lg tabular-nums shadow-md shadow-[var(--color-brand-accent)]/25"
+								aria-hidden="true"
+							>
+								{i + 1}
+							</span>
+							{i < dagen.length - 1 && (
+								<span
+									class="w-[2px] flex-1 mt-1 bg-gradient-to-b from-[var(--color-brand-accent)] to-[var(--color-brand-accent-light)]"
+									aria-hidden="true"
+								/>
+							)}
+						</div>
+						{/* Inhoud */}
+						<div class:list={["flex-1 min-w-0", i < dagen.length - 1 ? "pb-7 md:pb-9" : ""]}>
+							<p class="text-xs font-semibold uppercase tracking-widest text-[var(--color-brand-accent-hover)] mb-2 mt-1.5">
+								Dag {i + 1}
+							</p>
+							<div class="bg-white/70 backdrop-blur-xl border border-white rounded-[1.5rem] p-5 md:p-6 shadow-xl shadow-[var(--color-brand-muted)]/5">
+								<p class="text-base md:text-lg text-[var(--color-brand-primary-text)] leading-relaxed">
+									<strong>{dag.kop}</strong> {dag.rest}
+								</p>
+							</div>
+						</div>
+					</li>
+				))}
 			</ol>
 
 			<p
@@ -373,7 +470,7 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 
 	{/* SECTIE 6 — VOOR WIE DIT IS */}
 	<section
-		class="bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 py-20 md:py-28 px-6 lg:px-8 fade-in-section"
+		class="bg-gradient-to-b from-[var(--color-brand-accent-light)]/15 via-[var(--color-brand-accent-light)]/25 to-[var(--color-brand-accent-light)]/10 py-20 md:py-28 px-6 lg:px-8 fade-in-section"
 	>
 		<div class="max-w-3xl mx-auto">
 			<h2
@@ -682,7 +779,7 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 	</section>
 
 	{/* SECTIE 9 — HOE WERKT HET */}
-	<section class="py-20 md:py-28 px-6 lg:px-8 bg-white fade-in-section">
+	<section class="py-20 md:py-28 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-sage)]/10 via-[var(--color-brand-sage)]/30 to-[var(--color-brand-sage)]/10 fade-in-section">
 		<div class="max-w-3xl mx-auto">
 			<h2
 				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-10 md:mb-12 text-center"
@@ -1201,6 +1298,19 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 	details[open] .faq-content {
 		grid-template-rows: 1fr;
 		opacity: 1;
+	}
+
+	/* Subtiele tail aan de WhatsApp-berichtbubbel (linksboven) */
+	.chat-bubble::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -7px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 9px 11px 0;
+		border-color: transparent #ffffff transparent transparent;
 	}
 </style>
 
