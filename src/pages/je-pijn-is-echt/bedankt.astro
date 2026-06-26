@@ -4,11 +4,10 @@ import Button from "../../components/Button.astro";
 import { Picture } from "astro:assets";
 import bgIllustration from "../../assets/images/bedankt_hero.png";
 
-// ⚠️ TODO — VUL DE INVITE-LINK VAN HET BESLOTEN WHATSAPP-KANAAL IN.
-// Zolang dit leeg is ("") toont de pagina de boodschap dat de link in de
-// bevestigingsmail staat. Vul de echte kanaal-invitelink in en de
-// "Open het WhatsApp-kanaal"-knop verschijnt automatisch.
-const WHATSAPP_CHANNEL_INVITE = "";
+// ⚠️ TIJDELIJKE TEST-LINK — vervang door de DEFINITIEVE invite-link van het
+// besloten WhatsApp-kanaal zodra die er is. Leeg ("") => pagina verwijst naar
+// de bevestigingsmail; gevuld => de "Open het WhatsApp-kanaal"-knop verschijnt.
+const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029VaZVwso84Om3u2Bnqd1m";
 ---
 
 <Layout
