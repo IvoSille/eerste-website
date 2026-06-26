@@ -5,14 +5,14 @@ import { Picture } from "astro:assets";
 import bgIllustration from "../../assets/images/bedankt_hero.png";
 
 // ⚠️ TIJDELIJKE TEST-LINK — vervang door de DEFINITIEVE invite-link van het
-// besloten WhatsApp-kanaal zodra die er is. Leeg ("") => pagina verwijst naar
+// WhatsApp-kanaal zodra die er is. Leeg ("") => pagina verwijst naar
 // de bevestigingsmail; gevuld => de "Open het WhatsApp-kanaal"-knop verschijnt.
 const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029VaZVwso84Om3u2Bnqd1m";
 ---
 
 <Layout
 	title="Je bent aangemeld — Je pijn is echt | Crystal Helder"
-	description="Je aanmelding voor de 5-daagse challenge is gelukt. De link naar het besloten WhatsApp-kanaal komt eraan."
+	description="Je aanmelding voor de 5-daagse challenge is gelukt. De link naar het WhatsApp-kanaal komt eraan."
 	includeCal={false}
 	robots="noindex"
 >
@@ -137,7 +137,7 @@ const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029VaZVwso84Om3u2
 				style="opacity: 0;"
 			>
 				Wat fijn dat je deze stap zet. Je ontvangt nu een bevestigingsmail met de
-				link naar het besloten WhatsApp-kanaal. Check ook even je spam- of
+				link naar het WhatsApp-kanaal. Check ook even je spam- of
 				reclamemap, voor de zekerheid.
 			</p>
 
@@ -164,7 +164,7 @@ const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029VaZVwso84Om3u2
 				<h2
 					class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
 				>
-					Het besloten WhatsApp-kanaal
+					Het WhatsApp-kanaal
 				</h2>
 				{
 					WHATSAPP_CHANNEL_INVITE ? (
