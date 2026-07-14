@@ -37,7 +37,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 	<StickyBar ctaHref={ctaHref} ctaLabel={ctaLabel} />
 
 	{/* BLOK 1: HERO */}
-	<section id="hero" class="relative pt-12 pb-8 md:pt-24 md:pb-16 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0">
+	<section id="hero" class="relative pt-12 pb-4 md:pt-24 md:pb-8 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0">
 		<div class="w-full lg:w-[55%] relative z-20 text-center lg:text-left mt-2 md:mt-8 lg:mt-0 xl:-mr-24 bg-white/80 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none p-5 md:p-6 lg:p-0 rounded-3xl lg:rounded-none">
 			<div class="inline-block px-4 py-2 rounded-full bg-[var(--color-brand-secondary)]/60 backdrop-blur-md border border-[var(--color-brand-secondary)] mb-3 md:mb-6 text-xs md:text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm">
 				Voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten
@@ -97,23 +97,38 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 	</section>
 
 	{/* BLOK 2: AUTHORITY-STRIP */}
-	<section class="py-16 md:py-24 px-6 lg:px-8 fade-in-section">
-		<div class="max-w-3xl mx-auto text-center">
-			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">
-				Ik ben Crystal.
-			</p>
-			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">
-				Ik werk al meer dan tien jaar dagelijks met de Germaanse Geneeskunde en ik heb honderden conflictanalyses gedaan. Daarnaast breng ik twintig jaar ervaring mee in emotieregulatie, pedagogie en lichaamswerk.
-			</p>
-			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">
-				Dat is bewust die combinatie. Want een verklaring alleen brengt je nergens. Ik kan achterhalen wat er speelt, en ik kan je er ook doorheen begeleiden.
-			</p>
-			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Ik ben niet de goeroe die zegt hoe het moet. Ik ben degene die naast je zit, luistert, en samen met jou uitzoekt wat je lichaam probeert te vertellen.
-			</p>
-			<p class="text-sm text-[var(--color-brand-muted)]/70 italic">
-				Bron: deze cijfers staan letterlijk op Crystals eigen live pagina's. Geen schatting.
-			</p>
+	<section class="pt-6 pb-16 md:pt-8 md:pb-24 px-6 lg:px-8 fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<div class="bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-sm shadow-[var(--color-brand-secondary)]/40 p-8 md:p-12">
+				<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] text-center mb-8 md:mb-10">
+					Ik ben Crystal.
+				</p>
+				<div class="grid grid-cols-2 gap-6 md:gap-10 mb-8 md:mb-10">
+					<div class="text-center">
+						<p class="text-3xl md:text-4xl font-bold text-[var(--color-brand-accent)] mb-1">10+ jaar</p>
+						<p class="text-sm md:text-base text-[var(--color-brand-muted)] leading-snug">dagelijks Germaanse Geneeskunde, honderden conflictanalyses</p>
+					</div>
+					<div class="text-center border-l border-[var(--color-brand-secondary)]">
+						<p class="text-3xl md:text-4xl font-bold text-[var(--color-brand-accent)] mb-1">20 jaar</p>
+						<p class="text-sm md:text-base text-[var(--color-brand-muted)] leading-snug">ervaring in emotieregulatie, pedagogie en lichaamswerk</p>
+					</div>
+				</div>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-3 text-center">
+					Dat is bewust die combinatie.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-3 text-center">
+					Want een verklaring alleen brengt je nergens.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6 text-center">
+					Ik kan achterhalen wat er speelt, en ik kan je er ook doorheen begeleiden.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-3 text-center">
+					Ik ben niet de goeroe die zegt hoe het moet.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed text-center">
+					Ik ben degene die naast je zit, luistert, en samen met jou uitzoekt wat je lichaam probeert te vertellen.
+				</p>
+			</div>
 		</div>
 	</section>
 
@@ -262,28 +277,61 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-2xl mx-auto">
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Misschien heb je de pil geslikt. Misschien ben je van de gluten af gegaan, en daarna van de zuivel, en daarna van de suiker. Misschien heb je bekkenbodemfysiotherapie gedaan, of een operatie ondergaan, of een half jaar gemindfulnessd omdat iemand zei dat het door stress kwam.
+				Misschien heb je de pil geslikt.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Of misschien heb je helemaal niets geprobeerd. Misschien heb je het al die jaren gewoon gedragen, in stilte, omdat je na de derde keer "welkom bij het vrouw-zijn" geen zin meer had om je nog een keer uit te leggen.
+				Misschien ben je van de gluten af gegaan, en daarna van de zuivel, en daarna van de suiker.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Misschien heb je bekkenbodemfysiotherapie gedaan, of een operatie ondergaan, of een half jaar gemindfulnessd omdat iemand zei dat het door stress kwam.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Of misschien heb je helemaal niets geprobeerd.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Misschien heb je het al die jaren gewoon gedragen, in stilte, omdat je na de derde keer "welkom bij het vrouw-zijn" geen zin meer had om je nog een keer uit te leggen.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
 				Allebei is logisch.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				En hier is wat ik je wil zeggen over al die wegen: ze waren niet fout. Ze deugden alleen niet voor jouw situatie.
+				En hier is wat ik je wil zeggen over al die wegen: ze waren niet fout.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Want ze werkten allemaal op hetzelfde niveau. Het niveau van het symptoom. Ze bestreden de pijn, ze onderdrukten de pijn, ze leerden je omgaan met de pijn.
+				Ze deugden alleen niet voor jouw situatie.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Dat is de brandweer sturen naar een huis dat blijft branden. Iedereen doet zijn best, en het vuur blust ook echt even. Maar zolang niemand vraagt wie het aansteekt, komt het terug.
+				Want ze werkten allemaal op hetzelfde niveau. Het niveau van het symptoom.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				En daar zit de gemeenschappelijke vijand. Niet je huisarts, die het goed bedoelde en deed wat hij geleerd heeft. Maar een systeem dat geen taal heeft voor pijn die het niet kan zien. Dat een lege scan vertaalt naar "er is niets", terwijl het betekent: we hebben op de verkeerde plek gekeken.
+				Ze bestreden de pijn, ze onderdrukten de pijn, ze leerden je omgaan met de pijn.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Je hebt niet meer wilskracht nodig. Je hebt geen strengere lijst nodig, geen zwaarder dieet, geen betere discipline.
+				Dat is de brandweer sturen naar een huis dat blijft branden.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Iedereen doet zijn best, en het vuur blust ook echt even.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar zolang niemand vraagt wie het aansteekt, komt het terug.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En daar zit de gemeenschappelijke vijand.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Niet je huisarts, die het goed bedoelde en deed wat hij geleerd heeft.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar een systeem dat geen taal heeft voor pijn die het niet kan zien.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat een lege scan vertaalt naar "er is niets", terwijl het betekent: we hebben op de verkeerde plek gekeken.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je hebt niet meer wilskracht nodig.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je hebt geen strengere lijst nodig, geen zwaarder dieet, geen betere discipline.
 			</p>
 			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
 				Je hebt een aanpak nodig die begint waar het werkelijk begint.
@@ -298,22 +346,37 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				Je lichaam maakt geen fouten.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Dat klinkt misschien vreemd, want het voelt alsof je lijf je verraadt. Alsof het kapot is. Alsof er iets stuk zit dat gemaakt moet worden.
+				Dat klinkt misschien vreemd, want het voelt alsof je lijf je verraadt.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Alsof het kapot is. Alsof er iets stuk zit dat gemaakt moet worden.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
 				Maar zo werkt het niet.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Wat wij een klacht noemen, is bijna nooit een defect. Het is een reactie. Je lichaam heeft ooit iets meegemaakt, en het heeft daarop een antwoord gegeven. Een slim antwoord, een beschermend antwoord, precies op het moment dat je dat nodig had.
+				Wat wij een klacht noemen, is bijna nooit een defect. Het is een reactie.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je lichaam heeft ooit iets meegemaakt, en het heeft daarop een antwoord gegeven.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Een slim antwoord, een beschermend antwoord, precies op het moment dat je dat nodig had.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
 				Alleen: dat antwoord staat nog aan.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Je bekken spant niet omdat het kapot is. Het spant omdat het ooit heeft geleerd dat spannen veiliger was. Je cyclus loopt niet vast omdat je lijf je pest. Hij loopt vast omdat er iets is waar je lijf nog niet klaar mee is.
+				Je bekken spant niet omdat het kapot is. Het spant omdat het ooit heeft geleerd dat spannen veiliger was.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				De pijn is lichamelijk. Die is echt, die is meetbaar in je spieren, je weefsel, je zenuwen. Het zit niet tussen je oren.
+				Je cyclus loopt niet vast omdat je lijf je pest. Hij loopt vast omdat er iets is waar je lijf nog niet klaar mee is.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				De pijn is lichamelijk. Die is echt, die is meetbaar in je spieren, je weefsel, je zenuwen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Het zit niet tussen je oren.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
 				Maar de knop waarmee het wordt aangestuurd, zit ergens waar nog nooit iemand met je heeft gekeken.
@@ -324,7 +387,13 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 			</blockquote>
 
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				En nu komt het punt waarop je waarschijnlijk iets voelt samentrekken. Want als het lichaam reageert op iets, betekent dat dan dat jij het hebt veroorzaakt? Heb je dit aan jezelf te danken? Had je beter je best moeten doen?
+				En nu komt het punt waarop je waarschijnlijk iets voelt samentrekken.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Want als het lichaam reageert op iets, betekent dat dan dat jij het hebt veroorzaakt?
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Heb je dit aan jezelf te danken? Had je beter je best moeten doen?
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
 				Nee.
@@ -333,7 +402,10 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				Laat me daar heel duidelijk over zijn, want de holistische wereld heeft je hier misschien al eens pijn gedaan.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Dat er een oorzaak is, betekent niet dat het jouw schuld is. Je hebt dit niet veroorzaakt met verkeerd denken. Je hebt niets fout gedaan.
+				Dat er een oorzaak is, betekent niet dat het jouw schuld is.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je hebt dit niet veroorzaakt met verkeerd denken. Je hebt niets fout gedaan.
 			</p>
 			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
 				Dit maakt jou niet de oorzaak. Dit maakt jou de sleutel.
@@ -402,16 +474,25 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 			<div class="max-w-2xl mx-auto mb-16">
 				<h3 class="text-xl md:text-2xl font-semibold mb-4">Waar ik mee werk, en hoe het heet</h3>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Ik werk vanuit de Germaanse Geneeskunde. Dat is de reden dat ik andere vragen stel dan je arts.
+					Ik werk vanuit de Germaanse Geneeskunde.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Dat is de reden dat ik andere vragen stel dan je arts.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
 					In gewone taal komt het hierop neer: het gaat ervan uit dat je lichaam op ingrijpende gebeurtenissen reageert met een biologisch programma, en dat je klacht onderdeel is van dat programma en niet van een defect.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Ik leg je dat rustig uit, in normale mensentaal, zonder dat je ergens in hoeft te geloven. Je hoeft niets aan te nemen. Je gaat het zelf herkennen, of niet.
+					Ik leg je dat rustig uit, in normale mensentaal, zonder dat je ergens in hoeft te geloven.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Je hoeft niets aan te nemen. Je gaat het zelf herkennen, of niet.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					En het is aanvullend.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed">
-					En het is aanvullend. Je houdt je arts, je onderzoeken en je medicatie gewoon. Ik ga daar niet tussen staan.
+					Je houdt je arts, je onderzoeken en je medicatie gewoon. Ik ga daar niet tussen staan.
 				</p>
 			</div>
 
@@ -439,10 +520,19 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 			<div class="max-w-2xl mx-auto mb-12">
 				<h3 class="text-xl md:text-2xl font-semibold mb-4">En we komen een dag samen. Echt samen, in dezelfde ruimte.</h3>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Dat is geen extraatje. Het hoort bij het programma, en ik wil dat je erbij bent.
+					Dat is geen extraatje.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Wat er in één dag gebeurt tussen acht vrouwen die hetzelfde dragen, dat krijg ik via een scherm niet voor elkaar. Niet in zes sessies, niet in twaalf weken. Je hoeft het maar één keer mee te maken dat iemand tegenover je hetzelfde zegt als wat jij al jaren denkt, en er verandert iets wat online niet verandert.
+					Het hoort bij het programma, en ik wil dat je erbij bent.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Wat er in één dag gebeurt tussen acht vrouwen die hetzelfde dragen, dat krijg ik via een scherm niet voor elkaar.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Niet in zes sessies, niet in twaalf weken.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Je hoeft het maar één keer mee te maken dat iemand tegenover je hetzelfde zegt als wat jij al jaren denkt, en er verandert iets wat online niet verandert.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
 					De rest van het programma doe je gewoon vanaf je bank. Deze dag niet.
@@ -458,7 +548,13 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 					Dit programma komt niet bovenop je leven. Het past erin.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					De modules kijk je liggend, op de bank, met een kruik. De oefeningen kosten geen energie, ze geven energie terug. En als je een week hebt waarin je niets kunt, dan doe je die week niets, en dan pak je het daarna weer op.
+					De modules kijk je liggend, op de bank, met een kruik.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					De oefeningen kosten geen energie, ze geven energie terug.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					En als je een week hebt waarin je niets kunt, dan doe je die week niets, en dan pak je het daarna weer op.
 				</p>
 				<p class="text-lg font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
 					Genezing begint niet met harder werken. Het begint met zakken.
