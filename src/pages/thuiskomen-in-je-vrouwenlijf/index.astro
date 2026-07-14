@@ -1,0 +1,1108 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import Card from "../../components/Card.astro";
+import Footer from "../../components/Footer.astro";
+import StickyBar from "../../components/thuiskomen/StickyBar.astro";
+import { Picture } from "astro:assets";
+import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
+
+// Checkout-links (blok 15). CHECKOUT_URL_INEENS is nog de PlugAndPay-link uit de copy;
+// vervang door de Stripe-ineens-link zodra die er is — dit is de enige plek die dan moet wijzigen.
+const CHECKOUT_URL_INEENS = "https://crystalhelder.plugandpay.com/checkout/thuiskomen-in-je-lijf";
+const CHECKOUT_URL_TERMIJNEN = "https://buy.stripe.com/cNi14nfuagXHgS28K400000";
+
+// Wachtlijst-schakelaar (blok 16 build-notitie). Op false: alle primary CTA's
+// linken naar de wachtlijst in plaats van naar blok 15, en tonen wachtlijst-tekst.
+const inschrijvingOpen = true;
+const WACHTLIJST_URL = "/wachtlijst/";
+
+const ctaHref = inschrijvingOpen ? "#investering" : WACHTLIJST_URL;
+const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtlijst";
+---
+
+<Layout
+	title="Thuiskomen in je Vrouwenlijf — 12 weken begeleiding | Crystal Helder"
+	description="In 12 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet. Een begeleid programma voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten."
+	includeCal={false}
+>
+	{/* DECORATIVE BACKGROUND BLOBS */}
+	<div
+		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+		aria-hidden="true"
+	>
+		<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"></div>
+		<div class="absolute top-[35%] left-[-10%] w-[520px] h-[520px] bg-[var(--color-brand-accent-light)] rounded-full mix-blend-multiply filter blur-[120px] opacity-40"></div>
+	</div>
+
+	<StickyBar ctaHref={ctaHref} ctaLabel={ctaLabel} />
+
+	{/* BLOK 1: HERO */}
+	<section id="hero" class="relative pt-12 pb-8 md:pt-24 md:pb-16 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0">
+		<div class="w-full lg:w-[55%] relative z-20 text-center lg:text-left mt-2 md:mt-8 lg:mt-0 xl:-mr-24 bg-white/80 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none p-5 md:p-6 lg:p-0 rounded-3xl lg:rounded-none">
+			<div class="inline-block px-4 py-2 rounded-full bg-[var(--color-brand-secondary)]/60 backdrop-blur-md border border-[var(--color-brand-secondary)] mb-3 md:mb-6 text-xs md:text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent-hover)] shadow-sm">
+				Voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten
+			</div>
+			<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4rem] font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-tight md:leading-[1.08] tracking-tight drop-shadow-sm">
+				In 12 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet.
+			</h1>
+			<p class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-semibold">
+				Een begeleid programma van twaalf weken waarin je de taal van je klacht leert verstaan. In een kleine groep van acht vrouwen bij wie je niets hoeft uit te leggen.
+			</p>
+			<ul class="text-left max-w-xl mx-auto lg:mx-0 space-y-3 mb-8 md:mb-10">
+				<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)]">
+					<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+					Je snapt eindelijk waaróm je lijf dit doet. In gewone taal, zonder dat je je intelligentie beledigd voelt.
+				</li>
+				<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)]">
+					<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+					Je klachten worden draagbaar, of ze verdwijnen.
+				</li>
+				<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)]">
+					<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+					Je lichaam verandert van iets dat je vreest in iets dat je omarmt.
+				</li>
+				<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)]">
+					<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+					Je doet het niet meer alleen. Acht vrouwen, en ik erbij.
+				</li>
+				<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)]">
+					<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+					En als het na veertien dagen toch niet klopt, krijg je je geld terug. Zonder gedoe.
+				</li>
+			</ul>
+			<div class="flex justify-center lg:justify-start">
+				<Button href={ctaHref} data-cta-location="hero" className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
+					{ctaLabel} →
+				</Button>
+			</div>
+			<p class="text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
+				8 plekken. Start maandag 21 september.
+			</p>
+		</div>
+		<div class="w-full lg:w-[50%] relative z-10">
+			<div class="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto aspect-[3/4] sm:aspect-square md:aspect-square lg:aspect-[4/5]">
+				<div class="absolute inset-0 bg-gradient-to-tr from-[#E8D1C5] via-[#f0ddd4] to-[#fdfbf9] rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-2xl shadow-[var(--color-brand-accent)]/25 transform rotate-[-2deg] transition-transform duration-700 hover:rotate-0"></div>
+				<Picture
+					src={portretCrystal}
+					alt="Crystal Helder"
+					widths={[320, 480, 640, 960]}
+					sizes="(max-width: 640px) 220px, (max-width: 768px) 320px, (max-width: 1024px) 448px, 640px"
+					class="absolute inset-0 w-full h-full object-cover rounded-tl-[6rem] rounded-br-[6rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]"
+					style="object-position: center 20%;"
+					fetchpriority="high"
+					loading="eager"
+				/>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 2: AUTHORITY-STRIP */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 fade-in-section">
+		<div class="max-w-3xl mx-auto text-center">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Ik ben Crystal.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Ik werk al meer dan tien jaar dagelijks met de Germaanse Geneeskunde en ik heb honderden conflictanalyses gedaan. Daarnaast breng ik twintig jaar ervaring mee in emotieregulatie, pedagogie en lichaamswerk.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Dat is bewust die combinatie. Want een verklaring alleen brengt je nergens. Ik kan achterhalen wat er speelt, en ik kan je er ook doorheen begeleiden.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik ben niet de goeroe die zegt hoe het moet. Ik ben degene die naast je zit, luistert, en samen met jou uitzoekt wat je lichaam probeert te vertellen.
+			</p>
+			<p class="text-sm text-[var(--color-brand-muted)]/70 italic">
+				Bron: deze cijfers staan letterlijk op Crystals eigen live pagina's. Geen schatting.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 3: DE SCÈNE */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="dropcap text-lg md:text-xl text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
+				Het is 4:12 's nachts.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je weet het zo precies omdat je al drie keer op je telefoon hebt gekeken. De kruik in je rug is lauw geworden. Je ligt op je zij, knieën opgetrokken, en je durft je bijna niet te bewegen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Niet omdat het nú zo erg is. Maar omdat je weet wat eraan komt.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En dus lig je stil. Je spant je buik aan. Je ademt hoog en oppervlakkig, want diep ademhalen voelt riskant. Je hele lijf staat in de startblokken voor iets wat nog moet gebeuren.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat aanspannen. Dat wachten. Die stille onderhandeling met je eigen lichaam om alsjeblieft, alsjeblieft niet weer.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Daar bestaat een woord voor, en dat heeft nog nooit iemand tegen je gezegd.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je vecht twee gevechten.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Het eerste is de pijn zelf. Die is echt, die is lichamelijk, en die verzin je niet.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Het tweede is alles wat je doet om de pijn voor te blijven. Het schrap zetten. De paniek als het opkomt. De woede. Het onderhandelen. De uitputting van altijd maar op je hoede zijn.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je bent al jaren bezig met dat eerste gevecht. Er is nog nooit iemand geweest die je hielp met het tweede.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
+				En dat is precies waar dit begint.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 4: HERKENNING */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je hebt overal pijnstillers. In je tas, in je auto, in je bureaula, in je jaszak. Je weet precies hoeveel er nog in het stripje zitten, en je weet precies hoe lang het duurt voordat ze werken.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je zegt af. Weer. Je typt "sorry, voel me niet lekker" en je zet er een lachend emoji achter, want de waarheid is te lang en te intiem en te moeilijk uit te leggen aan iemand die om vijf uur een verjaardag heeft.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je draait je om in bed. Je partner legt een hand op je rug en je verstijft, en je haat jezelf daarom, en je zegt niks, want wat moet je zeggen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je zit tegenover een arts die naar een scherm kijkt en zegt dat alles er goed uitziet. En terwijl je naar buiten loopt bedenk je dat "er is niets gevonden" en "er is niets aan de hand" niet hetzelfde zijn. Maar dat je dat nergens kwijt kunt.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
+				Dit ligt niet aan jou.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+				Je lijf doet niet iets geks. Je lijf doet precies wat het moet doen in een situatie die onmogelijk is. En dat je uitgeput bent van jarenlang op scherp staan, is geen zwakte. Dat is wat er gebeurt met een mens die nooit veilig heeft kunnen zakken.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 5: HET VERHAAL VAN CRYSTAL */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h3 class="text-2xl md:text-3xl font-semibold mt-2 mb-6 text-center text-[var(--color-brand-primary-text)]">Waarom ik dit doe</h3>
+			<p class="dropcap text-lg md:text-xl text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
+				Mijn broertje overleed toen hij vijf maanden oud was. Hij had een hartafwijking.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Mijn moeder voelde dat er iets niet klopte. Ze trok aan de bel, en er werd niet naar haar geluisterd. De diagnose kwam te laat. Op de dag dat hij zijn harttransplantatie zou krijgen, was het voorbij.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik ben opgegroeid met een besef dat ik toen nog niet kon benoemen. Ze weten het niet altijd. Ze luisteren niet altijd.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En ik heb van heel dichtbij gezien wat er met een vrouw gebeurt die voelt dat er iets mis is, en die niet geloofd wordt.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat is waarom ik dit doe.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik heb jouw pijn niet gehad. Ik ga niet doen alsof, want je hebt al genoeg mensen gehad die deden alsof ze het begrepen. Ik heb geen endometriose gehad en ik weet niet hoe het is om kruipend naar de douche te gaan.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar dat gevoel dat je iets weet over je eigen lijf, en dat de mensen met de kennis en de witte jassen er overheen kijken? Daar ben ik mee opgegroeid. Dat is niet iets wat ik uit een boek heb.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Al mijn opleidingen door bleef ik tegen hetzelfde aanlopen. Wat gezondheid echt is, leer je niet uit een boekje. En elke specialist zei iets anders.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Later kreeg ik een ongeluk. Er volgden veel operaties, en er ging een tijd overheen waarin mijn lijf iets was dat gerepareerd moest worden.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				In die periode ontdekte ik iets wat me sindsdien niet meer heeft losgelaten: echte gezondheid heeft alles te maken met hoe je je voelt en met wat je meemaakt. En dat je écht naar je lichaam leert luisteren, dat wordt je nergens geleerd. In geen enkele opleiding, bij geen enkele specialist.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat heb ik moeten leren van de biologische natuurwetten. En van mijn eigen intuïtie.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Toen viel alles op zijn plek.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ineens voelde ik het: mijn lichaam maakte geen fouten. Het was wijs. Ook als ik ziek was. Juist als ik ziek was.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik leerde ziek te zijn zonder te vechten. En wat ik ontdekte, is dat het dan sneller voorbijgaat. Elke keer bracht het me iets wat ik nodig had.
+			</p>
+
+			<h3 class="text-2xl md:text-3xl font-semibold mt-12 mb-6 text-center text-[var(--color-brand-primary-text)]">Waarom ik dit met vrouwen doe, en met deze klachten</h3>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Wij vrouwen zijn ons aan het losmaken van oude patronen. We zoeken onze eigen plek, en we kunnen alles.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar we doen het met opvallend veel lichamelijke klachten. En ik denk niet dat dat toeval is.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				De pijn die in onze vrouwelijke organen zit, nemen we niet serieus genoeg. We kijken er van de verkeerde kant naar. We onderdrukken hem, plannen eromheen, en gaan door.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Er is bijna geen vrouw die deze pijn niet kent.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En het kan ook zonder.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Daar wil ik je bij helpen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik kan je klacht niet wegnemen. Dat is niet aan mij, en iedereen die je dat belooft, moet je wantrouwen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Wat ik wel kan, is naast je gaan zitten en samen met jou uitzoeken wat je lichaam probeert te zeggen.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
+				En dat is precies wat er nog nooit iemand met je heeft gedaan.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 6: DE GEFAALDE WEGEN EN DE ECHTE OORZAAK */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Misschien heb je de pil geslikt. Misschien ben je van de gluten af gegaan, en daarna van de zuivel, en daarna van de suiker. Misschien heb je bekkenbodemfysiotherapie gedaan, of een operatie ondergaan, of een half jaar gemindfulnessd omdat iemand zei dat het door stress kwam.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Of misschien heb je helemaal niets geprobeerd. Misschien heb je het al die jaren gewoon gedragen, in stilte, omdat je na de derde keer "welkom bij het vrouw-zijn" geen zin meer had om je nog een keer uit te leggen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Allebei is logisch.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En hier is wat ik je wil zeggen over al die wegen: ze waren niet fout. Ze deugden alleen niet voor jouw situatie.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Want ze werkten allemaal op hetzelfde niveau. Het niveau van het symptoom. Ze bestreden de pijn, ze onderdrukten de pijn, ze leerden je omgaan met de pijn.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat is de brandweer sturen naar een huis dat blijft branden. Iedereen doet zijn best, en het vuur blust ook echt even. Maar zolang niemand vraagt wie het aansteekt, komt het terug.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En daar zit de gemeenschappelijke vijand. Niet je huisarts, die het goed bedoelde en deed wat hij geleerd heeft. Maar een systeem dat geen taal heeft voor pijn die het niet kan zien. Dat een lege scan vertaalt naar "er is niets", terwijl het betekent: we hebben op de verkeerde plek gekeken.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je hebt niet meer wilskracht nodig. Je hebt geen strengere lijst nodig, geen zwaarder dieet, geen betere discipline.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
+				Je hebt een aanpak nodig die begint waar het werkelijk begint.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 7: DE OPENBARING */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je lichaam maakt geen fouten.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat klinkt misschien vreemd, want het voelt alsof je lijf je verraadt. Alsof het kapot is. Alsof er iets stuk zit dat gemaakt moet worden.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar zo werkt het niet.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Wat wij een klacht noemen, is bijna nooit een defect. Het is een reactie. Je lichaam heeft ooit iets meegemaakt, en het heeft daarop een antwoord gegeven. Een slim antwoord, een beschermend antwoord, precies op het moment dat je dat nodig had.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Alleen: dat antwoord staat nog aan.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je bekken spant niet omdat het kapot is. Het spant omdat het ooit heeft geleerd dat spannen veiliger was. Je cyclus loopt niet vast omdat je lijf je pest. Hij loopt vast omdat er iets is waar je lijf nog niet klaar mee is.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				De pijn is lichamelijk. Die is echt, die is meetbaar in je spieren, je weefsel, je zenuwen. Het zit niet tussen je oren.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar de knop waarmee het wordt aangestuurd, zit ergens waar nog nooit iemand met je heeft gekeken.
+			</p>
+
+			<blockquote class="text-2xl md:text-3xl font-semibold text-center text-[var(--color-brand-primary-text)] leading-snug my-12 py-8 border-y border-[var(--color-brand-secondary)]">
+				Je lijf maakt geen fouten. Het maakt keuzes die jij nooit bewust hebt genomen.
+			</blockquote>
+
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				En nu komt het punt waarop je waarschijnlijk iets voelt samentrekken. Want als het lichaam reageert op iets, betekent dat dan dat jij het hebt veroorzaakt? Heb je dit aan jezelf te danken? Had je beter je best moeten doen?
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Nee.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Laat me daar heel duidelijk over zijn, want de holistische wereld heeft je hier misschien al eens pijn gedaan.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat er een oorzaak is, betekent niet dat het jouw schuld is. Je hebt dit niet veroorzaakt met verkeerd denken. Je hebt niets fout gedaan.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
+				Dit maakt jou niet de oorzaak. Dit maakt jou de sleutel.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+				Want als je lijf een reden heeft, dan is er iets om te begrijpen. En wat je begrijpt, hoef je niet langer te bevechten.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 8: WAT WEL EN NIET VERANDERT */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik ga je eerst vertellen wat er níét gebeurt.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Ik kan je niet garanderen dat je pijn weg is. Ik ben geen arts en ik doe geen medische beloftes, en iedereen die dat wel doet bij een lijf als het jouwe, moet je wantrouwen.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je endometriose lost niet op omdat je hem begrijpt. Je zult nog dagen hebben die zwaar zijn. En er komt geen moment waarop alles ineens licht is en je een ander mens bent geworden.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat is de eerlijke versie. En ik zeg hem hardop, omdat je al genoeg mensen hebt gehad die je iets beloofden.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
+				Wat er wél verandert, is dit.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Op een ochtend word je wakker en merk je dat je je buik niet meteen aftast. Dat je gewoon opstaat, zonder eerst te scannen wat er vandaag gaat gebeuren.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je partner zegt op een dag, half verbaasd, dat je de laatste tijd zoveel minder gespannen bent. En je snapt eerst niet waar hij het over heeft, tot je het zelf ook merkt.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je krijgt je menstruatie en er komt geen paniek. De pijn is er misschien nog, maar de angst eromheen is weg. En dat scheelt zoveel meer dan je nu kunt geloven.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je zegt geen afspraak meer af omdat je bang bent voor wat er zou kunnen gebeuren.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+				En op een dag hoor je jezelf iets zeggen over je lijf, en je merkt dat je niet meer praat over een vijand.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 9: MID-PAGE CTA */}
+	<section class="py-12 md:py-16 px-6 lg:px-8 bg-white text-center fade-in-section">
+		<p class="text-xl md:text-2xl font-medium text-[var(--color-brand-primary-text)] mb-6">
+			Herken je dit, en wil je weten hoe ik hiermee werk?
+		</p>
+		<Button href="#programma" variant="secondary" className="text-base md:text-lg px-8 py-4">
+			Laat me het programma zien
+		</Button>
+	</section>
+
+	{/* BLOK 10: HET PROGRAMMA */}
+	<section id="programma" class="py-20 md:py-32 px-6 lg:px-8 bg-[var(--color-brand-base)] relative fade-in-section">
+		<div class="max-w-5xl mx-auto">
+			<div class="text-center mb-12 md:mb-16">
+				<h2 class="text-3xl md:text-5xl font-bold mb-3 tracking-tight">Thuiskomen in je Vrouwenlijf</h2>
+				<p class="text-xl md:text-2xl text-[var(--color-brand-muted)] font-medium mb-4">In twaalf weken begrijpen waarom je lichaam dit doet.</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)]">Twaalf weken, drie pijlers, acht vrouwen.</p>
+			</div>
+
+			<div class="max-w-2xl mx-auto mb-16">
+				<h3 class="text-xl md:text-2xl font-semibold mb-4">Waar ik mee werk, en hoe het heet</h3>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Ik werk vanuit de Germaanse Geneeskunde. Dat is de reden dat ik andere vragen stel dan je arts.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					In gewone taal komt het hierop neer: het gaat ervan uit dat je lichaam op ingrijpende gebeurtenissen reageert met een biologisch programma, en dat je klacht onderdeel is van dat programma en niet van een defect.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Ik leg je dat rustig uit, in normale mensentaal, zonder dat je ergens in hoeft te geloven. Je hoeft niets aan te nemen. Je gaat het zelf herkennen, of niet.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed">
+					En het is aanvullend. Je houdt je arts, je onderzoeken en je medicatie gewoon. Ik ga daar niet tussen staan.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+				<Card bgVariant="white" className="border-t-2 border-t-[var(--color-brand-accent)]/30">
+					<p class="text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] mb-3">Pijler 1</p>
+					<h3 class="text-xl md:text-2xl font-semibold mb-4">Het lichaamsbegrip</h3>
+					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Je leert de biologische logica onder jouw specifieke klacht. Twaalf video-modules die je kijkt wanneer het jou uitkomt, met een werkboek dat je stap voor stap naar je eigen verhaal brengt.</p>
+					<p class="text-sm font-semibold text-[var(--color-brand-primary-text)] italic">Wat het je oplevert: het einde van de onzekerheid. Je snapt eindelijk waarom.</p>
+				</Card>
+				<Card bgVariant="white" className="border-t-2 border-t-[var(--color-brand-accent)]/30">
+					<p class="text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] mb-3">Pijler 2</p>
+					<h3 class="text-xl md:text-2xl font-semibold mb-4">De lichaamstaal</h3>
+					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Dit is waar het kantelt. Begrijpen met je hoofd is één ding, maar het moet landen in je lijf, anders verandert er niets. Ik werk met voice dialogue, met opstellingen en met lichaamsgerichte oefeningen. Laagje voor laagje, in jouw tempo. Ik breek je niet open. Nee mag altijd, en "ik doe even niet mee" is een compleet antwoord.</p>
+					<p class="text-sm font-semibold text-[var(--color-brand-primary-text)] italic">Wat het je oplevert: de brug van weten naar voelen.</p>
+				</Card>
+				<Card bgVariant="white" className="border-t-2 border-t-[var(--color-brand-accent)]/30">
+					<p class="text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] mb-3">Pijler 3</p>
+					<h3 class="text-xl md:text-2xl font-semibold mb-4">De bedding</h3>
+					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Zes live sessies waarin we samen kijken naar wat er bij jou speelt, een besloten groep waar je terechtkunt als het schuurt, en een buddy die weet waar je aan werkt.</p>
+					<p class="text-sm font-semibold text-[var(--color-brand-primary-text)] italic">Wat het je oplevert: je doet het niet alleen.</p>
+				</Card>
+			</div>
+
+			<div class="max-w-2xl mx-auto mb-12">
+				<h3 class="text-xl md:text-2xl font-semibold mb-4">En we komen een dag samen. Echt samen, in dezelfde ruimte.</h3>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Dat is geen extraatje. Het hoort bij het programma, en ik wil dat je erbij bent.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Wat er in één dag gebeurt tussen acht vrouwen die hetzelfde dragen, dat krijg ik via een scherm niet voor elkaar. Niet in zes sessies, niet in twaalf weken. Je hoeft het maar één keer mee te maken dat iemand tegenover je hetzelfde zegt als wat jij al jaren denkt, en er verandert iets wat online niet verandert.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					De rest van het programma doe je gewoon vanaf je bank. Deze dag niet.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed">
+					En als je nu al denkt dat je een hele dag niet aankunt, lees dan verderop, want daar heb ik iets over te zeggen.
+				</p>
+			</div>
+
+			<div class="max-w-2xl mx-auto">
+				<h3 class="text-xl md:text-2xl font-semibold mb-4">En dan dit, want ik weet hoe moe je bent</h3>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Dit programma komt niet bovenop je leven. Het past erin.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					De modules kijk je liggend, op de bank, met een kruik. De oefeningen kosten geen energie, ze geven energie terug. En als je een week hebt waarin je niets kunt, dan doe je die week niets, en dan pak je het daarna weer op.
+				</p>
+				<p class="text-lg font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
+					Genezing begint niet met harder werken. Het begint met zakken.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 11: WAT JE KRIJGT */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-4xl mx-auto">
+			<table class="value-table w-full border-separate border-spacing-y-3">
+				<thead class="hidden md:table-header-group">
+					<tr class="text-left text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-muted)]">
+						<th class="pb-2 px-4">Wat je krijgt</th>
+						<th class="pb-2 px-4">Wat het je oplevert</th>
+						<th class="pb-2 px-4 text-right">Waarde</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="bg-[var(--color-brand-base)] rounded-2xl shadow-sm">
+						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">Het lichaamsbegrip<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">12 video-modules, intake en werkboek</span></td>
+						<td data-label="Wat het je oplevert" class="p-4 md:p-5 text-[var(--color-brand-muted)]">Je snapt eindelijk waarom je lijf dit doet</td>
+						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 997</td>
+					</tr>
+					<tr class="bg-[var(--color-brand-base)] rounded-2xl shadow-sm">
+						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">De lichaamstaal<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">Voice dialogue, opstellingen, lichaamsgerichte oefeningen</span></td>
+						<td data-label="Wat het je oplevert" class="p-4 md:p-5 text-[var(--color-brand-muted)]">Van weten naar voelen. Hier kantelt het</td>
+						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 2.497</td>
+					</tr>
+					<tr class="bg-[var(--color-brand-base)] rounded-2xl shadow-sm">
+						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">De bedding<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">6 live sessies, besloten groep, buddy</span></td>
+						<td data-label="Wat het je oplevert" class="p-4 md:p-5 text-[var(--color-brand-muted)]">Je doet het niet meer alleen</td>
+						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 1.497</td>
+					</tr>
+					<tr class="bg-[var(--color-brand-base)] rounded-2xl shadow-sm">
+						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">De zes extra's<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">Zie hieronder</span></td>
+						<td data-label="Wat het je oplevert" class="p-4 md:p-5 text-[var(--color-brand-muted)]">Voor elk "ja, maar" dat je nu voelt</td>
+						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 2.182</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="3" class="pt-6 px-4 text-center">
+							<p class="text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-muted)] mb-1">Totale waarde</p>
+							<p class="text-3xl md:text-4xl font-bold text-[var(--color-brand-primary-text)]">€ 7.173</p>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</section>
+
+	{/* BLOK 12: DE ZES EXTRA'S */}
+	<section class="py-20 md:py-32 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-6xl mx-auto">
+			<p class="text-center text-xl md:text-2xl font-medium text-[var(--color-brand-primary-text)] max-w-2xl mx-auto mb-12 md:mb-16">
+				Ik heb zes dingen voor je gemaakt. Elk daarvan lost iets op waar ik je nu al over hoor twijfelen.
+			</p>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+				<Card bgVariant="white" className="p-6 md:p-8">
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Straks voel ik iets nieuws en ga ik om drie uur 's nachts googelen."</p>
+					<h3 class="text-lg font-semibold mb-1">1. De symptoomdecoder <span class="font-normal text-[var(--color-brand-muted)]">· € 197</span></h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Een kaart en een checklist waarmee je zelf kunt kijken wat je lijf zegt. Zodat je niet in de zoekmachine belandt, maar bij jezelf.</p>
+				</Card>
+				<Card bgVariant="white" className="p-6 md:p-8">
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Mijn partner snapt er niets van."</p>
+					<h3 class="text-lg font-semibold mb-1">2. De relatiekit <span class="font-normal text-[var(--color-brand-muted)]">· € 497</span></h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Een video die je hem kunt laten zien, zodat jij het niet nog een keer hoeft uit te leggen. Plus woorden voor de gesprekken waar je nu voor terugdeinst.</p>
+				</Card>
+				<Card bgVariant="white" className="p-6 md:p-8">
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"En als het te veel wordt en ik zak door de bodem?"</p>
+					<h3 class="text-lg font-semibold mb-1">3. Het veiligheidsnet <span class="font-normal text-[var(--color-brand-muted)]">· € 297</span></h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Een protocol voor als het schuurt en een audio die je meteen kunt opzetten. Je valt niet, en je valt zeker niet alleen.</p>
+				</Card>
+				<Card bgVariant="white" className="p-6 md:p-8">
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Twee weken per maand herken ik mezelf niet."</p>
+					<h3 class="text-lg font-semibold mb-1">4. Het cycluskompas <span class="font-normal text-[var(--color-brand-muted)]">· € 297</span></h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Een kaart van je eigen cyclus en wat je in elke fase van jezelf mag verwachten. Je bent geen twee mensen. Je bent één vrouw met een lijf dat iets probeert te zeggen.</p>
+				</Card>
+				<Card bgVariant="white" className="p-6 md:p-8">
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"En als het over twee jaar terugkomt?"</p>
+					<h3 class="text-lg font-semibold mb-1">5. Je gereedschap, voor altijd <span class="font-normal text-[var(--color-brand-muted)]">· € 397</span></h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Alles blijft van jou, en je houdt toegang tot de groep, ook als de twaalf weken voorbij zijn. Zodat je bij een terugval niet opnieuw begint, maar teruggrijpt.</p>
+				</Card>
+				<Card bgVariant="white" className="p-6 md:p-8">
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Ik wil niet twaalf weken wachten op iets merkbaars."</p>
+					<h3 class="text-lg font-semibold mb-1">6. De eerste verschuiving <span class="font-normal text-[var(--color-brand-muted)]">· € 497</span></h3>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Eén oefening die je meteen krijgt, en waarmee de meeste vrouwen binnen twee dagen iets voelen verschuiven. Niet je pijn weg, maar de greep eromheen losser.</p>
+				</Card>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 13: VOOR WIE DIT IS, EN VOOR WIE NIET */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+			<div>
+				<h3 class="text-xl md:text-2xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Dit is voor jou als:</h3>
+				<ul class="space-y-4">
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-sage)] font-bold shrink-0 mt-1">✓</span>
+						Je jarenlang van het kastje naar de muur bent gestuurd en je het vertrouwen bent kwijtgeraakt, maar nog niet de hoop.
+					</li>
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-sage)] font-bold shrink-0 mt-1">✓</span>
+						Je nuchter bent, en niet van plan om iets te geloven alleen omdat iemand het zegt.
+					</li>
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-sage)] font-bold shrink-0 mt-1">✓</span>
+						Je bereid bent om te kijken naar wat er onder je klacht ligt, ook als dat ongemakkelijk wordt.
+					</li>
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-sage)] font-bold shrink-0 mt-1">✓</span>
+						Je klaar bent met alleen zijn hierin.
+					</li>
+				</ul>
+			</div>
+			<div>
+				<h3 class="text-xl md:text-2xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Dit is niet voor jou als:</h3>
+				<ul class="space-y-4">
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
+						Je een oplossing zoekt waar je zelf niets voor hoeft te doen. Ik heb tools, geen toverstok.
+					</li>
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
+						Je wilt stoppen met je medische behandeling. Dat is niet wat ik doe en ik zal je daar nooit toe aanmoedigen.
+					</li>
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
+						Je wilt dat ik je vertel dat je pijn over twaalf weken weg is. Dat beloof ik je niet, en ik zou liegen als ik het wel deed.
+					</li>
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
+						Je op dit moment in een crisis zit waarin je eerst andere hulp nodig hebt. Dan is dit niet het juiste moment, en dat is geen afwijzing. Stuur me gerust een bericht, dan denk ik met je mee.
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 14: BEWIJS */}
+	<section class="py-20 md:py-32 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-5xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-4 text-center tracking-tight">Dit programma is nieuw. Mijn werk niet.</h2>
+			<p class="max-w-2xl mx-auto text-center text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Ik kan je geen verhalen laten zien van vrouwen die dit programma hebben gedaan, want jij bent bij de eersten. Ik ga ze ook niet verzinnen, en ik ga geen sterren op deze pagina zetten die nergens op slaan.
+			</p>
+			<p class="max-w-2xl mx-auto text-center text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Wat ik je wel kan zeggen: het werk zelf is niet nieuw. Dit doe ik al meer dan tien jaar, één op één.
+			</p>
+			<p class="max-w-2xl mx-auto text-center text-base md:text-lg font-medium text-[var(--color-brand-primary-text)] leading-relaxed mb-12 md:mb-16">
+				Dit zeggen vrouwen die ik begeleidde.
+			</p>
+
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
+				<div class="bg-white rounded-[2rem] p-8 shadow-sm">
+					<svg class="h-8 w-8 text-[var(--color-brand-accent)]/30 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
+					<p class="text-base leading-relaxed mb-6 italic text-[var(--color-brand-primary-text)]">"Ik vond Crystal zeer scherp in verbanden leggen, heel helder in uitleg over wat ik te doen had en met welke thema's mijn klachten verbonden waren in mijn leven. Vooral werd me duidelijk hoe ik moest navigeren in wat er in mijn leven gebeurde. Ze is een heel fijn, open en compassievol mens."</p>
+					<p class="font-bold text-sm text-[var(--color-brand-primary-text)]">Kinga Sidor</p>
+				</div>
+				<div class="bg-white rounded-[2rem] p-8 shadow-sm">
+					<svg class="h-8 w-8 text-[var(--color-brand-accent)]/30 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
+					<p class="text-base leading-relaxed mb-6 italic text-[var(--color-brand-primary-text)]">"Crystal is heerlijk nuchter maar enorm doortastend. Ze kan me op een bepaalde manier lezen waardoor ze heel snel concreet kan maken waar ik zelf de woorden nog niet voor kan vinden. Ik merk dat ik veel meer bij mezelf kan blijven, m'n grenzen aanvoel en mezelf een stuk beter begrijp."</p>
+					<p class="font-bold text-sm text-[var(--color-brand-primary-text)]">Tessa van Beek</p>
+				</div>
+				<div class="bg-white rounded-[2rem] p-8 shadow-sm">
+					<svg class="h-8 w-8 text-[var(--color-brand-accent)]/30 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
+					<p class="text-base leading-relaxed mb-6 italic text-[var(--color-brand-primary-text)]">"We gingen terug in de tijd naar de oorsprong van bepaalde thema's, en wauw. Wat een geschenk en verademing om op deze manier meegenomen te worden. Heel straight en helder."</p>
+					<p class="font-bold text-sm text-[var(--color-brand-primary-text)]">Marinka van Aken</p>
+				</div>
+			</div>
+
+			<p class="max-w-2xl mx-auto text-center text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+				En verder doe ik wat ik kan doen: ik neem het risico van je over. Zie de garantie hieronder.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 15: DE INVESTERING */}
+	<section id="investering" class="py-20 md:py-32 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto text-center">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">Even alles bij elkaar.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Het lichaamsbegrip, de lichaamstaal, de bedding, en de zes extra's. Bij elkaar een waarde van <strong class="text-[var(--color-brand-primary-text)]">€ 7.173</strong>.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Als deze twaalf weken volgend jaar draaien, is de prijs <strong class="text-[var(--color-brand-primary-text)]">€ 1.497</strong>.
+			</p>
+			<p class="text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)] mb-6">
+				Voor deze eerste groep is het € 997.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-10">
+				Niet omdat je minder krijgt. Je krijgt meer van mij dan iedere groep die na jou komt, want ik ben er met acht vrouwen dichterbij dan ik ooit nog zal zijn. Maar jij stapt in bij iets waar nog geen verhalen van anderen bij staan, en je zegt ja op mijn woord alleen. Dat is wat waard.
+			</p>
+
+			<div class="text-left bg-[var(--color-brand-base)] rounded-3xl p-6 md:p-8 shadow-sm mb-10">
+				<p class="font-semibold text-[var(--color-brand-primary-text)] mb-4">En dan dit, want ik ken deze gedachte.</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Er komt zo een moment waarop je denkt: dat is veel geld, en ik heb al zoveel uitgegeven aan dingen die niet hielpen.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Dat klopt. En je mag boos zijn over elke euro daarvan.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+					Maar reken ook eens de andere kant uit. Wat kost het je nu al? De pijnstillers, de supplementen, de behandelingen die je zelf betaalt omdat ze niet vergoed worden. De dagen die je niet werkt. De dingen die je afzegt. De jaren.
+				</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+					En vraag je dan af of het echt egoïstisch is om dit voor jezelf te doen. Want jij bent degene die alles draagt in je gezin, in je werk, voor iedereen om je heen. Je hebt jarenlang op je tenen gelopen. Dat je nu een keer iets voor jezelf regelt, is niet egoïstisch. Dat is het minst egoïstische dat er is.
+				</p>
+			</div>
+
+			<div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
+				<a
+					href={CHECKOUT_URL_INEENS}
+					data-checkout
+					data-payment-option="single"
+					data-cta-text="Ik doe mee, €997 ineens"
+					class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white shadow-lg shadow-[var(--color-brand-accent)]/25 hover:shadow-xl hover:shadow-[var(--color-brand-accent)]/30"
+				>
+					Ik doe mee, € 997 ineens
+				</a>
+				<a
+					href={CHECKOUT_URL_TERMIJNEN}
+					data-checkout
+					data-payment-option="installments"
+					data-cta-text="Ik doe mee, in 3 termijnen"
+					class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-secondary)] hover:bg-[#D5C2B9] text-[var(--color-brand-primary-text)] shadow-sm hover:shadow-md"
+				>
+					Ik doe mee, in 3 termijnen
+				</a>
+			</div>
+			<p class="text-sm text-[var(--color-brand-muted)] italic">Je draagt het risico niet alleen. Lees hieronder waarom.</p>
+		</div>
+	</section>
+
+	{/* BLOK 16: WAAROM NU */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			{inschrijvingOpen ? (
+				<>
+					<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Acht vrouwen. Meer niet.</h3>
+					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dat is geen trucje om je op te jagen.</p>
+					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+						Ik doe dit met acht omdat ik in de live sessies elke vrouw wil zien. Niet als naam in een lijst, maar echt: wat er bij jou speelt, waar jij vastloopt, wat jij nodig hebt. Bij twintig vrouwen lukt dat niet, en dan word jij een van de twintig. Dat wil ik niet, en jij wilt het ook niet, want dat is precies wat je al jaren overkomt.
+					</p>
+					<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">We beginnen op maandag 21 september.</h3>
+					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+						Acht plekken, en als ze vol zijn, is het vol. Ik schuif niemand er nog even bij, want dan klopt de groep niet meer.
+					</p>
+					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Daarna is de volgende groep pas over een half jaar.</p>
+				</>
+			) : (
+				<>
+					<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Deze groep is vol.</h3>
+					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+						Acht vrouwen, en die acht plekken zijn ingevuld. Zet je op de wachtlijst en je hoort als eerste wanneer de volgende groep van start gaat.
+					</p>
+				</>
+			)}
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] mb-6">En dat is het eigenlijke punt.</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Niet de datum. De datum is maar een datum.</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Het punt is wat er gebeurt als je dit nog een half jaar laat liggen. Dan is het maart. Dan heb je nog zes menstruaties gehad waarvan je er minstens drie hebt uitgezeten met een kruik. Dan heb je weer een handvol afspraken afgezegd. Dan lig je nog steeds om 4:12 's nachts wakker, aangespannen, wachtend.
+			</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dan is er niets veranderd, behalve dat er weer een half jaar van je leven voorbij is.</p>
+			<p class="text-lg font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat is geen dreigement. Dat is gewoon wat er gebeurt als je niets doet, en dat weet je zelf ook.</p>
+			<div class="text-center">
+				<Button href={ctaHref} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
+					{ctaLabel}
+				</Button>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 17: DE VRAGEN DIE JE NU HEBT */}
+	<section id="vragen" class="py-20 md:py-32 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-12 text-center tracking-tight">De vragen die je nu hebt</h2>
+			<div class="space-y-4 md:space-y-6">
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"Ik heb hier de energie niet voor."</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Ik weet het. En ik neem dat serieus, want dit is niet hetzelfde als geen zin hebben. Jij bent op. Jij verdeelt je energie al maanden alsof het rantsoen is.</p>
+							<p>Daarom is dit programma zo gebouwd dat het geen energie kóst. De modules kijk je liggend. De oefeningen zijn bedoeld om je zenuwstelsel te laten zakken, niet om je op te jagen. En als je een week overslaat omdat je lijf niet meewerkt, dan blijft alles gewoon voor je klaarstaan.</p>
+							<p>Alles blijft van jou. Je loopt niets mis, ook niet als je even niet kunt.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"Ik heb al zoveel geld uitgegeven aan dingen die niet werkten."</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Dat is waar, en dat is precies waarom je terecht voorzichtig bent. Je bent al vaker teleurgesteld, en je bent er ook armer van geworden.</p>
+							<p>Ik ga je geen wonder beloven om dat gevoel weg te nemen. Wat ik je wel bied, is een andere plek om te kijken, en een garantie die het risico bij mij legt in plaats van bij jou. Je hebt veertien dagen om te ervaren of dit klopt.</p>
+							<p>En als het geld echt het enige is wat je tegenhoudt: stuur me een bericht. Dan kijk ik met je mee of er voor jou toch een manier is.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"Wat als mijn partner het niet snapt?"</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Dat is zwaar, en het maakt het extra eenzaam. Je hebt niet alleen de klacht, je hebt ook nog de taak om hem uit te leggen aan iemand die het niet ziet.</p>
+							<p>Daarom heb ik de relatiekit gemaakt. Er zit een video in die je hem kunt laten zien, zodat hij het van mij hoort en niet weer van jou. En er zitten woorden in voor de gesprekken waar je nu tegenop ziet.</p>
+							<p>Ik beloof je niet dat hij verandert. Dat kan ik niet, en dat zou niet eerlijk zijn. Maar ik kan het je een stuk makkelijker maken.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"Is dit niet een beetje zweverig?"</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Terechte vraag, en ik ben blij dat je hem stelt. Je bent nuchter, je bent vaak hoogopgeleid, en je hebt geen zin om je intelligentie beledigd te zien. Ik ook niet.</p>
+							<p>Wat ik doe is niet mystiek. Het is logica over hoe je lijf werkt, uitgelegd in gewone taal, en je hoeft er niets van te geloven. Je gaat het zelf herkennen, of niet. En als het bij jou niet blijkt te kloppen, dan hoor je dat van mij. Ik ga je niets aanpraten.</p>
+							<p>Je hoeft nergens in te geloven. Je hoeft alleen te kijken.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"En als het bij mij niet werkt?"</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Ik snap dat je dat vraagt. En weet je wat er onder die vraag zit? Niet de twijfel of ik goed ben. De twijfel of jij het kunt.</p>
+							<p>Dat is de gedachte die je al jaren met je meedraagt. Dat het aan jou ligt. Dat je niet genoeg je best doet, dat je te veel kapot bent, dat jij de uitzondering bent bij wie niets aanslaat.</p>
+							<p class="font-semibold text-[var(--color-brand-primary-text)]">Je bent de uitzondering niet.</p>
+							<p>Je krijgt hier een groep om je heen, een buddy die weet waar je aan werkt, en mij, twaalf weken lang. Je hoeft dit niet in je eentje te fiksen, en je hoeft het ook niet in één keer goed te doen.</p>
+							<p>En als je aan het einde alles hebt gedaan en je begrijpt je klacht nog steeds niet, dan ga ik met je door tot je het wel snapt. Zonder dat het je iets extra's kost.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"Een hele dag ergens naartoe. Ik weet niet of ik dat aankan."</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Dit is de vraag die ik het serieust neem van allemaal, en ik ga hem niet wegwuiven.</p>
+							<p>Ik weet dat reizen voor jou geen kleinigheid is. Dat een dag van huis betekent: hoe kom ik er, waar kan ik liggen, wat als het misgaat, en wat kost het me de dagen erna. Ik weet dat je al jaren je leven inricht rond precies deze rekensom.</p>
+							<p>En toch vraag ik je om te komen. Omdat ik heb gezien wat er in die ene dag gebeurt, en omdat ik je dat niet wil onthouden.</p>
+							<p>Dus dit is wat ik doe. Er is een plek om te liggen. Je mag zitten zoals je wilt, weglopen wanneer je wilt, later komen en eerder gaan. Je hoeft geen hele dag rechtop op een stoel te zitten, want dat vraag ik van niemand met een lijf zoals het jouwe.</p>
+							<p>En als je nu leest en je denkt: dit gaat me echt niet lukken, stuur me dan een bericht voordat je je inschrijft. Dan kijk ik met je mee wat er wél kan. Ik wil liever met je meedenken dan dat je afhaakt zonder het gevraagd te hebben.</p>
+						</div>
+					</div>
+				</details>
+
+				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+						<span class="pr-6">"Ik durf dit niet in een groep te bespreken."</span>
+						<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+							<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+						</span>
+					</summary>
+					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+						<div class="pb-6 md:pb-8 space-y-4">
+							<p>Natuurlijk niet. Je praat over je bekken, je blaas, je seksleven. Dat vertel je niet zomaar aan zeven vreemden, en iedereen die zegt dat dat wel meevalt, heeft het nooit hoeven doen.</p>
+							<p>Dus: je hoeft niets te delen wat je niet wilt. Nooit. Je mag twaalf weken lang je camera aan hebben en niets zeggen, en dan nog krijg je het volle programma.</p>
+							<p>Maar ik zeg er dit bij. Deze vrouwen kennen dit van binnenuit. En het moment waarop iemand iets zegt wat jij dacht dat alleen jij had, is voor de meeste vrouwen het moment waarop er iets breekt wat jaren op slot heeft gezeten.</p>
+							<p>Je hoeft het niet te vertellen. Maar je hoeft het ook niet langer alleen te dragen.</p>
+						</div>
+					</div>
+				</details>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 18: DE GARANTIE */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">Ik kan je nog geen verhalen van andere vrouwen laten zien.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Dus laat ik je zien dat ik er zelf voor sta.</p>
+
+			<h3 class="text-xl md:text-2xl font-semibold mb-4">Doe veertien dagen mee.</h3>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Niet nadenken, niet afwachten, niet aan de zijlijn kijken. Gewoon meedoen. Kijk de eerste modules, kom naar de eerste sessie, doe de eerste oefening.
+			</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">
+				En als je aan het einde van die veertien dagen voelt dat dit niet is wat je zoekt, dan zeg je dat tegen me en krijg je je geld terug. Geen formulier, geen uitleg, geen ongemakkelijk gesprek.
+			</p>
+
+			<h3 class="text-xl md:text-2xl font-semibold mb-4">En dan de tweede.</h3>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">
+				Als je de twaalf weken doorloopt, alle modules doet en bij de sessies bent, en je begrijpt aan het einde nog steeds niet wat jouw lichaam je vertelt, dan ga ik met je door. Eén op één, tot je het wel snapt. Daar betaal je niets extra voor.
+			</p>
+
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Ik beloof je niet dat je pijn weg is. Dat is niet aan mij.</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">
+				Ik beloof je wel dat je gaat snappen waarom je lijf doet wat het doet. En dat durf ik zo hard te beloven dat ik er mijn geld op zet.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 19: DE CLOSE */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="dropcap text-lg md:text-xl text-[var(--color-brand-primary-text)] leading-relaxed mb-6">Het is 4:12 's nachts.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Je ligt op je zij, je knieën opgetrokken, je buik aangespannen, wachtend op iets wat misschien komt.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">Ik kan je niet beloven dat je dat moment nooit meer meemaakt.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar ik kan je wel beloven dat je op een nacht wakker ligt en dat je merkt dat je niet meer aan het wachten bent. Dat het aanspannen er niet is. Dat je gewoon ligt, in een lijf waar je niet meer tegen vecht.
+			</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat tweede gevecht, dat je al die jaren in je eentje hebt gevoerd zonder dat iemand het zag.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat leg je hier neer.</p>
+
+			<div class="text-center mb-10">
+				<Button href={ctaHref} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
+					{ctaLabel}
+				</Button>
+			</div>
+
+			<p class="text-4xl text-center text-[var(--color-brand-accent)]" style="font-family: var(--font-signature);">Crystal</p>
+		</div>
+	</section>
+
+	{/* BLOK 20: P.S. */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				<strong class="text-[var(--color-brand-primary-text)]">P.S.</strong> Twaalf weken, in een groep van acht vrouwen, waarin je leert waarom je lichaam doet wat het doet. Start maandag 21 september. Normaal € 1.497, voor deze eerste groep € 997.
+			</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
+				Doe veertien dagen mee, en als het niet is wat je zoekt, krijg je je geld terug. En als je aan het einde je klacht nog steeds niet begrijpt, ga ik met je door tot je het wel doet.
+			</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">Acht plekken. Daarna is het een half jaar wachten.</p>
+			<div class="text-center">
+				<Button href={ctaHref} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
+					{ctaLabel}
+				</Button>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>
+
+<style is:global>
+	:global(html.js) .fade-in-section {
+		opacity: 0;
+		transform: translateY(20px);
+		visibility: hidden;
+		transition: opacity 600ms ease-out, transform 600ms ease-out;
+		will-change: opacity, visibility, transform;
+	}
+	:global(html.js) .fade-in-section.is-visible {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+</style>
+
+<style>
+	.dropcap::first-letter {
+		font-family: var(--font-heading);
+		font-size: 3.5rem;
+		line-height: 0.85;
+		font-weight: 700;
+		float: left;
+		padding-right: 0.5rem;
+		padding-top: 0.25rem;
+		color: var(--color-brand-accent);
+	}
+
+	@media (max-width: 767px) {
+		.value-table thead {
+			display: none;
+		}
+		.value-table tr {
+			display: block;
+			margin-bottom: 0;
+		}
+		.value-table td {
+			display: block;
+			text-align: left !important;
+		}
+		.value-table td[data-label]::before {
+			content: attr(data-label);
+			display: block;
+			font-size: 0.7rem;
+			font-weight: 600;
+			letter-spacing: 0.05em;
+			text-transform: uppercase;
+			color: var(--color-brand-accent);
+			margin-bottom: 0.25rem;
+		}
+	}
+</style>
+
+<script>
+	// DataLayer: begin_checkout tracking on the two checkout buttons (blok 15).
+	// Cross-origin redirect must wait for the dataLayer event to be sent — see tracking-patterns.md.
+	document.addEventListener("DOMContentLoaded", () => {
+		document.querySelectorAll("[data-checkout]").forEach((el) => {
+			el.addEventListener("click", (e) => {
+				e.preventDefault();
+				const href = el.getAttribute("href");
+				const paymentOption = el.getAttribute("data-payment-option");
+				const ctaText = el.getAttribute("data-cta-text");
+
+				let navigated = false;
+				function navigate() {
+					if (navigated) return;
+					navigated = true;
+					window.location.href = href as string;
+				}
+
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({
+					event: "begin_checkout",
+					cta_text: ctaText,
+					payment_option: paymentOption,
+					value: 997,
+					currency: "EUR",
+					eventCallback: navigate,
+					eventTimeout: 2000,
+				});
+				setTimeout(navigate, 2500);
+			});
+		});
+	});
+</script>
+
+<script>
+	// DataLayer: CTA click tracking (scroll-to-section CTA's, not the checkout buttons above)
+	document.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("click", (e) => {
+			const el = (e.target as HTMLElement).closest('a[href^="#"]');
+			if (!el) return;
+
+			const href = el.getAttribute("href");
+			const text = el.textContent?.trim();
+			const section = el.closest("section");
+			const location = section?.id || "unknown";
+
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				event: "cta_click",
+				cta_text: text,
+				cta_destination: href?.replace("#", ""),
+				cta_location: location,
+			});
+		});
+	});
+
+	// DataLayer: Scroll depth tracking
+	document.addEventListener("DOMContentLoaded", () => {
+		const thresholds = [25, 50, 75, 90];
+		const fired = new Set();
+
+		const checkScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+			thresholds.forEach((threshold) => {
+				if (scrollPercent >= threshold && !fired.has(threshold)) {
+					fired.add(threshold);
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "scroll_depth",
+						scroll_percentage: threshold,
+					});
+				}
+			});
+		};
+
+		let ticking = false;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						checkScroll();
+						ticking = false;
+					});
+					ticking = true;
+				}
+			},
+			{ passive: true }
+		);
+	});
+</script>
+
+<script>
+	// Scroll-triggered fade-in for every .fade-in-section
+	document.addEventListener("DOMContentLoaded", () => {
+		const animateOnScroll = function () {
+			const observer = new IntersectionObserver(
+				(entries, observer) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("is-visible");
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{ root: null, rootMargin: "0px", threshold: 0.15 }
+			);
+
+			const elements = document.querySelectorAll(".fade-in-section");
+			elements.forEach((el) => observer.observe(el));
+		};
+
+		animateOnScroll();
+		document.addEventListener("astro:page-load", animateOnScroll);
+	});
+</script>

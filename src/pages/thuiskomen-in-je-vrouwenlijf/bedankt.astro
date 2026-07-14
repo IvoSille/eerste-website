@@ -1,0 +1,95 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { Picture } from "astro:assets";
+import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
+---
+
+<Layout
+	title="Welkom bij Thuiskomen in je Vrouwenlijf — Crystal Helder"
+	description="Je inschrijving is ontvangen. Hier lees je wat er nu gebeurt."
+	includeCal={false}
+	robots="noindex"
+>
+	<div class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none" aria-hidden="true">
+		<div class="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"></div>
+		<div class="absolute bottom-[-10%] left-[-10%] w-[450px] h-[450px] bg-[var(--color-brand-sage)] rounded-full mix-blend-multiply filter blur-[120px] opacity-30"></div>
+	</div>
+
+	<div class="min-h-screen flex items-center justify-center px-6 py-20 md:py-24">
+		<div class="max-w-2xl mx-auto text-center fade-in-section">
+			<div class="w-20 h-20 rounded-full bg-[var(--color-brand-sage)] flex items-center justify-center mx-auto mb-8 shadow-lg shadow-[var(--color-brand-sage)]/30">
+				<svg class="w-10 h-10 text-[var(--color-brand-primary-text)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+				</svg>
+			</div>
+
+			<div class="inline-block px-4 py-2 rounded-full bg-white/80 backdrop-blur-md border border-white mb-6 text-xs font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] shadow-sm">
+				Welkom bij de groep
+			</div>
+
+			<h1 class="text-3xl md:text-5xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight">
+				Welkom bij <span class="text-[var(--color-brand-accent)]">Thuiskomen in je Vrouwenlijf</span>.
+			</h1>
+
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto">
+				Je inschrijving is ontvangen. Je krijgt binnen enkele minuten een bevestiging per e-mail, met de eerste stappen richting 21 september.
+			</p>
+
+			<div class="bg-white/80 backdrop-blur-md border border-white rounded-3xl p-6 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8 text-left flex flex-col md:flex-row items-center gap-6 md:gap-8">
+				<div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shrink-0 border-4 border-[var(--color-brand-secondary)] shadow-lg">
+					<Picture src={portretCrystal} alt="Crystal Helder" widths={[128, 256]} sizes="128px" class="w-full h-full object-cover" style="object-position: center 20%;" />
+				</div>
+				<div>
+					<p class="text-lg md:text-xl font-medium text-[var(--color-brand-primary-text)] leading-relaxed italic">
+						"Ik ben blij dat je erbij bent. Over twaalf weken snap je waarom je lichaam doet wat het doet — dat beloof ik je."
+					</p>
+					<p class="mt-3 text-sm font-semibold text-[var(--color-brand-muted)]">— Crystal</p>
+				</div>
+			</div>
+
+			<div class="bg-white/80 backdrop-blur-md border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-12 text-left">
+				<h2 class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]">Wat er nu gebeurt</h2>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+					Je ontvangt per e-mail toegang tot de eerste module, samen met alle praktische informatie voor de start op maandag 21 september. Heb je in de tussentijd een vraag? Stuur gerust een bericht, ik denk met je mee.
+				</p>
+			</div>
+
+			<Button href="/thuiskomen-in-je-vrouwenlijf/" className="text-base md:text-lg px-8 py-4">
+				Terug naar de pagina
+			</Button>
+		</div>
+	</div>
+</Layout>
+
+<style is:global>
+	:global(html.js) .fade-in-section {
+		opacity: 0;
+		transform: translateY(20px);
+		visibility: hidden;
+		transition: opacity 600ms ease-out, transform 600ms ease-out;
+		will-change: opacity, visibility, transform;
+	}
+	:global(html.js) .fade-in-section.is-visible {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+</style>
+
+<script>
+	document.addEventListener("DOMContentLoaded", () => {
+		const observer = new IntersectionObserver(
+			(entries, obs) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-visible");
+						obs.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.1 }
+		);
+		document.querySelectorAll(".fade-in-section").forEach((el) => observer.observe(el));
+	});
+</script>

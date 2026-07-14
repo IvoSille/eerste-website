@@ -1,0 +1,48 @@
+---
+import Button from "../Button.astro";
+
+interface Props {
+	ctaHref: string;
+	ctaLabel: string;
+}
+
+const { ctaHref, ctaLabel } = Astro.props;
+---
+
+<div
+	id="sticky-bar"
+	class="hidden md:flex fixed top-0 left-0 right-0 z-50 items-center justify-between transition-all duration-300 translate-y-[-100%] opacity-0 bg-white/90 backdrop-blur-md shadow-sm px-8 lg:px-12 py-3"
+>
+	<div class="flex items-center gap-4">
+		<span class="font-heading font-semibold text-base text-[var(--color-brand-primary-text)]">Thuiskomen in je Vrouwenlijf</span>
+		<span class="text-sm text-[var(--color-brand-muted)]">€ 997 · start 21 september</span>
+	</div>
+	<Button href={ctaHref} className="text-sm px-6 py-2.5">
+		{ctaLabel}
+	</Button>
+</div>
+
+<script>
+	function initStickyBar() {
+		const bar = document.getElementById("sticky-bar");
+		const hero = document.getElementById("hero");
+		if (!bar || !hero) return;
+
+		const observer = new IntersectionObserver(
+			([entry]) => {
+				if (entry.isIntersecting) {
+					bar.classList.add("translate-y-[-100%]", "opacity-0");
+					bar.classList.remove("translate-y-0", "opacity-100");
+				} else {
+					bar.classList.remove("translate-y-[-100%]", "opacity-0");
+					bar.classList.add("translate-y-0", "opacity-100");
+				}
+			},
+			{ threshold: 0, rootMargin: "-80px 0px 0px 0px" }
+		);
+		observer.observe(hero);
+	}
+
+	initStickyBar();
+	document.addEventListener("astro:page-load", initStickyBar);
+</script>
