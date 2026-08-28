@@ -12,6 +12,7 @@ interface Props {
 	conversionEvent?: string;
 	conversionValue?: number;
 	conversionCurrency?: string;
+	showConsentBanner?: boolean;
 }
 
 const {
@@ -24,6 +25,10 @@ const {
 	conversionEvent = "generate_lead",
 	conversionValue = 0,
 	conversionCurrency = "EUR",
+	// Uitzondering voor "je-pijn-is-echt": die pagina heeft bewust geen
+	// cookiebanner (zelfde aanpak als Innerlove & Strength). Overal elders
+	// blijft de banner + Consent Mode ongewijzigd staan.
+	showConsentBanner = true,
 } = Astro.props;
 ---
 
@@ -90,47 +95,57 @@ const {
 		/>
 		<title>{title}</title>
 
-		<!-- Google Consent Mode v2 defaults (MUST load before GTM) -->
-		<script is:inline>
-			window.dataLayer = window.dataLayer || [];
-			function gtag() {
-				dataLayer.push(arguments);
-			}
-			gtag("set", "url_passthrough", true);
-			gtag("consent", "default", {
-				ad_storage: "denied",
-				ad_user_data: "denied",
-				ad_personalization: "denied",
-				analytics_storage: "denied",
-				wait_for_update: 500,
-			});
-			// Restore previous consent choice if still valid (6 months)
-			// NOTE: Same validation logic exists in ConsentBanner.astro — keep both in sync
-			(function () {
-				try {
-					var stored = localStorage.getItem("cookie_consent");
-					if (stored) {
-						var data = JSON.parse(stored);
-						var sixMonths = 180 * 24 * 60 * 60 * 1000;
-						if (
-							data.timestamp &&
-							Date.now() - data.timestamp < sixMonths
-						) {
-							if (data.choice === "granted") {
-								gtag("consent", "update", {
-									ad_storage: "granted",
-									ad_user_data: "granted",
-									ad_personalization: "granted",
-									analytics_storage: "granted",
-								});
-							}
-						} else {
-							localStorage.removeItem("cookie_consent");
-						}
+		{
+			/* Google Consent Mode v2 defaults (MUST load before GTM). Overgeslagen
+			wanneer showConsentBanner=false: geen banner betekent hier geen enkele
+			consent-claim naar Google, in plaats van een ongevraagde "granted". Zelfde
+			aanpak als het Innerlove & Strength-project (dat roept gtag('consent', ...)
+			nergens aan). */
+		}
+		{
+			showConsentBanner && (
+				<script is:inline>
+					window.dataLayer = window.dataLayer || [];
+					function gtag() {
+						dataLayer.push(arguments);
 					}
-				} catch (e) {}
-			})();
-		</script>
+					gtag("set", "url_passthrough", true);
+					gtag("consent", "default", {
+						ad_storage: "denied",
+						ad_user_data: "denied",
+						ad_personalization: "denied",
+						analytics_storage: "denied",
+						wait_for_update: 500,
+					});
+					// Restore previous consent choice if still valid (6 months)
+					// NOTE: Same validation logic exists in ConsentBanner.astro — keep both in sync
+					(function () {
+						try {
+							var stored = localStorage.getItem("cookie_consent");
+							if (stored) {
+								var data = JSON.parse(stored);
+								var sixMonths = 180 * 24 * 60 * 60 * 1000;
+								if (
+									data.timestamp &&
+									Date.now() - data.timestamp < sixMonths
+								) {
+									if (data.choice === "granted") {
+										gtag("consent", "update", {
+											ad_storage: "granted",
+											ad_user_data: "granted",
+											ad_personalization: "granted",
+											analytics_storage: "granted",
+										});
+									}
+								} else {
+									localStorage.removeItem("cookie_consent");
+								}
+							}
+						} catch (e) {}
+					})();
+				</script>
+			)
+		}
 
 		<!-- Google Tag Manager via Stape Custom Loader -->
 		<script is:inline>
@@ -167,7 +182,7 @@ const {
 				style="display:none;visibility:hidden"></iframe>
 		</noscript>
 		<slot />
-		<ConsentBanner />
+		{showConsentBanner && <ConsentBanner />}
 		{/* Cal.com Embed Script (deferred until first user interaction) */}
 		{includeCal &&
 		<script is:inline define:vars={{ __calLink: calLink, __bedanktUrl: bedanktUrl, __conversionEvent: conversionEvent, __conversionValue: conversionValue, __conversionCurrency: conversionCurrency }}>

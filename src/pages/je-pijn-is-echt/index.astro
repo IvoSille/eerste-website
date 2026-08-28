@@ -35,6 +35,7 @@ const dagen = [
 	title="Je pijn is echt — gratis 5-daagse challenge | Crystal Helder"
 	description="Een gratis 5-daagse challenge via een WhatsApp-kanaal, voor vrouwen die al jaren vechten tegen onbegrepen klachten in hun bekken of cyclus — en nergens echt gehoor vinden."
 	includeCal={false}
+	showConsentBanner={false}
 >
 	{/* DECORATIVE BACKGROUND BLOBS */}
 	<div
@@ -1528,6 +1529,36 @@ const dagen = [
 			}
 			const phone = landcode + phoneDigits;
 
+			// event_id: gedeeld tussen Meta Pixel (browser, via GTM) en Meta CAPI
+			// (server, via n8n) zodat Meta hetzelfde CompleteRegistration-event
+			// kan dedupliceren.
+			const eventId =
+				typeof crypto !== "undefined" && crypto.randomUUID
+					? crypto.randomUUID()
+					: `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+			// SHA-256 hash voor Meta (Advanced Matching + CAPI). Geen consent-check
+			// hier: deze pagina heeft bewust geen cookiebanner, data gaat altijd
+			// mee (zelfde aanpak als het Innerlove & Strength-project).
+			async function sha256Hash(value: string): Promise<string | undefined> {
+				const normalized = value.trim().toLowerCase();
+				if (!normalized) return undefined;
+				try {
+					const buffer = new TextEncoder().encode(normalized);
+					const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+					return Array.from(new Uint8Array(hashBuffer))
+						.map((b) => b.toString(16).padStart(2, "0"))
+						.join("");
+				} catch {
+					return undefined;
+				}
+			}
+			const [emHash, fnHash, phHash] = await Promise.all([
+				sha256Hash(email),
+				sha256Hash(name),
+				sha256Hash(phoneDigits),
+			]);
+
 			// Loading state
 			submitBtn.disabled = true;
 			submitBtn.textContent = "Een moment…";
@@ -1547,6 +1578,8 @@ const dagen = [
 							utm_medium: utmMedium,
 							utm_campaign: utmCampaign,
 							timestamp: new Date().toISOString(),
+							event_id: eventId,
+							event_source_url: window.location.href,
 						}),
 						keepalive: true,
 					}
@@ -1565,18 +1598,25 @@ const dagen = [
 				}
 			}
 
-			// user_data voor Enhanced Conversions: rauwe e-mail/voornaam/telefoon mee
-			// in de dataLayer. GTM hasht (SHA-256) pas in de tag en stuurt het
-			// uitsluitend mee als ad_user_data-consent gegeven is — zie consent mode
-			// in Layout.astro.
+			// user_data: rauwe e-mail/voornaam/telefoon, voor eventuele toekomstige
+			// Google Enhanced Conversions (nog niet actief voor deze pagina).
+			// user_data_meta: vooraf gehashte (SHA-256) waarden specifiek voor Meta
+			// Advanced Matching — losse sleutel, zodat dit niet door elkaar loopt
+			// met Google's eigen user_data-mechanisme.
 			window.dataLayer = window.dataLayer || [];
 			window.dataLayer.push({
 				event: "generate_lead",
 				lead_source: "challenge_optin",
+				event_id: eventId,
 				user_data: {
 					email: email.toLowerCase(),
 					phone_number: phone,
 					address: { first_name: name },
+				},
+				user_data_meta: {
+					em: emHash,
+					fn: fnHash,
+					ph: phHash,
 				},
 				eventCallback: doRedirect,
 				eventTimeout: 2000,
