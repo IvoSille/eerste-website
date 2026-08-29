@@ -25,3 +25,23 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Windows/WSL alternate-data-stream metadata (ontstaat bij downloads via browser)
+*:Zone.Identifier
+
+# Tool-scratch / debug output (Playwright, Firecrawl, ad-hoc screenshotscripts)
+.playwright-mcp/
+.firecrawl/
+Temp/
+firebase-debug.log
+
+# Losse debug-screenshots die per ongeluk in de repo-root belanden
+/*.png
+/*.jpg
+/*.jpeg
+
+# Claude Code skill-tooling metadata (geen projectcode)
+skills-lock.json
+
+# Hi-res bronfoto's (originelen), niet gebruikt door de build zelf
+src/assets/images/originals/
