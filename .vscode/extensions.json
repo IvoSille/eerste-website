@@ -1,4 +1,19 @@
 {
-  "recommendations": ["astro-build.astro-vscode"],
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-playwright.playwright",
+    "esbenp.prettier-vscode",
+    "usernamehw.errorlens",
+    "eamodio.gitlens",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-dutch",
+    "yzhang.markdown-all-in-one",
+    "tomoki1207.pdf",
+    "tamasfe.even-better-toml",
+    "mikestead.dotenv",
+    "christian-kohler.path-intellisense",
+    "Gruntfuggly.todo-tree"
+  ],
   "unwantedRecommendations": []
 }
