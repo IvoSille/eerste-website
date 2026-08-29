@@ -514,7 +514,7 @@ import foto3 from "../../assets/images/foto_3.jpg";
 				}
 
 				// Track generate_lead event before redirect
-				const redirectUrl = "/begrijp-de-taal-van-je-klacht/bekijken/";
+				const redirectUrl = `/begrijp-de-taal-van-je-klacht/bekijken/?naam=${encodeURIComponent(name)}`;
 				let hasRedirected = false;
 				function doRedirect() {
 					if (!hasRedirected) {
