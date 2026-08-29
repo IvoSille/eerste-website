@@ -8,6 +8,12 @@ import bgIllustration from "../../assets/images/bedankt_hero.png";
 // WhatsApp-kanaal zodra die er is. Leeg ("") => pagina verwijst naar
 // de bevestigingsmail; gevuld => de "Open het WhatsApp-kanaal"-knop verschijnt.
 const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029Vb8cLcvCsU9QyiCiVp3Z";
+
+// Voor tracking: leidt de bestemming af uit het linktype, zodat een latere
+// wissel van kanaal naar groep (of andersom) vanzelf goed blijft loggen.
+const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
+	? "whatsapp_channel"
+	: "whatsapp_group";
 ---
 
 <Layout
@@ -178,6 +184,8 @@ const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029Vb8cLcvCsU9Qyi
 								className="text-base md:text-lg px-8 py-4"
 								target="_blank"
 								rel="noopener noreferrer"
+								data-cta-destination={whatsappCtaDestination}
+								data-cta-location="channel-card"
 							>
 								Open het WhatsApp-kanaal →
 							</Button>
@@ -435,4 +443,23 @@ const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029Vb8cLcvCsU9Qyi
 			delay: 2,
 		});
 	}
+</script>
+
+<script>
+	// DataLayer: klik op "Open het WhatsApp-kanaal" (of later: -groep)
+	document.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("click", (e) => {
+			const el = (e.target as HTMLElement).closest<HTMLElement>(
+				"[data-cta-destination^='whatsapp_']"
+			);
+			if (!el) return;
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				event: "cta_click",
+				cta_text: el.textContent?.trim() || "",
+				cta_destination: el.getAttribute("data-cta-destination") || "",
+				cta_location: el.getAttribute("data-cta-location") || "",
+			});
+		});
+	});
 </script>
