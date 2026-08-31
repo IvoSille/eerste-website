@@ -240,7 +240,7 @@ Doe je mee?
 
 **Lijst (praktisch):**
 - **Wat:** 5-daagse challenge "Je pijn is echt"
-- **Wanneer:** start 6 juli
+- **Wanneer:** start 11 september
 - **Waar:** besloten WhatsApp-kanaal (je nummer blijft afgeschermd)
 - **Hoeveel tijd:** 10 tot 15 minuten per dag
 - **Kosten:** gratis
@@ -281,4 +281,4 @@ De begeleiding die ik bied is educatief en coachend van aard. Het is geen medisc
 2. **Inschrijving → kanaal-link.** Aanmelding via MailerLite-form (voornaam, e-mail, telefoonnummer) → bevestigingsmail met de kanaal-invite-link. Telefoonnummer is bij een kanaal strikt genomen niet nodig om iemand toe te voegen (mensen joinen zelf via link), maar wel handig voor reminders/segmentatie. Overweeg of je het nummer echt nodig hebt of dat e-mail volstaat — minder velden = hogere conversie.
 3. **Testimonials.** Komen uit de 1-op-1 praktijk, niet uit de challenge. Borstkanker-testimonial (Marinka) bewust weggelaten: borst valt buiten cohort-1-scope en raakt de strengste medische grens.
 4. **De close.** Dag 5 eindigt met de uitnodiging naar een gratis 1-op-1 diagnosegesprek (conform Crystals ontwerp en het strategisch kader: challenge → gesprek → cohort). Er is bewust géén live groepssessie. Het concrete aanbod en de boeklink (Cal.com) doet Crystal op dag 5 in het kanaal zelf; de pagina blikt er alleen zacht op vooruit.
-5. **Start 6 juli** aangehouden; pas aan als de datum schuift.
+5. **Start 11 september** aangehouden; pas aan als de datum schuift.
