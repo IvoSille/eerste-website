@@ -4,23 +4,24 @@ import Button from "../../components/Button.astro";
 import { Picture } from "astro:assets";
 import bgIllustration from "../../assets/images/bedankt_hero.png";
 
-// ⚠️ TIJDELIJKE TEST-LINK — vervang door de DEFINITIEVE invite-link van het
-// WhatsApp-kanaal zodra die er is. Leeg ("") => pagina verwijst naar
-// de bevestigingsmail; gevuld => de "Open het WhatsApp-kanaal"-knop verschijnt.
-const WHATSAPP_CHANNEL_INVITE = "https://whatsapp.com/channel/0029Vb8cLcvCsU9QyiCiVp3Z";
+// ⚠️ TIJDELIJKE TEST-LINK — vervang door de DEFINITIEVE invite-link van de
+// WhatsApp-groep zodra die er is. Leeg ("") => pagina verwijst naar
+// de bevestigingsmail; gevuld => de "Open de WhatsApp-groep"-knop verschijnt.
+const WHATSAPP_GROUP_INVITE = "https://whatsapp.com/channel/0029Vb8cLcvCsU9QyiCiVp3Z";
 
 // Voor tracking: leidt de bestemming af uit het linktype, zodat een latere
-// wissel van kanaal naar groep (of andersom) vanzelf goed blijft loggen.
-const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
+// wissel van groep naar kanaal (of andersom) vanzelf goed blijft loggen.
+const whatsappCtaDestination = WHATSAPP_GROUP_INVITE.includes("/channel/")
 	? "whatsapp_channel"
 	: "whatsapp_group";
 ---
 
 <Layout
 	title="Je bent aangemeld — Je pijn is echt | Crystal Helder"
-	description="Je aanmelding voor de 5-daagse challenge is gelukt. De link naar het WhatsApp-kanaal komt eraan."
+	description="Je aanmelding voor de 5-daagse challenge is gelukt. De link naar de WhatsApp-groep komt eraan."
 	includeCal={false}
 	robots="noindex"
+	showConsentBanner={false}
 >
 	{/* Petals container — positioned fixed over viewport */}
 	<div
@@ -139,17 +140,16 @@ const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
 
 			<p
 				id="subtext"
-				class="text-lg md:text-xl text-[var(--color-brand-muted)] mb-12 leading-relaxed max-w-xl mx-auto"
+				class="text-lg md:text-xl font-semibold text-[var(--color-brand-primary-text)] mb-8 leading-relaxed max-w-xl mx-auto"
 				style="opacity: 0;"
 			>
-				Wat fijn dat je deze stap zet. Je ontvangt nu een bevestigingsmail met de
-				link naar het WhatsApp-kanaal. Check ook even je spam- of
-				reclamemap, voor de zekerheid.
+				Dit moet je <span class="text-[var(--color-brand-accent)]">nu</span> doen:
+				open de WhatsApp-groep hieronder.
 			</p>
 
-			{/* WhatsApp-kanaal kaart */}
+			{/* WhatsApp-groep kaart */}
 			<div
-				id="channel-card"
+				id="whatsapp-card"
 				class="bg-white/70 backdrop-blur-xl border border-white rounded-3xl p-6 md:p-8 shadow-xl shadow-[var(--color-brand-muted)]/5 mb-8"
 				style="opacity: 0;"
 			>
@@ -170,31 +170,36 @@ const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
 				<h2
 					class="text-xl md:text-2xl font-bold mb-3 text-[var(--color-brand-primary-text)]"
 				>
-					Het WhatsApp-kanaal
+					De WhatsApp-groep
 				</h2>
 				{
-					WHATSAPP_CHANNEL_INVITE ? (
+					WHATSAPP_GROUP_INVITE ? (
 						<>
 							<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6 max-w-md mx-auto">
-								Klik hieronder om direct in het kanaal te komen. Je
-								telefoonnummer blijft afgeschermd — niemand anders ziet het.
+								Klik hieronder om direct in de groep te komen. Het is een
+								rustige groep: alleen ik plaats berichten, dus je krijgt geen
+								meldingenregen van anderen. Reageren doe je met een emoji.
 							</p>
 							<Button
-								href={WHATSAPP_CHANNEL_INVITE}
+								href={WHATSAPP_GROUP_INVITE}
 								className="text-base md:text-lg px-8 py-4"
 								target="_blank"
 								rel="noopener noreferrer"
 								data-cta-destination={whatsappCtaDestination}
-								data-cta-location="channel-card"
+								data-cta-location="whatsapp-card"
 							>
-								Open het WhatsApp-kanaal →
+								Open de WhatsApp-groep →
 							</Button>
+							<p class="text-sm text-[var(--color-brand-muted)]/80 mt-5">
+								Je ontvangt ook een bevestigingsmail met deze link — check
+								eventueel je spam- of reclamemap.
+							</p>
 						</>
 					) : (
 						<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed max-w-md mx-auto">
-							De link naar het kanaal staat in je bevestigingsmail. Klik daar op
-							de link en je zit erin — je telefoonnummer blijft afgeschermd,
-							niemand anders ziet het.
+							De link naar de groep staat in je bevestigingsmail. Klik daar op
+							de link en je zit erin. Het is een rustige groep: alleen ik plaats
+							berichten, dus je krijgt geen meldingenregen van anderen.
 						</p>
 					)
 				}
@@ -217,9 +222,8 @@ const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
 					De challenge start op <strong class="text-[var(--color-brand-primary-text)]"
 						>6 juli</strong
 					>. Vanaf dan ontvang je vijf dagen lang elke ochtend een kort, persoonlijk
-					bericht in het kanaal. Eén inzicht, één kleine oefening — tien tot
-					vijftien minuten, meer niet. Je doet het in je eigen tempo, niemand
-					kijkt mee.
+					bericht in de groep. Eén inzicht, één kleine oefening — tien tot
+					vijftien minuten, meer niet. Je doet het in je eigen tempo.
 				</p>
 
 				{/* Mini dag-strip — sluit aan op het 5-dagen-pad van de LP */}
@@ -301,7 +305,7 @@ const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
 				1.5
 			)
 			.fromTo(
-				"#channel-card",
+				"#whatsapp-card",
 				{ opacity: 0, y: 40 },
 				{ opacity: 1, y: 0, duration: 0.7 },
 				1.7
@@ -446,7 +450,7 @@ const whatsappCtaDestination = WHATSAPP_CHANNEL_INVITE.includes("/channel/")
 </script>
 
 <script>
-	// DataLayer: klik op "Open het WhatsApp-kanaal" (of later: -groep)
+	// DataLayer: klik op "Open de WhatsApp-groep" (of later evt. -kanaal)
 	document.addEventListener("DOMContentLoaded", () => {
 		document.addEventListener("click", (e) => {
 			const el = (e.target as HTMLElement).closest<HTMLElement>(

@@ -33,7 +33,7 @@ const dagen = [
 
 <Layout
 	title="Je pijn is echt — gratis 5-daagse challenge | Crystal Helder"
-	description="Een gratis 5-daagse challenge via een WhatsApp-kanaal, voor vrouwen die al jaren vechten tegen onbegrepen klachten in hun bekken of cyclus — en nergens echt gehoor vinden."
+	description="Een gratis 5-daagse challenge via een WhatsApp-groep, voor vrouwen die al jaren vechten tegen onbegrepen klachten in hun bekken of cyclus — en nergens echt gehoor vinden."
 	includeCal={false}
 	showConsentBanner={false}
 >
@@ -91,8 +91,7 @@ const dagen = [
 			<p
 				class="text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0"
 			>
-				Gratis · 10 min per dag · via WhatsApp · je telefoonnummer blijft
-				afgeschermd
+				Gratis · 10 min per dag · via WhatsApp · alleen ik plaats berichten
 			</p>
 
 			{/* Dag-strip — visualiseert "5-daagse" */}
@@ -142,7 +141,7 @@ const dagen = [
 					loading="eager"
 				/>
 
-				{/* Zwevende WhatsApp-bubbel-badge — laat het kanaal voelen */}
+				{/* Zwevende WhatsApp-bubbel-badge — laat de groep voelen */}
 				<div
 					class="hidden sm:block absolute -bottom-5 -left-4 md:-left-8 z-20 w-[15rem] md:w-[16.5rem] bg-white/95 backdrop-blur-md rounded-2xl rounded-bl-md p-3.5 shadow-[0_16px_40px_-12px_rgba(44,38,36,0.35)] border border-white"
 				>
@@ -163,7 +162,7 @@ const dagen = [
 						</span>
 						<span
 							class="text-[0.7rem] font-semibold text-[var(--color-brand-primary-text)] leading-tight"
-							>Crystal · WhatsApp-kanaal</span
+							>Crystal · WhatsApp-groep</span
 						>
 					</div>
 					<p
@@ -345,7 +344,7 @@ const dagen = [
 			>
 				<p>
 					Vijf dagen lang stuur ik je elke ochtend een kort, persoonlijk bericht
-					in een WhatsApp-kanaal. Eerlijk, rustig, recht uit mijn
+					in een WhatsApp-groep. Eerlijk, rustig, recht uit mijn
 					praktijk en mijn eigen leven.
 				</p>
 				<p>
@@ -355,7 +354,7 @@ const dagen = [
 				</p>
 			</div>
 
-			{/* WhatsApp-bericht-motief — laat het kanaal voelen (op-merk, geen WhatsApp-groen) */}
+			{/* WhatsApp-bericht-motief — laat de groep voelen (op-merk, geen WhatsApp-groen) */}
 			<div class="max-w-md mx-auto mb-14 md:mb-20">
 				<div
 					class="bg-[var(--color-brand-base)] border border-white rounded-[1.5rem] p-4 md:p-5 shadow-xl shadow-[var(--color-brand-muted)]/10"
@@ -381,10 +380,10 @@ const dagen = [
 							<p
 								class="text-sm font-semibold text-[var(--color-brand-primary-text)]"
 							>
-								Crystal · WhatsApp-kanaal
+								Crystal · WhatsApp-groep
 							</p>
 							<p class="text-xs text-[var(--color-brand-muted)]">
-								jij leest mee — niemand ziet of jij reageert
+								een rustige groep — alleen ik plaats berichten
 							</p>
 						</div>
 					</div>
@@ -827,8 +826,8 @@ const dagen = [
 					<p
 						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
 					>
-						Je ontvangt een bevestiging met de link naar het
-						WhatsApp-kanaal.
+						Je ontvangt een bevestiging met de link naar de
+						WhatsApp-groep.
 					</p>
 				</li>
 				<li class="flex items-start gap-4">
@@ -839,9 +838,9 @@ const dagen = [
 					<p
 						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
 					>
-						Je klikt op de link en zit in het kanaal — je telefoonnummer blijft
-						afgeschermd. Niemand anders ziet het, en niemand ziet of jij iets
-						terugstuurt.
+						Je klikt op de link en zit in de groep. Het is een rustige groep:
+						alleen ik plaats berichten, dus je krijgt geen meldingenregen van
+						anderen.
 					</p>
 				</li>
 				<li class="flex items-start gap-4">
@@ -881,10 +880,10 @@ const dagen = [
 				</p>
 				<p>
 					En misschien wel het belangrijkste bij een onderwerp dat zo dichtbij
-					komt: dit is een kanaal waarin ik zend. Jouw nummer is
-					afgeschermd, je hoeft niets te delen, niemand kijkt mee. Je doet dit
-					veilig, in je eentje, in je eigen tempo. En je houdt je reguliere zorg
-					gewoon — wat we hier doen komt ernaast, nooit in plaats daarvan.
+					komt: dit is een rustige groep waarin alleen ik berichten plaats. Je
+					hoeft niets te delen wat je niet wilt, en je doet dit in je eigen
+					tempo. En je houdt je reguliere zorg gewoon — wat we hier doen komt
+					ernaast, nooit in plaats daarvan.
 				</p>
 			</div>
 		</div>
@@ -1136,7 +1135,7 @@ const dagen = [
 								Waar
 							</dt>
 							<dd class="text-right text-[var(--color-brand-muted)]">
-								WhatsApp-kanaal (je nummer blijft afgeschermd)
+								WhatsApp-groep (alleen ik plaats berichten)
 							</dd>
 						</div>
 						<div class="flex justify-between gap-4 py-3">
@@ -1186,7 +1185,7 @@ const dagen = [
 					<p
 						class="text-sm md:text-base text-[var(--color-brand-muted)] leading-relaxed mb-7 text-center"
 					>
-						Vul je gegevens in en je ontvangt de link naar het kanaal.
+						Vul je gegevens in en je ontvangt de link naar de groep.
 					</p>
 
 					<form id="optin-form" class="space-y-5" novalidate>
@@ -1261,8 +1260,7 @@ const dagen = [
 					</form>
 					<p class="text-xs text-[var(--color-brand-muted)] mt-4 leading-relaxed">
 						Je gegevens zijn veilig. Ik gebruik je nummer en e-mail alleen voor
-						deze challenge. Je nummer is in het kanaal afgeschermd voor andere
-						deelnemers. Je kunt op elk moment stoppen. Door je aan te melden ga je
+						deze challenge. Je kunt op elk moment stoppen. Door je aan te melden ga je
 						akkoord met <a
 							href="/algemene-voorwaarden/"
 							class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300"
