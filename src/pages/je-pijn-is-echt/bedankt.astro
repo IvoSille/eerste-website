@@ -141,6 +141,11 @@ const whatsappCtaDestination = WHATSAPP_GROUP_INVITE.includes("/channel/")
 				{
 					WHATSAPP_GROUP_INVITE ? (
 						<>
+							<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed max-w-md mx-auto mb-6">
+								Dit is de laatste stap van je aanmelding: zonder dat je hier
+								klikt, zit je niet in de groep en mis je de challenge. Doe het
+								dus gelijk, nu je toch hier bent 👇
+							</p>
 							<Button
 								href={WHATSAPP_GROUP_INVITE}
 								variant="whatsapp"
@@ -150,7 +155,7 @@ const whatsappCtaDestination = WHATSAPP_GROUP_INVITE.includes("/channel/")
 								data-cta-destination={whatsappCtaDestination}
 								data-cta-location="whatsapp-card"
 							>
-								Open de WhatsApp-groep →
+								Word lid van de WhatsApp-groep →
 							</Button>
 							<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed max-w-md mx-auto">
 								Het is een rustige groep: alleen ik plaats berichten, dus je
