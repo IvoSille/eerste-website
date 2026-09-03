@@ -3,7 +3,7 @@ interface Props {
   href?: string;
   type?: "button" | "submit" | "reset";
   className?: string;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "whatsapp";
   [key: string]: any;
 }
 
@@ -20,6 +20,8 @@ const baseStyles = "inline-flex justify-center items-center text-center font-hea
 const variants = {
   primary: "bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white shadow-lg shadow-[var(--color-brand-accent)]/25 hover:shadow-xl hover:shadow-[var(--color-brand-accent)]/30",
   secondary: "bg-[var(--color-brand-secondary)] hover:bg-[#D5C2B9] text-[var(--color-brand-primary-text)] shadow-sm hover:shadow-md",
+  // Officiële WhatsApp-groen, voor directe herkenning bij WhatsApp-CTA's.
+  whatsapp: "bg-[#25D366] hover:bg-[#1EBE5A] text-white shadow-lg shadow-[#25D366]/30 hover:shadow-xl hover:shadow-[#25D366]/40",
 };
 
 const classes = `${baseStyles} ${variants[variant]} ${className}`;
