@@ -120,7 +120,7 @@ const whatsappCtaDestination = WHATSAPP_GROUP_INVITE.includes("/channel/")
 				style="opacity: 0;"
 			>
 				<div
-					class="w-14 h-14 rounded-2xl bg-[var(--color-brand-sage)]/50 flex items-center justify-center mx-auto mb-5"
+					class="w-14 h-14 rounded-2xl bg-[var(--color-brand-sage)]/50 hidden md:flex items-center justify-center mx-auto mb-5"
 					aria-hidden="true"
 				>
 					<svg
@@ -141,10 +141,14 @@ const whatsappCtaDestination = WHATSAPP_GROUP_INVITE.includes("/channel/")
 				{
 					WHATSAPP_GROUP_INVITE ? (
 						<>
-							<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed max-w-md mx-auto mb-6">
-								Dit is de laatste stap van je aanmelding: zonder dat je hier
-								klikt, zit je niet in de groep en mis je de challenge. Doe het
-								dus gelijk, nu je toch hier bent 👇
+							<div class="flex justify-center mb-2">
+								<span class="inline-flex items-center gap-1.5 text-xs font-bold tracking-wide uppercase bg-amber-100 text-amber-800 px-3 py-1 rounded-full">
+									⚠️ Belangrijk
+								</span>
+							</div>
+							<p class="text-sm md:text-base text-[var(--color-brand-muted)] leading-relaxed max-w-md mx-auto mb-6">
+								Zonder dat je hier klikt, zit je niet in de groep en mis je de
+								challenge.
 							</p>
 							<Button
 								href={WHATSAPP_GROUP_INVITE}
