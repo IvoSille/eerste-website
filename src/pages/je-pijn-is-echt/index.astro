@@ -54,6 +54,7 @@ const dagen = [
 
 	{/* HERO */}
 	<section
+		id="hero"
 		class="relative pt-12 pb-8 md:pt-24 md:pb-16 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0"
 	>
 		<div
@@ -457,38 +458,7 @@ const dagen = [
 		</div>
 	</section>
 
-	{/* SECTIE 5 — WAT NA DAG 5 MOGELIJK IS */}
-	<section class="py-14 md:py-20 px-6 lg:px-8 bg-white fade-in-section">
-		<div class="max-w-3xl mx-auto">
-			<h2
-				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
-			>
-				En dan?
-			</h2>
-			<div
-				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
-			>
-				<p>
-					Op dag 5 voel je wat er verschoven is. En waarschijnlijk voel je ook
-					iets anders: dat hier méér onder ligt dan deze vijf dagen konden raken.
-				</p>
-				<p>
-					Want wat je deze week aanraakt is je verhouding tot de pijn — de
-					buitenste laag. Daaronder zit de vraag waaróm je lichaam dit doet. Die
-					vraag kun je niet in vijf dagen beantwoorden. Dat is geen toeval — het
-					is precies waar het echte werk begint.
-				</p>
-				<p>
-					Daarom nodig ik je aan het eind van de challenge uit voor een gratis,
-					persoonlijk gesprek, waarin we samen naar jouw situatie kijken. Wat
-					daarna komt, bepaal jij — er is geen haast. Maar dat is voor later.
-					Eerst deze vijf dagen.
-				</p>
-			</div>
-		</div>
-	</section>
-
-	{/* SECTIE 6 — VOOR WIE DIT IS */}
+	{/* SECTIE 5 — VOOR WIE DIT IS */}
 	<section
 		class="bg-gradient-to-b from-[var(--color-brand-accent-light)]/15 via-[var(--color-brand-accent-light)]/25 to-[var(--color-brand-accent-light)]/10 py-14 md:py-20 px-6 lg:px-8 fade-in-section"
 	>
@@ -634,6 +604,41 @@ const dagen = [
 					volgende pijnaanval, en ze voelen zich er vaak alleen in. Als dat klopt
 					— dan is dit voor jou.
 				</p>
+			</div>
+			<div class="mt-10 md:mt-12 flex justify-center">
+				<Button
+					href="#doe-mee"
+					data-cta-location="voor-wie"
+					className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5"
+				>
+					Ja, dit is voor mij →
+				</Button>
+			</div>
+		</div>
+	</section>
+
+	{/* SECTIE 6 — WAT NA DAG 5 MOGELIJK IS */}
+	<section class="py-14 md:py-20 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight tracking-tight mb-6 md:mb-8 text-center"
+			>
+				En dan?
+			</h2>
+			<div
+				class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed space-y-6"
+			>
+				<p>
+					Op dag 5 voel je wat er verschoven is. En waarschijnlijk voel je ook
+					iets anders: dat hier méér onder ligt dan deze vijf dagen konden raken.
+				</p>
+				<p>
+					Want wat je deze week aanraakt is je verhouding tot de pijn — de
+					buitenste laag. Daaronder zit de vraag waaróm je lichaam dit doet. Die
+					vraag kun je niet in vijf dagen beantwoorden. Dat is geen toeval — het
+					is precies waar het echte werk begint.
+				</p>
+				<p>Maar dat is voor later. Eerst deze vijf dagen.</p>
 			</div>
 		</div>
 	</section>
@@ -862,8 +867,8 @@ const dagen = [
 					<p
 						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
 					>
-						Op dag 5 nodig ik je uit voor een gratis persoonlijk gesprek — alleen
-						als jij dat wilt.
+						Op dag 5 kijk je terug op wat er in vijf dagen verschoven is. Daarna
+						bepaal jij zelf wat je ermee doet.
 					</p>
 				</li>
 			</ol>
@@ -1215,6 +1220,9 @@ const dagen = [
 									placeholder="6 12345678"
 								/>
 							</div>
+							<p class="mt-2 text-xs text-[var(--color-brand-muted)]">
+								Alleen voor de WhatsApp-groep, ik bel je niet.
+							</p>
 						</div>
 						<p id="form-error" class="text-[var(--color-brand-accent)] text-sm hidden">
 						</p>
@@ -1240,6 +1248,21 @@ const dagen = [
 	</section>
 
 	<Footer />
+
+	{/* STICKY MOBILE CTA — alleen mobiel, tussen hero en formulier zit anders
+	    een lange stille strook zonder actiemogelijkheid */}
+	<div
+		id="sticky-mobile-cta"
+		class="lg:hidden fixed inset-x-0 bottom-0 z-40 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-white/95 backdrop-blur-md border-t border-[var(--color-brand-secondary)]/60 shadow-[0_-8px_30px_-12px_rgba(44,38,36,0.25)] translate-y-full opacity-0 pointer-events-none transition-all duration-300 ease-out"
+	>
+		<Button
+			href="#doe-mee"
+			data-cta-location="sticky-mobile"
+			className="w-full text-base py-4"
+		>
+			Ja, ik doe mee →
+		</Button>
+	</div>
 </Layout>
 
 <style is:global>
@@ -1377,6 +1400,38 @@ const dagen = [
 					"hero",
 			});
 		});
+	});
+
+	// Sticky mobiele CTA — zichtbaar zodra de hero uit beeld is, verborgen
+	// zodra het aanmeldformulier zelf in beeld komt.
+	document.addEventListener("DOMContentLoaded", () => {
+		const bar = document.getElementById("sticky-mobile-cta");
+		const heroEl = document.getElementById("hero");
+		const doeMeeEl = document.getElementById("doe-mee");
+		if (!bar || !heroEl || !doeMeeEl) return;
+
+		let heroVisible = true;
+		let doeMeeVisible = false;
+
+		function updateStickyCta() {
+			const shouldShow = !heroVisible && !doeMeeVisible;
+			bar!.classList.toggle("translate-y-full", !shouldShow);
+			bar!.classList.toggle("opacity-0", !shouldShow);
+			bar!.classList.toggle("pointer-events-none", !shouldShow);
+			bar!.classList.toggle("translate-y-0", shouldShow);
+			bar!.classList.toggle("opacity-100", shouldShow);
+			bar!.classList.toggle("pointer-events-auto", shouldShow);
+		}
+
+		new IntersectionObserver(([entry]) => {
+			heroVisible = entry.isIntersecting;
+			updateStickyCta();
+		}).observe(heroEl);
+
+		new IntersectionObserver(([entry]) => {
+			doeMeeVisible = entry.isIntersecting;
+			updateStickyCta();
+		}).observe(doeMeeEl);
 	});
 
 	// FAQ accordion
