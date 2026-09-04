@@ -1061,8 +1061,7 @@ const dagen = [
 
 	{/* SECTIE 11 — LAATSTE CTA + INSCHRIJFFORMULIER */}
 	<section
-		id="doe-mee"
-		class="py-14 md:py-20 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] via-[#f4ebe6] to-[var(--color-brand-secondary)] fade-in-section scroll-mt-8"
+		class="py-14 md:py-20 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] via-[#f4ebe6] to-[var(--color-brand-secondary)] fade-in-section"
 	>
 		<div class="max-w-5xl mx-auto">
 			<h2
@@ -1143,9 +1142,13 @@ const dagen = [
 					</div>
 				</div>
 
-				{/* Inschrijfformulier */}
+				{/* Inschrijfformulier — #doe-mee zit hier, niet op de sectie: alle
+				    CTA's springen zo direct naar de velden (vooral relevant op
+				    mobiel, waar dit blok onder het infoblok staat), terwijl wie
+				    gewoon doorscrolt het infoblok nog altijd eerst tegenkomt. */}
 				<div
-					class="bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5"
+					id="doe-mee"
+					class="scroll-mt-8 bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5"
 				>
 					<h3
 						class="text-2xl md:text-3xl font-semibold leading-tight tracking-tight mb-2 text-center"
