@@ -1508,6 +1508,8 @@ const dagen = [
 		const utmSource = urlParams.get("utm_source") || "";
 		const utmMedium = urlParams.get("utm_medium") || "";
 		const utmCampaign = urlParams.get("utm_campaign") || "";
+		const utmContent = urlParams.get("utm_content") || "";
+		const utmTerm = urlParams.get("utm_term") || "";
 
 		form.addEventListener("submit", async (e) => {
 			e.preventDefault();
@@ -1600,6 +1602,8 @@ const dagen = [
 							utm_source: utmSource,
 							utm_medium: utmMedium,
 							utm_campaign: utmCampaign,
+							utm_content: utmContent,
+							utm_term: utmTerm,
 							timestamp: new Date().toISOString(),
 							event_id: eventId,
 							event_source_url: window.location.href,
