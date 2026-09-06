@@ -75,8 +75,11 @@ const {
 			}
 		})} />
 
-		<!-- Preconnect to Stape sGTM (DNS + TLS early, before GTM script tag) -->
-		<link rel="preconnect" href="https://ss.crystalhelder.nl" crossorigin />
+		<!-- Preconnect to Stape sGTM (DNS + TLS early, before GTM script tag).
+		     Bewust ZONDER crossorigin: de GTM-loader wordt als gewoon <script src>
+		     geladen (geen CORS), dus een anonieme verbinding is voor hem onbruikbaar
+		     en de browser zou alsnog een tweede verbinding moeten opzetten. -->
+		<link rel="preconnect" href="https://ss.crystalhelder.nl" />
 
 		<!-- Preload critical self-hosted fonts -->
 		<link
