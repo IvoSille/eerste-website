@@ -820,7 +820,7 @@ const dagen = [
 					<p
 						class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed pt-1"
 					>
-						Je schrijft je in met je voornaam, e-mailadres en telefoonnummer.
+						Je schrijft je in met je voornaam en e-mailadres.
 					</p>
 				</li>
 				<li class="flex items-start gap-4">
@@ -1197,37 +1197,6 @@ const dagen = [
 								placeholder="jouw@email.nl"
 							/>
 						</div>
-						<div>
-							<label
-								for="telefoon"
-								class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
-								>Telefoonnummer</label
-							>
-							<div class="flex gap-2">
-								<select
-									id="landcode"
-									name="landcode"
-									aria-label="Landcode"
-									class="shrink-0 rounded-xl border border-[var(--color-brand-secondary)] px-3 py-3 bg-white text-[var(--color-brand-primary-text)] focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300 cursor-pointer"
-								>
-									<option value="+31">🇳🇱 +31</option>
-									<option value="+32">🇧🇪 +32</option>
-								</select>
-								<input
-									type="tel"
-									id="telefoon"
-									name="telefoon"
-									required
-									autocomplete="tel-national"
-									inputmode="tel"
-									class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
-									placeholder="6 12345678"
-								/>
-							</div>
-							<p class="mt-2 text-xs text-[var(--color-brand-muted)]">
-								Alleen voor de WhatsApp-groep, ik bel je niet.
-							</p>
-						</div>
 						<p id="form-error" class="text-[var(--color-brand-accent)] text-sm hidden">
 						</p>
 						<Button
@@ -1238,7 +1207,7 @@ const dagen = [
 						</Button>
 					</form>
 					<p class="text-xs text-[var(--color-brand-muted)] mt-4 leading-relaxed">
-						Je gegevens zijn veilig. Ik gebruik je nummer en e-mail alleen voor
+						Je gegevens zijn veilig. Ik gebruik je e-mailadres alleen voor
 						deze challenge. Je kunt op elk moment stoppen. Door je aan te melden ga je
 						akkoord met <a
 							href="/algemene-voorwaarden/"
@@ -1569,12 +1538,6 @@ const dagen = [
 			const email = (
 				form.querySelector("#email") as HTMLInputElement
 			).value.trim();
-			const landcode = (
-				form.querySelector("#landcode") as HTMLSelectElement
-			).value;
-			const phoneLocalRaw = (
-				form.querySelector("#telefoon") as HTMLInputElement
-			).value.trim();
 
 			// Validation
 			if (!name) {
@@ -1592,16 +1555,6 @@ const dagen = [
 				errorEl.classList.remove("hidden");
 				return;
 			}
-			// Normaliseer telefoonnummer: strip alles behalve cijfers, haal evt.
-			// leidende 0 weg (lokale notatie) en plak de gekozen landcode ervoor.
-			const phoneDigits = phoneLocalRaw.replace(/\D/g, "").replace(/^0+/, "");
-			if (phoneDigits.length < 8) {
-				errorEl.textContent = "Vul een geldig telefoonnummer in";
-				errorEl.classList.remove("hidden");
-				return;
-			}
-			const phone = landcode + phoneDigits;
-
 			// event_id: gedeeld tussen Meta Pixel (browser, via GTM) en Meta CAPI
 			// (server, via n8n) zodat Meta hetzelfde CompleteRegistration-event
 			// kan dedupliceren.
@@ -1626,10 +1579,9 @@ const dagen = [
 					return undefined;
 				}
 			}
-			const [emHash, fnHash, phHash] = await Promise.all([
+			const [emHash, fnHash] = await Promise.all([
 				sha256Hash(email),
 				sha256Hash(name),
-				sha256Hash(phoneDigits),
 			]);
 
 			// Loading state
@@ -1645,7 +1597,6 @@ const dagen = [
 						body: JSON.stringify({
 							name,
 							email,
-							phone,
 							source: "challenge_optin",
 							utm_source: utmSource,
 							utm_medium: utmMedium,
@@ -1673,7 +1624,7 @@ const dagen = [
 				}
 			}
 
-			// user_data: rauwe e-mail/voornaam/telefoon, voor eventuele toekomstige
+			// user_data: rauwe e-mail/voornaam, voor eventuele toekomstige
 			// Google Enhanced Conversions (nog niet actief voor deze pagina).
 			// user_data_meta: vooraf gehashte (SHA-256) waarden specifiek voor Meta
 			// Advanced Matching — losse sleutel, zodat dit niet door elkaar loopt
@@ -1685,13 +1636,11 @@ const dagen = [
 				event_id: eventId,
 				user_data: {
 					email: email.toLowerCase(),
-					phone_number: phone,
 					address: { first_name: name },
 				},
 				user_data_meta: {
 					em: emHash,
 					fn: fnHash,
-					ph: phHash,
 				},
 				eventCallback: doRedirect,
 				eventTimeout: 2000,
