@@ -26,6 +26,12 @@
   status = 302
   force = true
 
+[[redirects]]
+  from = "/je-pijn-is-echt-groep"
+  to = "/je-pijn-is-echt/?utm_source=facebook&utm_medium=group&utm_campaign=jpie_ronde2"
+  status = 302
+  force = true
+
 # Cache fonts for 1 year (immutable, never change)
 [[headers]]
   for = "/fonts/*"
