@@ -1588,8 +1588,14 @@ const dagen = [
 			submitBtn.disabled = true;
 			submitBtn.textContent = "Een moment…";
 
+			// alreadySubscribed: true als n8n meldt dat dit e-mailadres al eerder
+			// is aangemeld (Supabase unique constraint, zie n8n-workflow). In dat
+			// geval geen nieuwe generate_lead/conversie vuren — dat zou dezelfde
+			// aanmelding dubbel tellen in Ads/Meta — en direct doorsturen naar de
+			// bedankt-pagina, die toch al de WhatsApp-groepslink toont.
+			let alreadySubscribed = false;
 			try {
-				await fetch(
+				const res = await fetch(
 					"https://n8n.reconnectnow.nl/webhook/crystal-challenge-optin",
 					{
 						method: "POST",
@@ -1610,11 +1616,13 @@ const dagen = [
 						keepalive: true,
 					}
 				);
+				const json = await res.json().catch(() => ({}));
+				alreadySubscribed = json && json.already_subscribed === true;
 			} catch {
-				// Don't block redirect on webhook failure
+				// Netwerkfout: doorgaan als nieuwe aanmelding — beter dan de
+				// gebruiker vastzetten op de pagina.
 			}
 
-			// Track generate_lead event before redirect
 			const redirectUrl = "/je-pijn-is-echt/bedankt/";
 			let hasRedirected = false;
 			function doRedirect() {
@@ -1624,6 +1632,12 @@ const dagen = [
 				}
 			}
 
+			if (alreadySubscribed) {
+				doRedirect();
+				return;
+			}
+
+			// Track generate_lead event before redirect
 			// user_data: rauwe e-mail/voornaam, voor eventuele toekomstige
 			// Google Enhanced Conversions (nog niet actief voor deze pagina).
 			// user_data_meta: vooraf gehashte (SHA-256) waarden specifiek voor Meta
