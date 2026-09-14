@@ -29,6 +29,12 @@ const dagen = [
 		rest: "Misschien is er niets opgelost — maar je bent niet meer op precies dezelfde plek als vijf dagen geleden.",
 	},
 ];
+
+// Inschrijving voor deze ronde sluit op dit moment automatisch — het formulier
+// wordt dan vervangen door een wachtlijst-opt-in voor de volgende ronde. Zelfde
+// patroon als de MeTime Challenge (Innerlove & Strength, Inschrijving.astro).
+// Bij een nieuwe ronde: deze datum + de "start/tot en met"-copy verderop bijwerken.
+const CHALLENGE_CLOSE_AT_ISO = "2026-09-14T00:00:00+02:00";
 ---
 
 <Layout
@@ -1060,6 +1066,20 @@ const dagen = [
 		</div>
 	</section>
 
+	{/* Datumtrigger inschrijving: synchrone check vóór paint, zet html.signup-closed
+	    zodat CSS direct de wachtlijst-kaart toont i.p.v. het formulier — voorkomt een
+	    flits van het oude formulier. window.__challengeCloseAt is de ENIGE plek waar
+	    CHALLENGE_CLOSE_AT_ISO als timestamp bestaat: het formulier-script hieronder
+	    leest 'm terug i.p.v. het getal nogmaals te hardcoden, want bij de MeTime
+	    Challenge (het referentiepatroon) liep genoeg een keer uit de pas (twee losse
+	    kopieën van dezelfde datum, ná een wijziging niet allebei bijgewerkt). */}
+	<script is:inline define:vars={{ closeAtIso: CHALLENGE_CLOSE_AT_ISO }}>
+		window.__challengeCloseAt = new Date(closeAtIso).getTime();
+		if (Date.now() >= window.__challengeCloseAt) {
+			document.documentElement.classList.add("signup-closed");
+		}
+	</script>
+
 	{/* SECTIE 11 — LAATSTE CTA + INSCHRIJFFORMULIER */}
 	<section data-section="aanmelden"
 		class="py-14 md:py-20 px-6 lg:px-8 bg-gradient-to-b from-[var(--color-brand-base)] via-[#f4ebe6] to-[var(--color-brand-secondary)] fade-in-section"
@@ -1127,7 +1147,7 @@ const dagen = [
 							werken. Je hoeft alleen te besluiten dat je het vijf dagen gaat
 							proberen.
 						</p>
-						<p>
+						<p id="aanmelden-deadline-tekst">
 							<strong class="text-[var(--color-brand-primary-text)]"
 								>Aanmelden kan</strong
 							> tot en met 13 september.
@@ -1151,70 +1171,171 @@ const dagen = [
 					id="doe-mee"
 					class="scroll-mt-8 bg-white/70 backdrop-blur-xl border border-white rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-10 shadow-xl shadow-[var(--color-brand-muted)]/5"
 				>
-					<h3
-						class="text-2xl md:text-3xl font-semibold leading-tight tracking-tight mb-2 text-center"
-					>
-						Ja, ik doe mee
-					</h3>
-					<p
-						class="text-sm md:text-base text-[var(--color-brand-muted)] leading-relaxed mb-7 text-center"
-					>
-						Vul je gegevens in en je ontvangt de link naar de groep. Aanmelden
-						kan tot en met 13 september, daarna sluit ik de groep zodat we
-						samen op dag 1 beginnen.
-					</p>
-
-					<form id="optin-form" class="space-y-5" novalidate>
-						<div>
-							<label
-								for="voornaam"
-								class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
-								>Voornaam</label
-							>
-							<input
-								type="text"
-								id="voornaam"
-								name="voornaam"
-								required
-								autocomplete="given-name"
-								class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
-								placeholder="Je voornaam"
-							/>
-						</div>
-						<div>
-							<label
-								for="email"
-								class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
-								>E-mailadres</label
-							>
-							<input
-								type="email"
-								id="email"
-								name="email"
-								required
-								autocomplete="email"
-								class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
-								placeholder="jouw@email.nl"
-							/>
-						</div>
-						<p id="form-error" class="text-[var(--color-brand-accent)] text-sm hidden">
-						</p>
-						<Button
-							type="submit"
-							className="w-full text-base md:text-lg py-4 cursor-pointer"
+					<div id="optin-open">
+						<h3
+							class="text-2xl md:text-3xl font-semibold leading-tight tracking-tight mb-2 text-center"
 						>
-							Ja, ik doe mee →
-						</Button>
-					</form>
-					<p class="text-xs text-[var(--color-brand-muted)] mt-4 leading-relaxed">
-						Je gegevens zijn veilig. Ik gebruik je e-mailadres alleen voor
-						deze challenge. Je kunt op elk moment stoppen. Door je aan te melden ga je
-						akkoord met <a
-							href="/privacyverklaring/"
-							class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300"
-							>mijn privacyverklaring</a
-						>.
-					</p>
+							Ja, ik doe mee
+						</h3>
+						<p
+							class="text-sm md:text-base text-[var(--color-brand-muted)] leading-relaxed mb-7 text-center"
+						>
+							Vul je gegevens in en je ontvangt de link naar de groep. Aanmelden
+							kan tot en met 13 september, daarna sluit ik de groep zodat we
+							samen op dag 1 beginnen.
+						</p>
+
+						<form id="optin-form" class="space-y-5" novalidate>
+							<div>
+								<label
+									for="voornaam"
+									class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+									>Voornaam</label
+								>
+								<input
+									type="text"
+									id="voornaam"
+									name="voornaam"
+									required
+									autocomplete="given-name"
+									class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+									placeholder="Je voornaam"
+								/>
+							</div>
+							<div>
+								<label
+									for="email"
+									class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+									>E-mailadres</label
+								>
+								<input
+									type="email"
+									id="email"
+									name="email"
+									required
+									autocomplete="email"
+									class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+									placeholder="jouw@email.nl"
+								/>
+							</div>
+							<p id="form-error" class="text-[var(--color-brand-accent)] text-sm hidden">
+							</p>
+							<Button
+								type="submit"
+								className="w-full text-base md:text-lg py-4 cursor-pointer"
+							>
+								Ja, ik doe mee →
+							</Button>
+						</form>
+						<p class="text-xs text-[var(--color-brand-muted)] mt-4 leading-relaxed">
+							Je gegevens zijn veilig. Ik gebruik je e-mailadres alleen voor
+							deze challenge. Je kunt op elk moment stoppen. Door je aan te melden ga je
+							akkoord met <a
+								href="/privacyverklaring/"
+								class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300"
+								>mijn privacyverklaring</a
+							>.
+						</p>
+					</div>
+
+					{/* Inschrijving gesloten — direct getoond bij paginalaad ná
+					    CHALLENGE_CLOSE_AT_ISO (via html.signup-closed in CSS), of door
+					    JS in de edge case dat iemand met een pre-cutoff geladen pagina
+					    ná sluiting alsnog het hoofdformulier verzendt. */}
+					<div id="optin-closed" class="status-card-hidden">
+						<div class="status-card-inner text-center">
+							<h3
+								class="text-2xl md:text-3xl font-semibold leading-tight tracking-tight mb-3"
+								tabindex="-1"
+								data-card-heading
+							>
+								De inschrijving is gesloten
+							</h3>
+							<p
+								class="text-base text-[var(--color-brand-muted)] leading-relaxed mb-2"
+							>
+								Fijn dat je er toch nog bij wilt zijn. Deze ronde van "Je pijn is
+								echt" is al gestart, dus aanmelden kan nu niet meer.
+							</p>
+							<p
+								class="text-base text-[var(--color-brand-muted)] leading-relaxed mb-6"
+							>
+								Er komt een nieuwe ronde — en jij hoort dat als eerste. Laat
+								hieronder je gegevens achter:
+							</p>
+							<form id="waitlist-form" class="space-y-5 text-left" novalidate>
+								<div>
+									<label
+										for="waitlist-voornaam"
+										class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+										>Voornaam</label
+									>
+									<input
+										type="text"
+										id="waitlist-voornaam"
+										name="voornaam"
+										required
+										autocomplete="given-name"
+										class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+										placeholder="Je voornaam"
+									/>
+								</div>
+								<div>
+									<label
+										for="waitlist-email"
+										class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2"
+										>E-mailadres</label
+									>
+									<input
+										type="email"
+										id="waitlist-email"
+										name="email"
+										required
+										autocomplete="email"
+										class="w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/50 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300"
+										placeholder="jouw@email.nl"
+									/>
+								</div>
+								<Button
+									type="submit"
+									id="waitlist-btn"
+									className="w-full text-base md:text-lg py-4 cursor-pointer"
+								>
+									Zet mij op de wachtlijst
+								</Button>
+								<p id="waitlist-error" class="text-[var(--color-brand-accent)] text-sm hidden">
+								</p>
+							</form>
+							<p class="text-xs text-[var(--color-brand-muted)] mt-4 leading-relaxed">
+								Je krijgt bericht zodra de volgende ronde opent. Verder niets —
+								geen nieuwsbrief, geen spam.
+							</p>
+						</div>
+					</div>
+
+					{/* Wachtlijst bevestigd */}
+					<div id="waitlist-confirmed" class="status-card-hidden">
+						<div class="status-card-inner text-center">
+							<h3
+								class="text-2xl md:text-3xl font-semibold leading-tight tracking-tight mb-3"
+								tabindex="-1"
+								data-card-heading
+							>
+								Je staat op de wachtlijst
+							</h3>
+							<p
+								class="text-base text-[var(--color-brand-muted)] leading-relaxed"
+							>
+								Dankjewel! Zodra de volgende ronde van "Je pijn is echt" opent,
+								hoor jij dat als eerste.
+							</p>
+							<p
+								class="text-base text-[var(--color-brand-muted)] leading-relaxed mt-2"
+							>
+								Tot snel — Crystal
+							</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -1253,6 +1374,39 @@ const dagen = [
 		opacity: 1;
 		transform: none;
 		visibility: visible;
+	}
+
+	/* Datumtrigger inschrijving — statuskaarten standaard verborgen (eigen klasse
+	   i.p.v. het [hidden]-attribuut, want Tailwind v4's preflight markeert
+	   [hidden] !important, lastig te overschrijven met een class-toggle). */
+	.status-card-hidden {
+		display: none;
+	}
+	.status-card-inner {
+		opacity: 0;
+		transform: scale(0.96);
+		transition:
+			opacity 320ms ease-out,
+			transform 320ms ease-out;
+	}
+	.status-card-inner.is-visible {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	/* Ná CHALLENGE_CLOSE_AT_ISO: formulier + deadline-tekst weg, gesloten-kaart
+	   direct in beeld (geen flits — zie de anti-flash-script vóór sectie 11). */
+	html.signup-closed #optin-open,
+	html.signup-closed #aanmelden-deadline-tekst {
+		display: none;
+	}
+	html.signup-closed #optin-closed.status-card-hidden {
+		display: block;
+	}
+	html.signup-closed #optin-closed .status-card-inner {
+		opacity: 1;
+		transform: none;
+		transition: none;
 	}
 </style>
 
@@ -1532,6 +1686,14 @@ const dagen = [
 			e.preventDefault();
 			errorEl.classList.add("hidden");
 
+			// Edge case: pagina geladen vóór CHALLENGE_CLOSE_AT_ISO, verzonden erna.
+			// window.__challengeCloseAt komt uit de anti-flash-script vóór sectie 11
+			// (enige bron van de sluitingsdatum, zie toelichting daar).
+			if (Date.now() >= (window as any).__challengeCloseAt) {
+				(window as any).showSignupClosed();
+				return;
+			}
+
 			const name = (
 				form.querySelector("#voornaam") as HTMLInputElement
 			).value.trim();
@@ -1660,6 +1822,116 @@ const dagen = [
 				eventTimeout: 2000,
 			});
 			setTimeout(doRedirect, 2500);
+		});
+	});
+
+	// Datumtrigger inschrijving — gesloten-kaart tonen + wachtlijst-mini-form.
+	document.addEventListener("DOMContentLoaded", () => {
+		const optinOpen = document.getElementById("optin-open");
+		const optinClosed = document.getElementById("optin-closed");
+		const waitlistConfirmed = document.getElementById("waitlist-confirmed");
+		if (!optinOpen || !optinClosed || !waitlistConfirmed) return;
+
+		// Toont een statuskaart met binnenkom-animatie (zelfde patroon als de
+		// MeTime Challenge-referentie).
+		function revealCard(wrapper: HTMLElement | null) {
+			if (!wrapper) return;
+			wrapper.classList.remove("status-card-hidden");
+			const card = wrapper.querySelector(".status-card-inner") as HTMLElement | null;
+			void wrapper.offsetWidth; // forceer reflow zodat de transition speelt
+			if (card) card.classList.add("is-visible");
+			wrapper.scrollIntoView({ behavior: "smooth", block: "center" });
+			const heading = wrapper.querySelector("[data-card-heading]") as HTMLElement | null;
+			if (heading) setTimeout(() => heading.focus(), 350);
+		}
+
+		// @ts-expect-error — gebruikt door de submit-handler van #optin-form (edge
+		// case: pagina geladen vóór sluiting, verzonden erna) en hieronder.
+		window.showSignupClosed = function showSignupClosed() {
+			// Vul de wachtlijst-mini-form alvast met wat iemand al in het
+			// hoofdformulier had ingevuld.
+			const wlVoornaam = document.getElementById("waitlist-voornaam") as HTMLInputElement | null;
+			const wlEmail = document.getElementById("waitlist-email") as HTMLInputElement | null;
+			const mainVoornaam = document.getElementById("voornaam") as HTMLInputElement | null;
+			const mainEmail = document.getElementById("email") as HTMLInputElement | null;
+			if (wlVoornaam && mainVoornaam && !wlVoornaam.value) wlVoornaam.value = mainVoornaam.value;
+			if (wlEmail && mainEmail && !wlEmail.value) wlEmail.value = mainEmail.value;
+			optinOpen.hidden = true;
+			revealCard(optinClosed);
+		};
+
+		const waitlistForm = document.getElementById("waitlist-form") as HTMLFormElement | null;
+		const waitlistBtn = document.getElementById("waitlist-btn") as HTMLButtonElement | null;
+		const waitlistError = document.getElementById("waitlist-error") as HTMLElement | null;
+
+		waitlistForm?.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			if (waitlistError) waitlistError.classList.add("hidden");
+			if (!waitlistBtn) return;
+
+			const voornaamInput = document.getElementById("waitlist-voornaam") as HTMLInputElement | null;
+			const emailInput = document.getElementById("waitlist-email") as HTMLInputElement | null;
+			const voornaam = voornaamInput?.value.trim() || "";
+			const email = emailInput?.value.trim() || "";
+			if (!voornaam || !email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+				if (waitlistError) {
+					waitlistError.textContent = "Vul je voornaam en een geldig e-mailadres in.";
+					waitlistError.classList.remove("hidden");
+				}
+				(!voornaam ? voornaamInput : emailInput)?.focus();
+				return;
+			}
+
+			const originalText = waitlistBtn.textContent;
+			waitlistBtn.disabled = true;
+			waitlistBtn.textContent = "Een moment…";
+
+			const urlParams = new URLSearchParams(window.location.search);
+
+			let ok = false;
+			try {
+				const res = await fetch(
+					"https://n8n.reconnectnow.nl/webhook/crystal-challenge-wachtlijst",
+					{
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify({
+							voornaam,
+							email,
+							utm_source: urlParams.get("utm_source") || "",
+							utm_medium: urlParams.get("utm_medium") || "",
+							utm_campaign: urlParams.get("utm_campaign") || "",
+							utm_content: urlParams.get("utm_content") || "",
+							utm_term: urlParams.get("utm_term") || "",
+							event_source_url: window.location.href,
+						}),
+						keepalive: true,
+					}
+				);
+				ok = res.ok;
+			} catch {
+				ok = false;
+			}
+
+			if (ok) {
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({ event: "waitlist_signup" });
+				// Inline style i.p.v. de "status-card-hidden"-class opnieuw
+				// toevoegen: zolang html.signup-closed staat, wint de CSS-regel die
+				// #optin-closed juist zichtbaar hóudt (id-selector, hogere
+				// specificiteit dan de class) anders alsnog — de kaart zou dan naast
+				// de wachtlijst-bevestiging in beeld blijven i.p.v. eruit te wisselen.
+				if (optinClosed) optinClosed.style.display = "none";
+				revealCard(waitlistConfirmed);
+			} else {
+				waitlistBtn.disabled = false;
+				waitlistBtn.textContent = originalText;
+				if (waitlistError) {
+					waitlistError.textContent =
+						"Er ging even iets mis. Mail Crystal, dan zet ze je er handmatig bij.";
+					waitlistError.classList.remove("hidden");
+				}
+			}
 		});
 	});
 </script>
