@@ -8,26 +8,10 @@ import bgIllustration from "../../assets/images/bedankt_hero.png";
 const BOOKING_URL =
 	"https://cal.com/crystalhelder/inzicht?utm_source=evaluatie&utm_medium=bedankt&utm_campaign=jpie_ronde2";
 
-// [MEDIA] en [TEKST] uit de spec: volgen uiterlijk zondagavond 20 september.
-// Zodra ze er zijn, hier invullen. type "video" = Gumlet-embed (id), type "audio" =
-// bestand in /public/audio. Zolang type null is, toont de pagina een tijdelijke melding.
-const MEDIA: {
-	type: "video" | "audio" | null;
-	gumletId: string;
-	audioSrc: string;
-	title: string;
-	text: string;
-} = {
-	type: null,
-	gumletId: "",
-	audioSrc: "",
-	title: "",
-	text: "",
-};
-
-const VIDEO_SRC = MEDIA.gumletId
-	? `https://play.gumlet.io/embed/${MEDIA.gumletId}?player_color=%23BC5940`
-	: "";
+// Gumlet: "Podcast 1" (try-out podcast). player_color: terracotta i.p.v. Gumlet-paars
+// (waarde moet URL-encoded, %23 = #).
+const GUMLET_VIDEO_ID = "6aaf03997d44d89d015cbff4";
+const VIDEO_SRC = `https://play.gumlet.io/embed/${GUMLET_VIDEO_ID}?player_color=%23BC5940`;
 ---
 
 <Layout
@@ -49,53 +33,40 @@ const VIDEO_SRC = MEDIA.gumletId
 
 		<div class="relative w-full max-w-[640px] bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-[var(--color-brand-accent)]/15 px-6 py-10 sm:px-10 sm:py-12">
 			<div class="text-center">
-				<h1 class="font-heading font-semibold text-[2rem] sm:text-[2.5rem] leading-[1.15] tracking-tight text-balance text-[var(--color-brand-primary-text)] mb-4">
-					Dank je wel voor je antwoorden.
+				<h1 class="font-heading font-semibold text-[2rem] sm:text-[2.5rem] leading-[1.15] tracking-tight text-balance text-[var(--color-brand-primary-text)] mb-5">
+					Dank je wel voor je antwoorden
 				</h1>
 				<p class="text-lg sm:text-xl leading-[1.7] text-[var(--color-brand-primary-text)]/85">
-					Zoals beloofd staat hier iets voor je klaar.
+					Zoals beloofd heb ik iets voor je. Dit is de try-out van een podcast waar ik aan werk. Je bent een van de eersten die hem ziet.
 				</p>
 			</div>
 
-			<div class="mt-9">
-				{
-					MEDIA.type === "video" && (
-						<div class="relative w-full rounded-2xl overflow-hidden bg-[#3A302D] shadow-[0_24px_60px_-20px_rgba(188,89,64,0.45)]" style="aspect-ratio: 16 / 9;">
-							<iframe
-								src={VIDEO_SRC}
-								title={MEDIA.title || "Bedankje van Crystal"}
-								class="absolute inset-0 w-full h-full border-0"
-								allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
-								allowfullscreen
-							/>
-						</div>
-					)
-				}
-				{
-					MEDIA.type === "audio" && (
-						<audio controls preload="metadata" src={MEDIA.audioSrc} class="w-full" aria-label={MEDIA.title || "Bedankje van Crystal"} />
-					)
-				}
-				{
-					MEDIA.type === null && (
-						<div class="rounded-2xl border border-[var(--color-brand-secondary)] bg-[var(--color-brand-base)] px-6 py-8 text-center">
-							{/* Tijdelijke tekst (niet uit de spec), verdwijnt zodra MEDIA hierboven gevuld is */}
-							<p class="text-lg leading-relaxed text-[var(--color-brand-primary-text)]/85">
-								Je bedankje staat vanaf zondagavond 20 september voor je klaar op deze pagina. Kom dan gerust nog even terug.
-							</p>
-						</div>
-					)
-				}
-				{
-					MEDIA.type && MEDIA.title && (
-						<h2 class="font-heading font-semibold text-2xl leading-tight mt-7 text-[var(--color-brand-primary-text)]">{MEDIA.title}</h2>
-					)
-				}
-				{MEDIA.type && MEDIA.text && <p class="text-lg leading-[1.7] mt-3 text-[var(--color-brand-primary-text)]/85">{MEDIA.text}</p>}
+			<div class="mt-10 pt-9 border-t border-[var(--color-brand-secondary)]">
+				<h2 class="font-heading font-semibold text-2xl sm:text-[1.75rem] leading-tight text-balance text-[var(--color-brand-primary-text)] mb-4">
+					Wat als je klacht een signaal is?
+				</h2>
+				<p class="text-lg leading-[1.7] text-[var(--color-brand-primary-text)]/85 mb-7">
+					In 10 minuten neem ik je mee in een andere manier van kijken naar je lichaam: als iets wat reageert en je informatie geeft. Met een persoonlijk verhaal over mijn dochter, dat mijn blik op klachten voorgoed veranderde.
+				</p>
+				<div class="relative w-full rounded-2xl overflow-hidden bg-[#3A302D] shadow-[0_24px_60px_-20px_rgba(188,89,64,0.45)]" style="aspect-ratio: 16 / 9;">
+					<iframe
+						src={VIDEO_SRC}
+						title="Wat als je klacht een signaal is? Try-out podcast"
+						class="absolute inset-0 w-full h-full border-0"
+						allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+						allowfullscreen
+					></iframe>
+				</div>
 			</div>
 
-			{/* Alleen zichtbaar als in het formulier "Nog niet" is gekozen bij "Heb je al een inzichtgesprek geboekt?" */}
-			<div id="boeking" class="mt-10 pt-9 border-t border-[var(--color-brand-secondary)] text-center" hidden>
+			{/* Alleen als in het formulier "Nog niet" is gekozen bij "Heb je al een inzichtgesprek geboekt?" */}
+			<div id="boeking" class="ev-cond mt-10 pt-9 border-t border-[var(--color-brand-secondary)] text-center" hidden>
+				<h2 class="font-heading font-semibold text-2xl sm:text-[1.75rem] leading-tight text-balance text-[var(--color-brand-primary-text)] mb-4">
+					Wil je ontdekken waar jouw lichaam op reageert?
+				</h2>
+				<p class="text-lg leading-[1.7] text-[var(--color-brand-primary-text)]/85 mb-7">
+					In een inzichtgesprek van 45 minuten kijken we samen naar jouw klachten. Je kunt je gesprek boeken tot en met 25 september.
+				</p>
 				<Button
 					href={BOOKING_URL}
 					target="_blank"
@@ -105,7 +76,13 @@ const VIDEO_SRC = MEDIA.gumletId
 				>
 					Boek je inzichtgesprek
 				</Button>
-				<p class="mt-4 text-base text-[var(--color-brand-muted)] italic">Je kunt je gesprek boeken tot en met 25 september.</p>
+			</div>
+
+			{/* Alleen als in het formulier "Ja" is gekozen */}
+			<div id="gepland" class="ev-cond mt-10 pt-9 border-t border-[var(--color-brand-secondary)] text-center" hidden>
+				<p class="font-heading font-medium text-xl sm:text-2xl leading-snug text-balance text-[var(--color-brand-primary-text)]">
+					Je inzichtgesprek staat gepland. Ik kijk ernaar uit.
+				</p>
 			</div>
 		</div>
 	</main>
@@ -117,21 +94,25 @@ const VIDEO_SRC = MEDIA.gumletId
 		-webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
 		mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
 	}
-	#boeking[hidden] { display: none; }
+	.ev-cond[hidden] { display: none; }
 </style>
 
 <script>
 	(function () {
 		// Het antwoord op "Heb je al een inzichtgesprek geboekt?" staat in sessionStorage
-		// (bewust niet in de URL). Wie de pagina direct opent, ziet de boekingsknop niet.
+		// (bewust niet in de URL). Wie de pagina direct opent, ziet geen van beide blokken.
 		let geboekt = "";
 		let bron = "onbekend";
 		try {
 			geboekt = sessionStorage.getItem("jpie_eval_geboekt") || "";
 			bron = sessionStorage.getItem("jpie_eval_bron") || "onbekend";
 		} catch {}
-		const block = document.getElementById("boeking");
-		if (block && geboekt === "Nog niet") block.hidden = false;
+		const show = (id: string) => {
+			const el = document.getElementById(id);
+			if (el) el.hidden = false;
+		};
+		if (geboekt === "Nog niet") show("boeking");
+		else if (geboekt === "Ja") show("gepland");
 
 		document.querySelectorAll<HTMLElement>("[data-track-booking]").forEach((el) => {
 			el.addEventListener("click", () => {

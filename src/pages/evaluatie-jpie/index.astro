@@ -3,6 +3,8 @@ import Layout from "../../layouts/Layout.astro";
 import Button from "../../components/Button.astro";
 import { Picture } from "astro:assets";
 import bgIllustration from "../../assets/images/bedankt_hero.png";
+import QuestionStep from "../../components/evaluatie/Question.astro";
+import type { Question } from "../../components/evaluatie/types";
 
 // n8n-webhook die elke inzending (onvolledig / kern_ingevuld / volledig) als
 // één rij wegschrijft, op submission_id (zie docs/evaluatieformulier-…md §5).
@@ -13,24 +15,6 @@ const ENDPOINT = "https://n8n.reconnectnow.nl/webhook/crystal-challenge-evaluati
 // formulier (met nog niet opgeslagen antwoorden) kwijtraken.
 const BOOKING_URL =
 	"https://cal.com/crystalhelder/inzicht?utm_source=evaluatie&utm_medium=formulier&utm_campaign=jpie_ronde2";
-
-type Option = { label: string; other?: boolean; exclusive?: boolean };
-type Question = {
-	id: string;
-	part: 1 | 2;
-	type: "single" | "multi" | "scale" | "text";
-	text: string;
-	hint?: string;
-	required?: boolean;
-	options?: Option[];
-	scaleLabels?: [string, string];
-	// Voorwaarde om de vraag te tonen (verwijst naar het antwoord op een eerdere vraag)
-	ifField?: string;
-	ifEquals?: string;
-	ifFilled?: boolean;
-	// Volgorde: de vraag staat direct na deze vraag-id (voor het boekingsblok bij V9a)
-	bookingButton?: boolean;
-};
 
 // Copy letterlijk uit docs/evaluatieformulier-challenge-je-pijn-is-echt.md
 const questions: Question[] = [
@@ -90,10 +74,14 @@ const questions: Question[] = [
 		ifField: "wat_gebracht",
 		ifFilled: true,
 		text: "Mag ik jouw antwoord op de vorige vraag delen op mijn website, zodat andere vrouwen weten wat ze kunnen verwachten?",
+		hint: "* Bij een andere naam zet ik er op de website bij dat de naam is gewijzigd.",
+		otherPlaceholder: "De naam die je wilt gebruiken",
+		otherLabel: "Andere naam, namelijk",
 		options: [
 			{ label: "Ja, met mijn voornaam" },
 			{ label: "Ja, met mijn initialen" },
-			{ label: "Ja, zonder naam" },
+			{ label: "Ja, zonder naam (met mijn leeftijdscategorie)" },
+			{ label: "Ja, met een andere naam die ik zelf kies*", other: true },
 			{ label: "Liever niet" },
 		],
 	},
@@ -170,12 +158,44 @@ const questions: Question[] = [
 		options: [
 			{ label: "Ik wil er nog over nadenken" },
 			{ label: "Ik weet niet goed wat het gesprek inhoudt" },
+			{ label: "Ik weet niet of het bij mijn klachten past" },
 			{ label: "Mijn agenda laat het nu niet toe" },
+			{ label: "Ik heb al begeleiding of een behandeling" },
 			{ label: "Ik heb er nu geen behoefte aan" },
 			{ label: "Anders", other: true },
 		],
 	},
+	{
+		id: "vervolg_niet_geboekt",
+		part: 1,
+		type: "text",
+		ifField: "reden_niet_geboekt",
+		ifIn: [
+			"Ik wil er nog over nadenken",
+			"Ik weet niet of het bij mijn klachten past",
+			"Ik heb er nu geen behoefte aan",
+		],
+		text: "Wil je er iets meer over vertellen? Dan kan ik er rekening mee houden.",
+	},
+	// Deel 1, na naam en e-mail (V5 t/m V8: snelle, optionele vragen)
 ];
+
+const byId = Object.fromEntries(questions.map((q) => [q.id, q]));
+const pick = (ids: string[]) => ids.map((id) => byId[id]);
+// Volgorde: eerst wat voor Crystal het zwaarst weegt (live sessie, aanbeveling, review, boeking),
+// dan naam + e-mail, daarna de snelle profielvragen.
+const kernA = pick([
+	"live_sessie",
+	"interesse_programma",
+	"reden_niet_live",
+	"aanbevelen",
+	"wat_gebracht",
+	"toestemming_review",
+	"geboekt",
+	"reden_niet_geboekt",
+	"vervolg_niet_geboekt",
+]);
+const kernB = pick(["leeftijd", "cyclusfase", "bekend_gg", "eerder_geprobeerd"]);
 
 const part2: Question[] = [
 	{
@@ -208,11 +228,6 @@ const part2: Question[] = [
 const inputClass =
 	"w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-base text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/60 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300";
 
-const condAttrs = (q: Question) => ({
-	"data-if-field": q.ifField,
-	"data-if-equals": q.ifEquals,
-	"data-if-filled": q.ifFilled ? "1" : undefined,
-});
 ---
 
 <Layout
@@ -263,110 +278,7 @@ const condAttrs = (q: Question) => ({
 				</section>
 
 				{/* ============ DEEL 1: KERN ============ */}
-				{
-					questions.map((q) => (
-						<section
-							class="ev-step"
-							hidden
-							data-id={q.id}
-							data-part={q.part}
-							data-type={q.type}
-							data-required={q.required ? "1" : undefined}
-							{...condAttrs(q)}
-						>
-							{q.bookingButton && (
-								<div class="mb-8">
-									<Button
-										href={BOOKING_URL}
-										target="_blank"
-										rel="noopener"
-										data-track-booking="formulier"
-										className="w-full text-lg py-5"
-									>
-										Boek je inzichtgesprek
-									</Button>
-								</div>
-							)}
-							<h2 class="ev-q" id={`q-${q.id}`} tabindex="-1" data-focus>{q.text}</h2>
-							{q.hint && <p class="ev-hint">{q.hint}</p>}
-
-							{q.type === "text" && (
-								<textarea
-									name={q.id}
-									rows="5"
-									maxlength="2000"
-									aria-labelledby={`q-${q.id}`}
-									class={`${inputClass} mt-6 resize-y min-h-[9rem]`}
-								/>
-							)}
-
-							{(q.type === "single" || q.type === "multi") && (
-								<div class="ev-options" role={q.type === "single" ? "radiogroup" : "group"} aria-labelledby={`q-${q.id}`}>
-									{q.options!.map((o) => (
-										<>
-											<label class="ev-opt">
-												<input
-													type={q.type === "single" ? "radio" : "checkbox"}
-													name={q.id}
-													value={o.label}
-													data-other={o.other ? "1" : undefined}
-													data-exclusive={o.exclusive ? "1" : undefined}
-												/>
-												<span class="ev-face">
-													<span class={`ev-mark ${q.type === "multi" ? "ev-mark-check" : ""}`} aria-hidden="true" />
-													<span class="ev-text">{o.label}</span>
-												</span>
-											</label>
-											{o.other && (
-												<div class="ev-other" hidden data-for={q.id}>
-													<input
-														type="text"
-														name={`${q.id}_anders`}
-														maxlength="300"
-														aria-label={`${q.text} Anders, namelijk`}
-														placeholder="Jouw antwoord"
-														class={inputClass}
-													/>
-												</div>
-											)}
-										</>
-									))}
-								</div>
-							)}
-
-							{q.type === "scale" && (
-								<div>
-									<div class="ev-scale" role="radiogroup" aria-labelledby={`q-${q.id}`}>
-										{q.options!.map((o) => (
-											<label class="ev-opt">
-												<input type="radio" name={q.id} value={o.label} />
-												<span class="ev-face ev-face-num"><span class="ev-text">{o.label}</span></span>
-											</label>
-										))}
-									</div>
-									<div class="flex justify-between gap-6 mt-3 text-sm text-[var(--color-brand-muted)]">
-										<span>0 = {q.scaleLabels![0]}</span>
-										<span class="text-right">10 = {q.scaleLabels![1]}</span>
-									</div>
-								</div>
-							)}
-
-							<p class="ev-err" role="alert" hidden />
-
-							{/* Volgende: bij meerkeuze, open vragen en enkelvoudig met "Anders" (dan pas zichtbaar) */}
-							{(q.type === "multi" || q.type === "text" || q.options?.some((o) => o.other)) && (
-								<div class="ev-actions" data-actions-for-other={q.type === "single" ? "1" : undefined} hidden={q.type === "single"}>
-									<Button type="button" data-action="next" className="w-full sm:w-auto text-lg px-10 py-4 cursor-pointer">Volgende</Button>
-								</div>
-							)}
-							{!q.required && (
-								<div class="ev-skip-row">
-									<button type="button" class="ev-skip" data-action="skip">Overslaan</button>
-								</div>
-							)}
-						</section>
-					))
-				}
+				{kernA.map((q) => <QuestionStep q={q} bookingUrl={BOOKING_URL} inputClass={inputClass} />)}
 
 				{/* ============ V10: VOORNAAM + E-MAIL ============ */}
 				<section class="ev-step" hidden data-id="contact" data-part="1" data-type="contact" data-primary="core">
@@ -383,13 +295,16 @@ const condAttrs = (q: Question) => ({
 					</div>
 					<p class="ev-err" role="alert" hidden />
 					<div class="ev-actions">
-						<Button type="button" data-action="core" className="w-full sm:w-auto text-lg px-12 py-4 cursor-pointer">Verstuur</Button>
+						<Button type="button" data-action="core" className="w-full sm:w-auto text-lg px-12 py-4 cursor-pointer">Volgende</Button>
 					</div>
 					{/* Privacyregel: door mij geschreven (spec noemt alleen "korte privacyregel"), ter goedkeuring */}
 					<p class="text-sm text-[var(--color-brand-muted)] leading-relaxed mt-6">
 						Ik gebruik je antwoorden om de challenge te verbeteren en om persoonlijk op je te reageren. Een paar vragen gaan over je gezondheid: die gebruik ik alleen daarvoor. Lees meer in mijn <a href="/privacyverklaring/" target="_blank" rel="noopener" class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300">privacyverklaring</a>.
 					</p>
 				</section>
+
+				{/* ============ DEEL 1 (vervolg): SNELLE PROFIELVRAGEN ============ */}
+				{kernB.map((q) => <QuestionStep q={q} bookingUrl={BOOKING_URL} inputClass={inputClass} />)}
 
 				{/* ============ OVERGANGSSCHERM ============ */}
 				<section class="ev-step" hidden data-id="overgang" data-part="0" data-primary="none">
@@ -638,7 +553,13 @@ const condAttrs = (q: Question) => ({
 		let kernAt = "";
 		let volledigAt = "";
 		let clickedBooking = false;
-		let kernSaved = false;
+		let kernNotified = false; // kern is opgeslagen (Slack/MailerLite/GTM zijn dan 1x afgegaan)
+		let volledigDone = false;
+		// Tussentijds opslaan (anoniem tot naam/e-mail bekend is) bij het betreden van deze stappen,
+		// zodat afhakers toch in de data zichtbaar zijn. Bewust een paar checkpoints i.p.v. elke vraag
+		// (Google Sheets-quota bij veel gelijktijdige invullers).
+		const CHECKPOINTS_VOOR_KERN = new Set(["wat_gebracht", "geboekt", "contact"]);
+		const CHECKPOINTS_NA_KERN = new Set(["bekend_gg", "overgang"]);
 		let currentId = "intro";
 		let modality: "pointer" | "key" = "pointer";
 		let autoTimer: number | undefined;
@@ -667,6 +588,7 @@ const condAttrs = (q: Question) => ({
 			if (assumeUnvisited && !visited.has(f)) return true;
 			const v = a[f] ?? "";
 			if (s.dataset.ifEquals !== undefined) return v === s.dataset.ifEquals;
+			if (s.dataset.ifIn !== undefined) return s.dataset.ifIn.split("||").includes(v);
 			if (s.dataset.ifFilled !== undefined) return v.length > 0;
 			return true;
 		}
@@ -696,8 +618,9 @@ const condAttrs = (q: Question) => ({
 				}
 				for (const n of names) {
 					if (n.endsWith("_anders")) {
-						const chosen = (a[n.slice(0, -7)] || "").split("; ").includes("Anders");
-						if (!chosen) a[n] = "";
+						const base = n.slice(0, -7);
+						const trigger = inputs.find((i) => i.name === base && (i as HTMLInputElement).dataset.other) as HTMLInputElement | undefined;
+						if (!trigger || !trigger.checked) a[n] = "";
 					}
 				}
 			}
@@ -707,11 +630,12 @@ const condAttrs = (q: Question) => ({
 		// ---------- Opslaan (serieel, zodat de volgorde onvolledig → kern → volledig klopt) ----------
 		let queue: Promise<unknown> = Promise.resolve();
 
-		function buildPayload(stage: string) {
+		function buildPayload(status: string, stage: string) {
 			const a = collect();
 			return {
 				submission_id: submissionId,
-				status: stage,
+				status,
+				stage,
 				bron,
 				gestart: startedAt,
 				kern_ingevuld_op: kernAt,
@@ -741,9 +665,10 @@ const condAttrs = (q: Question) => ({
 			}
 		}
 
-		function save(stage: string): Promise<boolean> {
+		// status = wat er in de Sheet komt (nooit terugvallen), stage = kern | voortgang | aanvulling | volledig
+		function save(status: string, stage: string): Promise<boolean> {
 			const run = async () => {
-				const body = JSON.stringify(buildPayload(stage));
+				const body = JSON.stringify(buildPayload(status, stage));
 				if (await postOnce(body)) return true;
 				await new Promise((r) => setTimeout(r, 1200));
 				return postOnce(body);
@@ -796,8 +721,11 @@ const condAttrs = (q: Question) => ({
 			pushed.add(id);
 			window.scrollTo({ top: 0 });
 			(s.querySelector("[data-focus]") as HTMLElement | null)?.focus({ preventScroll: true });
-			// Bij het bereiken van V10: antwoorden V1 t/m V9 tussentijds opslaan (anoniem)
-			if (id === "contact" && !kernSaved) void save("onvolledig");
+			// Tussentijds opslaan bij checkpoints (niet bij terugnavigeren)
+			if (mode !== "none") {
+				if (!kernNotified && CHECKPOINTS_VOOR_KERN.has(id)) void save("onvolledig", "voortgang");
+				else if (kernNotified && !volledigDone && CHECKPOINTS_NA_KERN.has(id)) void save("kern_ingevuld", "aanvulling");
+			}
 		}
 
 		function goNext() {
@@ -969,11 +897,6 @@ const condAttrs = (q: Question) => ({
 		window.addEventListener("popstate", (e) => {
 			const id = (e.state && e.state.step) as string | undefined;
 			if (!id || !pushed.has(id)) return;
-			// Na het versturen van de kern geen terugkeer naar deel 1 (voorkomt dat status terugvalt)
-			if (kernSaved && byId(id).dataset.part === "1") {
-				show("overgang", "push");
-				return;
-			}
 			show(id, "none");
 		});
 
@@ -992,24 +915,25 @@ const condAttrs = (q: Question) => ({
 			const label = btn.textContent;
 			btn.disabled = true;
 			btn.textContent = "Een moment…";
-			kernAt = new Date().toISOString();
-			const ok = await save("kern_ingevuld");
+			const firstTime = !kernNotified;
+			if (!kernAt) kernAt = new Date().toISOString();
+			// Slack + MailerLite gaan precies 1x af: bij de eerste keer dat naam + e-mail zijn opgeslagen
+			const ok = await save("kern_ingevuld", firstTime ? "kern" : "aanvulling");
+			btn.disabled = false;
+			btn.textContent = label;
 			if (!ok) {
-				kernAt = "";
-				btn.disabled = false;
-				btn.textContent = label;
+				if (firstTime) kernAt = "";
 				return showError(s, SAVE_ERROR);
 			}
-			kernSaved = true;
+			if (firstTime) {
+				kernNotified = true;
+				push({ event: "evaluatie_kern_verstuurd", bron: bron || "onbekend" });
+			}
 			try {
 				sessionStorage.setItem("jpie_eval_geboekt", collect().geboekt || "");
 				sessionStorage.setItem("jpie_eval_bron", bron || "onbekend");
 			} catch {}
-			push({ event: "evaluatie_kern_verstuurd", bron: bron || "onbekend" });
-			btn.disabled = false;
-			btn.textContent = label;
-			visited.add("contact");
-			show("overgang");
+			goNext();
 		}
 
 		async function submitFull(btn: HTMLButtonElement) {
@@ -1019,13 +943,14 @@ const condAttrs = (q: Question) => ({
 			btn.disabled = true;
 			btn.textContent = "Een moment…";
 			volledigAt = new Date().toISOString();
-			const ok = await save("volledig");
+			const ok = await save("volledig", "volledig");
 			if (!ok) {
 				volledigAt = "";
 				btn.disabled = false;
 				btn.textContent = label;
 				return showError(s, SAVE_ERROR);
 			}
+			volledigDone = true;
 			goBedankt();
 		}
 

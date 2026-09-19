@@ -1,0 +1,138 @@
+---
+import Button from "../Button.astro";
+import type { Question } from "./types";
+
+interface Props {
+	q: Question;
+	bookingUrl: string;
+	inputClass: string;
+}
+
+const { q, bookingUrl, inputClass } = Astro.props;
+
+const condAttrs = {
+	"data-if-field": q.ifField,
+	"data-if-equals": q.ifEquals,
+	"data-if-in": q.ifIn ? q.ifIn.join("||") : undefined,
+	"data-if-filled": q.ifFilled ? "1" : undefined,
+};
+---
+
+<section
+	class="ev-step"
+	hidden
+	data-id={q.id}
+	data-part={q.part}
+	data-type={q.type}
+	data-required={q.required ? "1" : undefined}
+	{...condAttrs}
+>
+	{
+		q.bookingButton && (
+			<div class="mb-8">
+				<Button
+					href={bookingUrl}
+					target="_blank"
+					rel="noopener"
+					data-track-booking="formulier"
+					className="w-full text-lg py-5"
+				>
+					Boek je inzichtgesprek
+				</Button>
+			</div>
+		)
+	}
+	<h2 class="ev-q" id={`q-${q.id}`} tabindex="-1" data-focus>{q.text}</h2>
+	{q.hint && <p class="ev-hint">{q.hint}</p>}
+
+	{
+		q.type === "text" && (
+			<textarea
+				name={q.id}
+				rows="5"
+				maxlength="2000"
+				aria-labelledby={`q-${q.id}`}
+				class={`${inputClass} mt-6 resize-y min-h-[9rem]`}
+			/>
+		)
+	}
+
+	{
+		(q.type === "single" || q.type === "multi") && (
+			<div class="ev-options" role={q.type === "single" ? "radiogroup" : "group"} aria-labelledby={`q-${q.id}`}>
+				{q.options!.map((o) => (
+					<>
+						<label class="ev-opt">
+							<input
+								type={q.type === "single" ? "radio" : "checkbox"}
+								name={q.id}
+								value={o.label}
+								data-other={o.other ? "1" : undefined}
+								data-exclusive={o.exclusive ? "1" : undefined}
+							/>
+							<span class="ev-face">
+								<span class={`ev-mark ${q.type === "multi" ? "ev-mark-check" : ""}`} aria-hidden="true" />
+								<span class="ev-text">{o.label}</span>
+							</span>
+						</label>
+						{o.other && (
+							<div class="ev-other" hidden data-for={q.id}>
+								<input
+									type="text"
+									name={`${q.id}_anders`}
+									maxlength="300"
+									aria-label={`${q.text} ${q.otherLabel ?? "Anders, namelijk"}`}
+									placeholder={q.otherPlaceholder ?? "Jouw antwoord"}
+									class={inputClass}
+								/>
+							</div>
+						)}
+					</>
+				))}
+			</div>
+		)
+	}
+
+	{
+		q.type === "scale" && (
+			<div>
+				<div class="ev-scale" role="radiogroup" aria-labelledby={`q-${q.id}`}>
+					{q.options!.map((o) => (
+						<label class="ev-opt">
+							<input type="radio" name={q.id} value={o.label} />
+							<span class="ev-face ev-face-num">
+								<span class="ev-text">{o.label}</span>
+							</span>
+						</label>
+					))}
+				</div>
+				<div class="flex justify-between gap-6 mt-3 text-sm text-[var(--color-brand-muted)]">
+					<span>0 = {q.scaleLabels![0]}</span>
+					<span class="text-right">10 = {q.scaleLabels![1]}</span>
+				</div>
+			</div>
+		)
+	}
+
+	<p class="ev-err" role="alert" hidden />
+
+	{/* Volgende: bij meerkeuze, open vragen en enkelvoudig met een tekstveld-optie (dan pas zichtbaar) */}
+	{
+		(q.type === "multi" || q.type === "text" || q.options?.some((o) => o.other)) && (
+			<div class="ev-actions" data-actions-for-other={q.type === "single" ? "1" : undefined} hidden={q.type === "single"}>
+				<Button type="button" data-action="next" className="w-full sm:w-auto text-lg px-10 py-4 cursor-pointer">
+					Volgende
+				</Button>
+			</div>
+		)
+	}
+	{
+		!q.required && (
+			<div class="ev-skip-row">
+				<button type="button" class="ev-skip" data-action="skip">
+					Overslaan
+				</button>
+			</div>
+		)
+	}
+</section>
