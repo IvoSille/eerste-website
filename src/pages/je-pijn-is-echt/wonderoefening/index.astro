@@ -95,7 +95,7 @@ const CAL_LINK = "crystalhelder/inzicht";
 							<svg id="icon-play" viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true">
 								<path d="M8.5 5.6v12.8a.9.9 0 0 0 1.4.75l10-6.4a.9.9 0 0 0 0-1.5l-10-6.4a.9.9 0 0 0-1.4.75z" />
 							</svg>
-							<svg id="icon-pause" viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true" hidden>
+							<svg id="icon-pause" viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true">
 								<rect x="6" y="5" width="4.2" height="14" rx="1.6" />
 								<rect x="13.8" y="5" width="4.2" height="14" rx="1.6" />
 							</svg>
@@ -253,6 +253,12 @@ const CAL_LINK = "crystalhelder/inzicht";
 	.play:hover { background: #cf6a4f; transform: translateY(-2px); }
 	.play svg { display: block; }
 	#icon-play { margin-left: 4px; }
+	/* Icoon volgt de speelstatus (.is-playing wordt door het script gezet) */
+	#icon-pause { display: none; }
+	.player.is-playing #icon-play { display: none; }
+	.player.is-playing #icon-pause { display: block; }
+	/* Direct zichtbaar dat de knop is ingedrukt */
+	.play:active { transform: scale(0.94); }
 
 	.skip {
 		position: relative;
@@ -348,18 +354,16 @@ const CAL_LINK = "crystalhelder/inzicht";
 
 <script>
 	(function () {
-		const audio = document.getElementById("oefening-audio") as HTMLAudioElement | null;
+		const audio = document.getElementById("oefening-audio") as HTMLAudioElement;
 		const player = document.getElementById("player");
 		const playBtn = document.getElementById("play") as HTMLButtonElement | null;
-		const iconPlay = document.getElementById("icon-play");
-		const iconPause = document.getElementById("icon-pause");
 		const back = document.getElementById("back15");
 		const fwd = document.getElementById("fwd15");
 		const seek = document.getElementById("seek") as HTMLInputElement | null;
 		const cur = document.getElementById("cur");
 		const dur = document.getElementById("dur");
 		const status = document.getElementById("audio-status");
-		if (!audio || !player || !playBtn || !iconPlay || !iconPause || !back || !fwd || !seek || !cur || !dur) return;
+		if (!audio || !player || !playBtn || !back || !fwd || !seek || !cur || !dur) return;
 
 		const push = (data: Record<string, unknown>) => {
 			const w = window as any;
@@ -410,8 +414,6 @@ const CAL_LINK = "crystalhelder/inzicht";
 
 		const setPlaying = (on: boolean) => {
 			player.classList.toggle("is-playing", on);
-			iconPlay.hidden = on;
-			iconPause.hidden = !on;
 			playBtn.setAttribute("aria-label", on ? "Oefening pauzeren" : "Oefening afspelen");
 		};
 		audio.addEventListener("play", () => setPlaying(true));
