@@ -1,0 +1,509 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import Button from "../../../components/Button.astro";
+import Footer from "../../../components/Footer.astro";
+import { Picture } from "astro:assets";
+import bgIllustration from "../../../assets/images/bedankt_hero.png";
+import portretCrystal from "../../../assets/images/Portret Crystal 1.jpg";
+
+// Gumlet: "Intro oefening Je pijn is echt sep2026" (45 sec)
+const GUMLET_VIDEO_ID = "6aae35fd7d44d89d0158f7ce";
+// player_color: terracotta i.p.v. Gumlet-paars (waarde moet URL-encoded, %23 = #)
+const VIDEO_SRC = `https://play.gumlet.io/embed/${GUMLET_VIDEO_ID}?player_color=%23BC5940`;
+
+// Audio staat in /public/audio (Netlify). Faststart-M4A, dus start snel op mobiel.
+const AUDIO_SRC = "/audio/de-wonderoefening.m4a";
+
+// Gratis gesprek (45 min) — Cal.com event type "inzicht"
+const CAL_LINK = "crystalhelder/inzicht";
+---
+
+<Layout
+	title="De wonderoefening — Je pijn is echt | Crystal Helder"
+	description="De oefening uit de live sessie van vrijdagavond, met een korte uitleg vooraf."
+	robots="noindex, nofollow"
+	calLink={CAL_LINK}
+	showConsentBanner={false}
+>
+	{/* ============ HERO + VIDEO ============ */}
+	<section class="relative overflow-hidden px-6 lg:px-8 pt-14 pb-16 md:pt-24 md:pb-24">
+		{/* Aquarel: twee bijgesneden hoeken, zelfde beeldtaal als de bedankt-pagina's */}
+		<div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+			<div class="absolute -top-[14%] -right-[18%] w-[380px] md:-top-[22%] md:-right-[24%] md:w-[560px] lg:-top-[14%] lg:-right-[18%] lg:w-[620px] rotate-[12deg] opacity-80 wash">
+				<Picture src={bgIllustration} alt="" widths={[380, 620]} sizes="620px" class="w-full h-auto" />
+			</div>
+			<div class="absolute -bottom-[6%] -left-[22%] w-[340px] md:w-[560px] rotate-[192deg] opacity-70 wash">
+				<Picture src={bgIllustration} alt="" widths={[340, 560]} sizes="560px" class="w-full h-auto" />
+			</div>
+		</div>
+
+		<div class="relative max-w-[900px] mx-auto">
+			<div class="max-w-2xl mx-auto text-center mb-10 md:mb-14">
+				<h1 class="text-4xl sm:text-6xl md:text-7xl font-semibold tracking-tight leading-[1.05] text-balance text-[var(--color-brand-primary-text)] mb-5 md:mb-6">
+					De wonderoefening
+				</h1>
+				<p class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] leading-relaxed text-balance">
+					Uit de live sessie van vrijdagavond. Neem er een kwartier voor.
+				</p>
+			</div>
+
+			<div class="relative w-full rounded-2xl md:rounded-3xl overflow-hidden bg-[#3A302D] shadow-[0_24px_60px_-20px_rgba(188,89,64,0.45)]" style="aspect-ratio: 16 / 9;">
+				<iframe
+					src={VIDEO_SRC}
+					title="Uitleg bij de wonderoefening"
+					class="absolute inset-0 w-full h-full border-0"
+					allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+					allowfullscreen
+				></iframe>
+			</div>
+		</div>
+	</section>
+
+	{/* ============ DE OEFENING (podium) ============ */}
+	<section class="px-4 sm:px-6 lg:px-8 pb-20 md:pb-28">
+		<div id="oefening" class="stage relative max-w-[980px] mx-auto rounded-[2rem] md:rounded-[3rem] overflow-hidden text-white px-6 sm:px-10 md:px-16 pt-14 pb-12 md:pt-20 md:pb-16">
+			<div class="relative z-10 max-w-xl mx-auto text-center">
+				<h2 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight text-[var(--color-brand-base)] mb-6 md:mb-8">
+					Doe de oefening
+				</h2>
+				<p class="text-lg md:text-xl leading-[1.7] text-[#E4D5CD] mb-5">
+					Zoek een plek waar je een kwartier niet gestoord wordt. Koptelefoon op als je die hebt, ga liggen of zitten, en laat je ogen dicht.
+				</p>
+				<p class="text-lg md:text-xl leading-[1.7] text-[#E4D5CD]">
+					De oefening duurt bijna negen minuten. Je hoeft niets te onthouden of op te schrijven, luisteren en volgen is genoeg.
+				</p>
+			</div>
+
+			{/* SPELER */}
+			<div id="player" class="player relative z-10 max-w-lg mx-auto mt-24 md:mt-28">
+				<audio id="oefening-audio" preload="metadata" src={AUDIO_SRC}></audio>
+
+				<div class="flex items-center justify-center gap-4 sm:gap-8">
+					<button type="button" id="back15" class="skip" aria-label="15 seconden terug">
+						<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path d="M4 12a8 8 0 1 0 2.6-5.9" />
+							<path d="M4 4.5v4.6h4.6" />
+						</svg>
+						<span class="skip-num" aria-hidden="true">15</span>
+					</button>
+
+					<div class="halo">
+						<span class="breath breath-3" aria-hidden="true"></span>
+						<span class="breath breath-2" aria-hidden="true"></span>
+						<span class="breath breath-1" aria-hidden="true"></span>
+						<button type="button" id="play" class="play" aria-label="Oefening afspelen">
+							<svg id="icon-play" viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true">
+								<path d="M8.5 5.6v12.8a.9.9 0 0 0 1.4.75l10-6.4a.9.9 0 0 0 0-1.5l-10-6.4a.9.9 0 0 0-1.4.75z" />
+							</svg>
+							<svg id="icon-pause" viewBox="0 0 24 24" width="34" height="34" fill="currentColor" aria-hidden="true" hidden>
+								<rect x="6" y="5" width="4.2" height="14" rx="1.6" />
+								<rect x="13.8" y="5" width="4.2" height="14" rx="1.6" />
+							</svg>
+						</button>
+					</div>
+
+					<button type="button" id="fwd15" class="skip" aria-label="15 seconden vooruit">
+						<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<path d="M20 12a8 8 0 1 1-2.6-5.9" />
+							<path d="M20 4.5v4.6h-4.6" />
+						</svg>
+						<span class="skip-num" aria-hidden="true">15</span>
+					</button>
+				</div>
+
+				<div class="mt-20 md:mt-24">
+					<input
+						id="seek"
+						class="seek"
+						type="range"
+						min="0"
+						max="1000"
+						step="1"
+						value="0"
+						aria-label="Positie in de oefening"
+						aria-valuetext="0 seconden"
+						disabled
+					/>
+					<div class="flex justify-between text-sm md:text-base tabular-nums text-[#D5C2B9] mt-1">
+						<time id="cur">0:00</time>
+						<time id="dur">–:––</time>
+					</div>
+				</div>
+
+				<p id="audio-status" class="text-center text-base text-[#F0C9BC] mt-4 min-h-[1.5rem]" role="status" aria-live="polite"></p>
+			</div>
+		</div>
+	</section>
+
+	{/* ============ GESPREK ============ */}
+	<section id="gesprek" class="px-6 lg:px-8 pb-24 md:pb-32">
+		<div class="max-w-[1040px] mx-auto grid lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-14 lg:gap-20 items-center">
+			<div class="relative max-w-sm mx-auto lg:max-w-none w-full">
+				<div class="absolute -bottom-5 -left-5 md:-bottom-7 md:-left-7 w-3/4 h-3/4 rounded-[3rem] bg-[var(--color-brand-sage)]/70" aria-hidden="true"></div>
+				<div class="relative aspect-[4/5]">
+					<Picture
+						src={portretCrystal}
+						alt="Crystal met haar handen op haar hart en buik"
+						widths={[360, 540, 720, 960]}
+						sizes="(max-width: 768px) 384px, 480px"
+						formats={["avif", "webp"]}
+						class="w-full h-full object-cover rounded-tl-[5rem] rounded-br-[5rem] rounded-tr-3xl rounded-bl-3xl shadow-[0_20px_50px_-15px_rgba(200,102,77,0.4)]"
+						style="object-position: center 55%;"
+					/>
+				</div>
+			</div>
+
+			<div class="max-w-[34rem] mx-auto lg:mx-0 lg:max-w-none">
+				<h2 class="text-3xl sm:text-4xl md:text-[2.75rem] font-semibold tracking-tight leading-tight text-[var(--color-brand-primary-text)] mb-8">
+					Wil je hierover doorpraten?
+				</h2>
+				<div class="space-y-5 text-lg md:text-xl leading-[1.7] text-[var(--color-brand-primary-text)]/85 max-w-[34rem]">
+					<p>
+						Vrijdagavond hebben we met een groep tegelijk gekeken. Maar wanneer jouw klachten begonnen, wat er in jouw leven speelde en waar het bij jou precies zit: dat is bij iedereen anders.
+					</p>
+					<p>
+						Daarom geef ik deze weken een aantal persoonlijke gesprekken weg. Drie kwartier, alleen jij en ik. Je loopt er weg met een beeld van wat er bij jou speelt, waar het volgens mij vandaan komt, en een volgende stap die bij jouw situatie past.
+					</p>
+					<p>
+						Je betaalt er niets voor. Ik geef ze weg omdat ik weet hoe het is om lang rond te lopen met klachten waar niemand een antwoord op heeft.
+					</p>
+					<p>
+						Ik voer die gesprekken zelf en ik neem er de tijd voor, dus ik doe er een beperkt aantal per week. Je kiest zelf een moment dat jou uitkomt. Inplannen kan <strong class="font-bold">tot en met vrijdag 25 september</strong>.
+					</p>
+				</div>
+
+				<div class="mt-10">
+					<Button
+						data-cal-link={CAL_LINK}
+						data-cal-config='{"layout":"month_view","theme":"light"}'
+						className="text-base md:text-lg px-10 py-5 cursor-pointer w-full sm:w-auto"
+					>
+						Plan je gesprek in
+					</Button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>
+
+<style is:global>
+	/* Aquarel zonder zichtbare papierrand: multiply + zachte uitloop */
+	.wash {
+		mix-blend-mode: multiply;
+		-webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+		mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+	}
+
+	/* ---------- Podium ---------- */
+	.stage {
+		background:
+			radial-gradient(60% 45% at 50% 62%, rgba(188, 89, 64, 0.22), transparent 70%),
+			radial-gradient(45% 35% at 8% 0%, rgba(211, 222, 198, 0.14), transparent 70%),
+			linear-gradient(180deg, #3a302d 0%, #2f2725 100%);
+		box-shadow: 0 30px 70px -30px rgba(44, 38, 36, 0.55);
+	}
+
+	/* ---------- Adem-ringen rond de play-knop ---------- */
+	.halo {
+		position: relative;
+		width: 112px;
+		height: 112px;
+		flex: none;
+		display: grid;
+		place-items: center;
+	}
+	.breath {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		border-radius: 9999px;
+		transform: translate(-50%, -50%) scale(0.88);
+		pointer-events: none;
+		/* Pauze zolang er niets speelt: de ringen blijven dan rustig staan */
+		animation: breathe 10s ease-in-out infinite;
+		animation-play-state: paused;
+	}
+	.breath-1 { width: 144px; height: 144px; background: rgba(232, 160, 144, 0.22); }
+	.breath-2 { width: 184px; height: 184px; background: rgba(232, 160, 144, 0.13); animation-delay: -0.6s; }
+	.breath-3 { width: 226px; height: 226px; background: rgba(232, 160, 144, 0.07); animation-delay: -1.2s; }
+	.player.is-playing .breath { animation-play-state: running; }
+
+	/* 10 sec: 4 sec in, 6 sec uit */
+	@keyframes breathe {
+		0%   { transform: translate(-50%, -50%) scale(0.88); }
+		40%  { transform: translate(-50%, -50%) scale(1.1); }
+		100% { transform: translate(-50%, -50%) scale(0.88); }
+	}
+
+	.play {
+		position: relative;
+		z-index: 1;
+		width: 112px;
+		height: 112px;
+		border-radius: 9999px;
+		display: grid;
+		place-items: center;
+		color: #fff;
+		background: var(--color-brand-accent);
+		box-shadow: 0 14px 34px -8px rgba(188, 89, 64, 0.7);
+		transition: background-color 300ms ease-in-out, transform 300ms ease-in-out;
+	}
+	.play:hover { background: #cf6a4f; transform: translateY(-2px); }
+	.play svg { display: block; }
+	#icon-play { margin-left: 4px; }
+
+	.skip {
+		position: relative;
+		width: 52px;
+		height: 52px;
+		border-radius: 9999px;
+		display: grid;
+		place-items: center;
+		color: #e4d5cd;
+		border: 1px solid rgba(228, 213, 205, 0.28);
+		transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
+	}
+	.skip:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(228, 213, 205, 0.5); }
+	.skip svg { grid-area: 1 / 1; }
+	.skip-num {
+		grid-area: 1 / 1;
+		font-family: var(--font-heading);
+		font-size: 0.6rem;
+		font-weight: 600;
+		line-height: 1;
+		margin-top: 1px;
+	}
+
+	.play:focus-visible,
+	.skip:focus-visible,
+	.seek:focus-visible {
+		outline: 3px solid #f3d3c8;
+		outline-offset: 4px;
+	}
+
+	/* ---------- Tijdlijn ---------- */
+	.seek {
+		--p: 0%;
+		display: block;
+		width: 100%;
+		height: 32px;
+		margin: 0;
+		background: transparent;
+		-webkit-appearance: none;
+		appearance: none;
+		cursor: pointer;
+		touch-action: pan-y;
+	}
+	.seek:disabled { cursor: default; opacity: 0.6; }
+	.seek::-webkit-slider-runnable-track {
+		height: 6px;
+		border-radius: 9999px;
+		background: linear-gradient(to right, #e8a090 var(--p), rgba(255, 255, 255, 0.2) var(--p));
+	}
+	.seek::-moz-range-track {
+		height: 6px;
+		border-radius: 9999px;
+		background: rgba(255, 255, 255, 0.2);
+	}
+	.seek::-moz-range-progress {
+		height: 6px;
+		border-radius: 9999px;
+		background: #e8a090;
+	}
+	.seek::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		width: 20px;
+		height: 20px;
+		margin-top: -7px;
+		border-radius: 9999px;
+		background: #faf7f5;
+		border: 0;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	}
+	.seek::-moz-range-thumb {
+		width: 20px;
+		height: 20px;
+		border-radius: 9999px;
+		background: #faf7f5;
+		border: 0;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+	}
+
+	@media (max-width: 480px) {
+		.halo, .play { width: 96px; height: 96px; }
+		.breath-1 { width: 132px; height: 132px; }
+		.breath-2 { width: 184px; height: 184px; }
+		.breath-3 { width: 250px; height: 250px; }
+		.skip { width: 46px; height: 46px; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.breath { animation: none; transform: translate(-50%, -50%) scale(1); }
+		.play, .skip { transition: none; }
+		.play:hover { transform: none; }
+	}
+</style>
+
+<script>
+	(function () {
+		const audio = document.getElementById("oefening-audio") as HTMLAudioElement | null;
+		const player = document.getElementById("player");
+		const playBtn = document.getElementById("play") as HTMLButtonElement | null;
+		const iconPlay = document.getElementById("icon-play");
+		const iconPause = document.getElementById("icon-pause");
+		const back = document.getElementById("back15");
+		const fwd = document.getElementById("fwd15");
+		const seek = document.getElementById("seek") as HTMLInputElement | null;
+		const cur = document.getElementById("cur");
+		const dur = document.getElementById("dur");
+		const status = document.getElementById("audio-status");
+		if (!audio || !player || !playBtn || !iconPlay || !iconPause || !back || !fwd || !seek || !cur || !dur) return;
+
+		const push = (data: Record<string, unknown>) => {
+			const w = window as any;
+			w.dataLayer = w.dataLayer || [];
+			w.dataLayer.push(data);
+		};
+
+		const fmt = (s: number) => {
+			if (!isFinite(s) || s < 0) return "–:––";
+			const m = Math.floor(s / 60);
+			const r = Math.floor(s % 60);
+			return `${m}:${String(r).padStart(2, "0")}`;
+		};
+		const spoken = (s: number) => {
+			const m = Math.floor(s / 60);
+			const r = Math.floor(s % 60);
+			return (m ? `${m} ${m === 1 ? "minuut" : "minuten"} ` : "") + `${r} seconden`;
+		};
+
+		let scrubbing = false;
+
+		const render = () => {
+			const d = audio.duration;
+			const t = audio.currentTime;
+			cur.textContent = fmt(t);
+			if (isFinite(d) && d > 0) {
+				if (!scrubbing) seek.value = String(Math.round((t / d) * 1000));
+				seek.style.setProperty("--p", `${(t / d) * 100}%`);
+				seek.setAttribute("aria-valuetext", `${spoken(t)} van ${spoken(d)}`);
+			}
+		};
+
+		const onMeta = () => {
+			if (isFinite(audio.duration) && audio.duration > 0) {
+				dur.textContent = fmt(audio.duration);
+				seek.disabled = false;
+				render();
+			}
+		};
+		audio.addEventListener("loadedmetadata", onMeta);
+		audio.addEventListener("durationchange", onMeta);
+		if (audio.readyState >= 1) onMeta();
+
+		audio.addEventListener("timeupdate", () => {
+			render();
+			trackProgress();
+		});
+
+		const setPlaying = (on: boolean) => {
+			player.classList.toggle("is-playing", on);
+			iconPlay.hidden = on;
+			iconPause.hidden = !on;
+			playBtn.setAttribute("aria-label", on ? "Oefening pauzeren" : "Oefening afspelen");
+		};
+		audio.addEventListener("play", () => setPlaying(true));
+		audio.addEventListener("pause", () => setPlaying(false));
+		audio.addEventListener("ended", () => {
+			setPlaying(false);
+			push({ event: "audio_complete", audio_name: "wonderoefening" });
+		});
+
+		audio.addEventListener("error", () => {
+			setPlaying(false);
+			if (status) status.textContent = "De audio kon niet laden. Vernieuw de pagina en probeer het opnieuw.";
+		});
+
+		playBtn.addEventListener("click", () => {
+			if (status) status.textContent = "";
+			if (audio.paused) {
+				audio.play().catch(() => {
+					if (status) status.textContent = "Afspelen lukt niet. Tik nogmaals op de knop.";
+				});
+			} else {
+				audio.pause();
+			}
+		});
+
+		const skip = (delta: number) => {
+			const d = isFinite(audio.duration) ? audio.duration : Infinity;
+			audio.currentTime = Math.max(0, Math.min(d, audio.currentTime + delta));
+			render();
+		};
+		back.addEventListener("click", () => skip(-15));
+		fwd.addEventListener("click", () => skip(15));
+
+		const beginScrub = () => { scrubbing = true; };
+		const endScrub = () => { scrubbing = false; };
+		seek.addEventListener("pointerdown", beginScrub);
+		seek.addEventListener("pointerup", endScrub);
+		seek.addEventListener("pointercancel", endScrub);
+		seek.addEventListener("input", () => {
+			const d = audio.duration;
+			if (!isFinite(d) || d <= 0) return;
+			audio.currentTime = (Number(seek.value) / 1000) * d;
+			render();
+		});
+
+		// Tracking: eerste start + voortgang (25/50/75%) + einde. Geen navigatie, dus geen risico op verloren events.
+		let started = false;
+		const fired = new Set<number>();
+		audio.addEventListener("play", () => {
+			if (started) return;
+			started = true;
+			push({ event: "audio_play", audio_name: "wonderoefening" });
+		});
+		function trackProgress() {
+			const d = audio.duration;
+			if (!isFinite(d) || d <= 0 || audio.paused) return;
+			const pct = (audio.currentTime / d) * 100;
+			[25, 50, 75].forEach((th) => {
+				if (pct >= th && !fired.has(th)) {
+					fired.add(th);
+					push({ event: "audio_progress", audio_name: "wonderoefening", audio_percentage: th });
+				}
+			});
+		}
+
+		// Vergrendelscherm / koptelefoonbediening
+		if ("mediaSession" in navigator) {
+			try {
+				navigator.mediaSession.metadata = new MediaMetadata({
+					title: "De wonderoefening",
+					artist: "Crystal Helder",
+					album: "Je pijn is echt",
+				});
+				navigator.mediaSession.setActionHandler("play", () => audio.play());
+				navigator.mediaSession.setActionHandler("pause", () => audio.pause());
+				navigator.mediaSession.setActionHandler("seekbackward", () => skip(-15));
+				navigator.mediaSession.setActionHandler("seekforward", () => skip(15));
+			} catch (e) {}
+		}
+	})();
+
+	// CTA-klik (opent Cal.com-modal; geen navigatie)
+	document.addEventListener("click", (e) => {
+		const el = (e.target as Element).closest("[data-cal-link]");
+		if (!el) return;
+		const w = window as any;
+		w.dataLayer = w.dataLayer || [];
+		w.dataLayer.push({
+			event: "cta_click",
+			cta_text: el.textContent?.trim() || "",
+			cta_destination: "inzicht",
+			cta_location: "wonderoefening",
+		});
+	});
+</script>

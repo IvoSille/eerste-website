@@ -56,6 +56,12 @@
   [headers.values]
     Cache-Control = "public, max-age=2592000"
 
+# Cache audio for 1 day (stable filename, so a re-recording shows up quickly)
+[[headers]]
+  for = "/audio/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
 # Cache favicon and other static assets for 1 week
 [[headers]]
   for = "/favicon.*"
