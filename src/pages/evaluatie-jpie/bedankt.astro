@@ -1,0 +1,144 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { Picture } from "astro:assets";
+import bgIllustration from "../../assets/images/bedankt_hero.png";
+
+// Boekingslink inzichtgesprek (Cal.com "inzicht"), zelfde als in het formulier.
+const BOOKING_URL =
+	"https://cal.com/crystalhelder/inzicht?utm_source=evaluatie&utm_medium=bedankt&utm_campaign=jpie_ronde2";
+
+// [MEDIA] en [TEKST] uit de spec: volgen uiterlijk zondagavond 20 september.
+// Zodra ze er zijn, hier invullen. type "video" = Gumlet-embed (id), type "audio" =
+// bestand in /public/audio. Zolang type null is, toont de pagina een tijdelijke melding.
+const MEDIA: {
+	type: "video" | "audio" | null;
+	gumletId: string;
+	audioSrc: string;
+	title: string;
+	text: string;
+} = {
+	type: null,
+	gumletId: "",
+	audioSrc: "",
+	title: "",
+	text: "",
+};
+
+const VIDEO_SRC = MEDIA.gumletId
+	? `https://play.gumlet.io/embed/${MEDIA.gumletId}?player_color=%23BC5940`
+	: "";
+---
+
+<Layout
+	title="Dank je wel — Je pijn is echt | Crystal Helder"
+	description="Dank je wel voor je antwoorden."
+	robots="noindex, nofollow"
+	includeCal={false}
+	showConsentBanner={false}
+>
+	<main class="relative min-h-[100svh] px-4 sm:px-6 py-10 sm:py-16 flex justify-center items-start md:items-center">
+		<div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+			<div class="absolute -top-[10%] -right-[26%] w-[340px] md:-top-[16%] md:-right-[14%] md:w-[520px] rotate-[12deg] opacity-70 ev-wash">
+				<Picture src={bgIllustration} alt="" widths={[340, 520]} sizes="520px" class="w-full h-auto" />
+			</div>
+			<div class="absolute -bottom-[6%] -left-[30%] w-[320px] md:-left-[14%] md:w-[480px] rotate-[192deg] opacity-60 ev-wash">
+				<Picture src={bgIllustration} alt="" widths={[320, 480]} sizes="480px" class="w-full h-auto" />
+			</div>
+		</div>
+
+		<div class="relative w-full max-w-[640px] bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-[var(--color-brand-accent)]/15 px-6 py-10 sm:px-10 sm:py-12">
+			<div class="text-center">
+				<h1 class="font-heading font-semibold text-[2rem] sm:text-[2.5rem] leading-[1.15] tracking-tight text-balance text-[var(--color-brand-primary-text)] mb-4">
+					Dank je wel voor je antwoorden.
+				</h1>
+				<p class="text-lg sm:text-xl leading-[1.7] text-[var(--color-brand-primary-text)]/85">
+					Zoals beloofd staat hier iets voor je klaar.
+				</p>
+			</div>
+
+			<div class="mt-9">
+				{
+					MEDIA.type === "video" && (
+						<div class="relative w-full rounded-2xl overflow-hidden bg-[#3A302D] shadow-[0_24px_60px_-20px_rgba(188,89,64,0.45)]" style="aspect-ratio: 16 / 9;">
+							<iframe
+								src={VIDEO_SRC}
+								title={MEDIA.title || "Bedankje van Crystal"}
+								class="absolute inset-0 w-full h-full border-0"
+								allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+								allowfullscreen
+							/>
+						</div>
+					)
+				}
+				{
+					MEDIA.type === "audio" && (
+						<audio controls preload="metadata" src={MEDIA.audioSrc} class="w-full" aria-label={MEDIA.title || "Bedankje van Crystal"} />
+					)
+				}
+				{
+					MEDIA.type === null && (
+						<div class="rounded-2xl border border-[var(--color-brand-secondary)] bg-[var(--color-brand-base)] px-6 py-8 text-center">
+							{/* Tijdelijke tekst (niet uit de spec), verdwijnt zodra MEDIA hierboven gevuld is */}
+							<p class="text-lg leading-relaxed text-[var(--color-brand-primary-text)]/85">
+								Je bedankje staat vanaf zondagavond 20 september voor je klaar op deze pagina. Kom dan gerust nog even terug.
+							</p>
+						</div>
+					)
+				}
+				{
+					MEDIA.type && MEDIA.title && (
+						<h2 class="font-heading font-semibold text-2xl leading-tight mt-7 text-[var(--color-brand-primary-text)]">{MEDIA.title}</h2>
+					)
+				}
+				{MEDIA.type && MEDIA.text && <p class="text-lg leading-[1.7] mt-3 text-[var(--color-brand-primary-text)]/85">{MEDIA.text}</p>}
+			</div>
+
+			{/* Alleen zichtbaar als in het formulier "Nog niet" is gekozen bij "Heb je al een inzichtgesprek geboekt?" */}
+			<div id="boeking" class="mt-10 pt-9 border-t border-[var(--color-brand-secondary)] text-center" hidden>
+				<Button
+					href={BOOKING_URL}
+					target="_blank"
+					rel="noopener"
+					data-track-booking="bedankt"
+					className="w-full sm:w-auto text-lg px-10 py-5"
+				>
+					Boek je inzichtgesprek
+				</Button>
+				<p class="mt-4 text-base text-[var(--color-brand-muted)] italic">Je kunt je gesprek boeken tot en met 25 september.</p>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style is:global>
+	.ev-wash {
+		mix-blend-mode: multiply;
+		-webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+		mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+	}
+	#boeking[hidden] { display: none; }
+</style>
+
+<script>
+	(function () {
+		// Het antwoord op "Heb je al een inzichtgesprek geboekt?" staat in sessionStorage
+		// (bewust niet in de URL). Wie de pagina direct opent, ziet de boekingsknop niet.
+		let geboekt = "";
+		let bron = "onbekend";
+		try {
+			geboekt = sessionStorage.getItem("jpie_eval_geboekt") || "";
+			bron = sessionStorage.getItem("jpie_eval_bron") || "onbekend";
+		} catch {}
+		const block = document.getElementById("boeking");
+		if (block && geboekt === "Nog niet") block.hidden = false;
+
+		document.querySelectorAll<HTMLElement>("[data-track-booking]").forEach((el) => {
+			el.addEventListener("click", () => {
+				const w = window as any;
+				w.dataLayer = w.dataLayer || [];
+				w.dataLayer.push({ event: "evaluatie_boekingslink_klik", plaatsing: el.dataset.trackBooking, bron });
+			});
+		});
+	})();
+</script>

@@ -1,0 +1,1039 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Button from "../../components/Button.astro";
+import { Picture } from "astro:assets";
+import bgIllustration from "../../assets/images/bedankt_hero.png";
+
+// n8n-webhook die elke inzending (onvolledig / kern_ingevuld / volledig) als
+// één rij wegschrijft, op submission_id (zie docs/evaluatieformulier-…md §5).
+const ENDPOINT = "https://n8n.reconnectnow.nl/webhook/crystal-challenge-evaluatie";
+
+// Boekingslink inzichtgesprek (Cal.com "inzicht"). Bewust een gewone link in een
+// nieuw tabblad, geen Cal-modal: de modal zou na een boeking wegnavigeren en het
+// formulier (met nog niet opgeslagen antwoorden) kwijtraken.
+const BOOKING_URL =
+	"https://cal.com/crystalhelder/inzicht?utm_source=evaluatie&utm_medium=formulier&utm_campaign=jpie_ronde2";
+
+type Option = { label: string; other?: boolean; exclusive?: boolean };
+type Question = {
+	id: string;
+	part: 1 | 2;
+	type: "single" | "multi" | "scale" | "text";
+	text: string;
+	hint?: string;
+	required?: boolean;
+	options?: Option[];
+	scaleLabels?: [string, string];
+	// Voorwaarde om de vraag te tonen (verwijst naar het antwoord op een eerdere vraag)
+	ifField?: string;
+	ifEquals?: string;
+	ifFilled?: boolean;
+	// Volgorde: de vraag staat direct na deze vraag-id (voor het boekingsblok bij V9a)
+	bookingButton?: boolean;
+};
+
+// Copy letterlijk uit docs/evaluatieformulier-challenge-je-pijn-is-echt.md
+const questions: Question[] = [
+	{
+		id: "live_sessie",
+		part: 1,
+		type: "single",
+		required: true,
+		text: "Was je bij de live sessie op vrijdag 18 september?",
+		options: [{ label: "Ja" }, { label: "Nee" }],
+	},
+	{
+		id: "interesse_programma",
+		part: 1,
+		type: "single",
+		required: true,
+		ifField: "live_sessie",
+		ifEquals: "Ja",
+		text: "Hoe graag wil je meer horen over het programma dat ik noemde?",
+		options: [{ label: "Heel graag" }, { label: "Misschien" }, { label: "Nu niet" }],
+	},
+	{
+		id: "reden_niet_live",
+		part: 1,
+		type: "single",
+		required: true,
+		ifField: "live_sessie",
+		ifEquals: "Nee",
+		text: "Wat maakte dat je er niet bij was?",
+		options: [
+			{ label: "Het tijdstip kwam niet uit" },
+			{ label: "Ik was het vergeten" },
+			{ label: "Ik wist niet goed wat ik kon verwachten" },
+			{ label: "Anders", other: true },
+		],
+	},
+	{
+		id: "aanbevelen",
+		part: 1,
+		type: "scale",
+		required: true,
+		text: "Hoe waarschijnlijk is het dat je de challenge aanraadt aan een vriendin?",
+		scaleLabels: ["Zeer onwaarschijnlijk", "Zeer waarschijnlijk"],
+		options: Array.from({ length: 11 }, (_, i) => ({ label: String(i) })),
+	},
+	{
+		id: "wat_gebracht",
+		part: 1,
+		type: "text",
+		text: "Wat heeft de challenge jou gebracht?",
+	},
+	{
+		id: "toestemming_review",
+		part: 1,
+		type: "single",
+		required: true,
+		ifField: "wat_gebracht",
+		ifFilled: true,
+		text: "Mag ik jouw antwoord op de vorige vraag delen op mijn website, zodat andere vrouwen weten wat ze kunnen verwachten?",
+		options: [
+			{ label: "Ja, met mijn voornaam" },
+			{ label: "Ja, met mijn initialen" },
+			{ label: "Ja, zonder naam" },
+			{ label: "Liever niet" },
+		],
+	},
+	{
+		id: "leeftijd",
+		part: 1,
+		type: "single",
+		text: "Wat is je leeftijd?",
+		options: [
+			{ label: "Jonger dan 30" },
+			{ label: "30–39" },
+			{ label: "40–49" },
+			{ label: "50–59" },
+			{ label: "60 of ouder" },
+		],
+	},
+	{
+		id: "cyclusfase",
+		part: 1,
+		type: "single",
+		text: "Welke fase past het best bij jou?",
+		options: [
+			{ label: "Ik heb een regelmatige cyclus" },
+			{ label: "Mijn cyclus is onregelmatig" },
+			{ label: "Ik zit in de overgang" },
+			{ label: "Ik ben door de overgang heen" },
+			{ label: "Zeg ik liever niet" },
+		],
+	},
+	{
+		id: "bekend_gg",
+		part: 1,
+		type: "single",
+		text: "Hoe bekend was je met Germaanse Geneeskunde vóór de challenge?",
+		options: [
+			{ label: "Ik werk er al mee" },
+			{ label: "Ik had ervan gehoord" },
+			{ label: "Het was nieuw voor mij" },
+		],
+	},
+	{
+		id: "eerder_geprobeerd",
+		part: 1,
+		type: "multi",
+		text: "Wat heb je al geprobeerd voor je klachten?",
+		hint: "(meerdere antwoorden mogelijk)",
+		options: [
+			{ label: "Huisarts of specialist" },
+			{ label: "Bekkenfysiotherapie" },
+			{ label: "Voeding en leefstijl" },
+			{ label: "Alternatieve therapie (bijv. acupunctuur, osteopathie)" },
+			{ label: "Coaching of therapie" },
+			{ label: "Nog niets", exclusive: true },
+			{ label: "Anders", other: true },
+		],
+	},
+	{
+		id: "geboekt",
+		part: 1,
+		type: "single",
+		required: true,
+		text: "Heb je al een inzichtgesprek geboekt?",
+		options: [{ label: "Ja" }, { label: "Nog niet" }],
+	},
+	{
+		id: "reden_niet_geboekt",
+		part: 1,
+		type: "single",
+		required: true,
+		ifField: "geboekt",
+		ifEquals: "Nog niet",
+		bookingButton: true,
+		text: "Wat maakt dat je nog niet geboekt hebt?",
+		options: [
+			{ label: "Ik wil er nog over nadenken" },
+			{ label: "Ik weet niet goed wat het gesprek inhoudt" },
+			{ label: "Mijn agenda laat het nu niet toe" },
+			{ label: "Ik heb er nu geen behoefte aan" },
+			{ label: "Anders", other: true },
+		],
+	},
+];
+
+const part2: Question[] = [
+	{
+		id: "klachten_eigen_woorden",
+		part: 2,
+		type: "text",
+		text: "Hoe zou je je klachten omschrijven als je ze aan een goede vriendin vertelt?",
+	},
+	{
+		id: "reden_aanmelding",
+		part: 2,
+		type: "text",
+		text: "Wat maakte dat je je aanmeldde voor de challenge?",
+	},
+	{
+		id: "moment_bijgebleven",
+		part: 2,
+		type: "text",
+		text: "Welk moment uit de challenge is je het meest bijgebleven, en waarom?",
+	},
+	{
+		id: "verbetering",
+		part: 2,
+		type: "text",
+		text: "Wat zou de challenge voor jou nog waardevoller maken?",
+	},
+];
+
+// V10 (contact) komt na de laatste kernvraag, deel 2 na het overgangsscherm.
+const inputClass =
+	"w-full rounded-xl border border-[var(--color-brand-secondary)] px-4 py-3 bg-white text-base text-[var(--color-brand-primary-text)] placeholder:text-[var(--color-brand-muted)]/60 focus:ring-2 focus:ring-[var(--color-brand-accent)] focus:border-transparent outline-none transition-all duration-300";
+
+const condAttrs = (q: Question) => ({
+	"data-if-field": q.ifField,
+	"data-if-equals": q.ifEquals,
+	"data-if-filled": q.ifFilled ? "1" : undefined,
+});
+---
+
+<Layout
+	title="Evaluatie — Je pijn is echt | Crystal Helder"
+	description="Jouw feedback op de challenge Je pijn is echt."
+	robots="noindex, nofollow"
+	includeCal={false}
+	showConsentBanner={false}
+>
+	<main class="ev-page relative min-h-[100svh] px-4 sm:px-6 py-5 sm:py-10 flex justify-center items-start md:items-center">
+		{/* Aquarel-hoeken, zelfde beeldtaal als de bedankt-pagina's (decoratief, klein gehouden) */}
+		<div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+			<div class="absolute -top-[10%] -right-[26%] w-[340px] md:-top-[16%] md:-right-[14%] md:w-[520px] rotate-[12deg] opacity-70 ev-wash">
+				<Picture src={bgIllustration} alt="" widths={[340, 520]} sizes="520px" class="w-full h-auto" />
+			</div>
+			<div class="absolute -bottom-[6%] -left-[30%] w-[320px] md:-left-[14%] md:w-[480px] rotate-[192deg] opacity-60 ev-wash">
+				<Picture src={bgIllustration} alt="" widths={[320, 480]} sizes="480px" class="w-full h-auto" />
+			</div>
+		</div>
+
+		{/* data-clarity-mask: Clarity maskeert alles hierbinnen (antwoorden gaan over gezondheid) */}
+		<div class="ev-card relative w-full max-w-[640px] bg-white rounded-[2rem] md:rounded-[2.5rem] shadow-2xl shadow-[var(--color-brand-accent)]/15 px-5 pt-5 pb-8 sm:px-10 sm:pt-7 sm:pb-11" data-clarity-mask="true">
+			<div class="ev-top" id="ev-top" hidden>
+				<button type="button" id="ev-back" class="ev-back" hidden>
+					<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg>
+					<span>Terug</span>
+				</button>
+				<div id="ev-progress" class="ev-progress" role="progressbar" aria-label="Voortgang" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden>
+					<div id="ev-bar" class="ev-bar"></div>
+				</div>
+			</div>
+
+			<form id="ev-form" novalidate data-endpoint={ENDPOINT} autocomplete="on">
+				{/* ============ INTRO ============ */}
+				<section class="ev-step" data-id="intro" data-part="0" data-primary="start">
+					<div class="text-center pt-6 sm:pt-4">
+						<p class="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-brand-accent)] mb-3">Evaluatie van de challenge</p>
+						<h1 class="ev-q ev-q-hero mb-7" tabindex="-1" data-focus>Je pijn is echt</h1>
+						<p class="text-lg sm:text-xl leading-[1.7] text-[var(--color-brand-primary-text)]/85 text-left sm:text-center mb-9">
+							Fijn dat je meedeed met de challenge. Met jouw antwoorden maak ik de challenge nog beter voor de vrouwen na jou. Het eerste deel duurt ongeveer 2 minuten. Als dank staat er daarna iets voor je klaar.
+						</p>
+						<Button type="button" data-action="start" className="w-full sm:w-auto text-lg px-12 py-4 cursor-pointer">Start</Button>
+						{/* Toestemmingszin: door mij geschreven (niet in de spec), ter goedkeuring door Crystal */}
+						<p class="text-sm text-[var(--color-brand-muted)] leading-relaxed mt-6 text-left sm:text-center">
+							Een aantal vragen gaat over je gezondheid. Door te starten geef je mij toestemming om je antwoorden daarvoor te gebruiken: om de challenge te verbeteren en om persoonlijk op je te reageren. Lees meer in mijn <a href="/privacyverklaring/" target="_blank" rel="noopener" class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300">privacyverklaring</a>.
+						</p>
+					</div>
+				</section>
+
+				{/* ============ DEEL 1: KERN ============ */}
+				{
+					questions.map((q) => (
+						<section
+							class="ev-step"
+							hidden
+							data-id={q.id}
+							data-part={q.part}
+							data-type={q.type}
+							data-required={q.required ? "1" : undefined}
+							{...condAttrs(q)}
+						>
+							{q.bookingButton && (
+								<div class="mb-8">
+									<Button
+										href={BOOKING_URL}
+										target="_blank"
+										rel="noopener"
+										data-track-booking="formulier"
+										className="w-full text-lg py-5"
+									>
+										Boek je inzichtgesprek
+									</Button>
+								</div>
+							)}
+							<h2 class="ev-q" id={`q-${q.id}`} tabindex="-1" data-focus>{q.text}</h2>
+							{q.hint && <p class="ev-hint">{q.hint}</p>}
+
+							{q.type === "text" && (
+								<textarea
+									name={q.id}
+									rows="5"
+									maxlength="2000"
+									aria-labelledby={`q-${q.id}`}
+									class={`${inputClass} mt-6 resize-y min-h-[9rem]`}
+								/>
+							)}
+
+							{(q.type === "single" || q.type === "multi") && (
+								<div class="ev-options" role={q.type === "single" ? "radiogroup" : "group"} aria-labelledby={`q-${q.id}`}>
+									{q.options!.map((o) => (
+										<>
+											<label class="ev-opt">
+												<input
+													type={q.type === "single" ? "radio" : "checkbox"}
+													name={q.id}
+													value={o.label}
+													data-other={o.other ? "1" : undefined}
+													data-exclusive={o.exclusive ? "1" : undefined}
+												/>
+												<span class="ev-face">
+													<span class={`ev-mark ${q.type === "multi" ? "ev-mark-check" : ""}`} aria-hidden="true" />
+													<span class="ev-text">{o.label}</span>
+												</span>
+											</label>
+											{o.other && (
+												<div class="ev-other" hidden data-for={q.id}>
+													<input
+														type="text"
+														name={`${q.id}_anders`}
+														maxlength="300"
+														aria-label={`${q.text} Anders, namelijk`}
+														placeholder="Jouw antwoord"
+														class={inputClass}
+													/>
+												</div>
+											)}
+										</>
+									))}
+								</div>
+							)}
+
+							{q.type === "scale" && (
+								<div>
+									<div class="ev-scale" role="radiogroup" aria-labelledby={`q-${q.id}`}>
+										{q.options!.map((o) => (
+											<label class="ev-opt">
+												<input type="radio" name={q.id} value={o.label} />
+												<span class="ev-face ev-face-num"><span class="ev-text">{o.label}</span></span>
+											</label>
+										))}
+									</div>
+									<div class="flex justify-between gap-6 mt-3 text-sm text-[var(--color-brand-muted)]">
+										<span>0 = {q.scaleLabels![0]}</span>
+										<span class="text-right">10 = {q.scaleLabels![1]}</span>
+									</div>
+								</div>
+							)}
+
+							<p class="ev-err" role="alert" hidden />
+
+							{/* Volgende: bij meerkeuze, open vragen en enkelvoudig met "Anders" (dan pas zichtbaar) */}
+							{(q.type === "multi" || q.type === "text" || q.options?.some((o) => o.other)) && (
+								<div class="ev-actions" data-actions-for-other={q.type === "single" ? "1" : undefined} hidden={q.type === "single"}>
+									<Button type="button" data-action="next" className="w-full sm:w-auto text-lg px-10 py-4 cursor-pointer">Volgende</Button>
+								</div>
+							)}
+							{!q.required && (
+								<div class="ev-skip-row">
+									<button type="button" class="ev-skip" data-action="skip">Overslaan</button>
+								</div>
+							)}
+						</section>
+					))
+				}
+
+				{/* ============ V10: VOORNAAM + E-MAIL ============ */}
+				<section class="ev-step" hidden data-id="contact" data-part="1" data-type="contact" data-primary="core">
+					<h2 class="ev-q" id="q-contact" tabindex="-1" data-focus>Je voornaam en e-mailadres, zodat ik persoonlijk op je antwoorden kan reageren.</h2>
+					<div class="mt-7 space-y-5">
+						<div>
+							<label for="voornaam" class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2">Voornaam</label>
+							<input type="text" id="voornaam" name="voornaam" maxlength="80" autocomplete="given-name" class={inputClass} placeholder="Je voornaam" />
+						</div>
+						<div>
+							<label for="email" class="block text-sm font-semibold text-[var(--color-brand-primary-text)] mb-2">E-mailadres</label>
+							<input type="email" id="email" name="email" maxlength="200" autocomplete="email" inputmode="email" class={inputClass} placeholder="jouw@email.nl" />
+						</div>
+					</div>
+					<p class="ev-err" role="alert" hidden />
+					<div class="ev-actions">
+						<Button type="button" data-action="core" className="w-full sm:w-auto text-lg px-12 py-4 cursor-pointer">Verstuur</Button>
+					</div>
+					{/* Privacyregel: door mij geschreven (spec noemt alleen "korte privacyregel"), ter goedkeuring */}
+					<p class="text-sm text-[var(--color-brand-muted)] leading-relaxed mt-6">
+						Ik gebruik je antwoorden om de challenge te verbeteren en om persoonlijk op je te reageren. Een paar vragen gaan over je gezondheid: die gebruik ik alleen daarvoor. Lees meer in mijn <a href="/privacyverklaring/" target="_blank" rel="noopener" class="underline hover:text-[var(--color-brand-accent)] transition-colors duration-300">privacyverklaring</a>.
+					</p>
+				</section>
+
+				{/* ============ OVERGANGSSCHERM ============ */}
+				<section class="ev-step" hidden data-id="overgang" data-part="0" data-primary="none">
+					<div class="text-center pt-4 sm:pt-6">
+						<h2 class="ev-q mb-4" tabindex="-1" data-focus>Dank je wel, je antwoorden zijn verstuurd.</h2>
+						<p class="text-lg sm:text-xl leading-[1.7] text-[var(--color-brand-primary-text)]/85 mb-9">
+							Heb je nog 3 minuten? Dan help je de vrouwen na jou enorm.
+						</p>
+						<div class="flex flex-col gap-3">
+							<Button type="button" data-action="deel2" className="w-full text-lg py-4 cursor-pointer">Ja, graag</Button>
+							<Button type="button" variant="secondary" data-action="bedankt" className="w-full text-lg py-4 cursor-pointer">Nee, naar mijn bedankje</Button>
+						</div>
+					</div>
+				</section>
+
+				{/* ============ DEEL 2: VERDIEPING ============ */}
+				{
+					part2.map((q, i) => (
+						<section class="ev-step" hidden data-id={q.id} data-part="2" data-type="text" data-primary={i === part2.length - 1 ? "full" : "next"}>
+							<h2 class="ev-q" id={`q-${q.id}`} tabindex="-1" data-focus>{q.text}</h2>
+							<textarea
+								name={q.id}
+								rows="6"
+								maxlength="2000"
+								aria-labelledby={`q-${q.id}`}
+								class={`${inputClass} mt-6 resize-y min-h-[10rem]`}
+							/>
+							<p class="ev-err" role="alert" hidden />
+							<div class="ev-actions">
+								<Button type="button" data-action={i === part2.length - 1 ? "full" : "next"} className="w-full sm:w-auto text-lg px-12 py-4 cursor-pointer">
+									{i === part2.length - 1 ? "Verstuur" : "Volgende"}
+								</Button>
+							</div>
+							<div class="ev-skip-row">
+								<button type="button" class="ev-skip" data-action="skip">Overslaan</button>
+							</div>
+						</section>
+					))
+				}
+			</form>
+		</div>
+	</main>
+</Layout>
+
+<style is:global>
+	.ev-wash {
+		mix-blend-mode: multiply;
+		-webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+		mask-image: radial-gradient(closest-side, #000 55%, transparent 100%);
+	}
+
+	/* ---------- Kop: terug + voortgang ---------- */
+	.ev-top {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-height: 2.75rem;
+		margin-bottom: 1.25rem;
+	}
+	.ev-top[hidden] { display: none; }
+	.ev-back {
+		flex: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		min-height: 2.75rem;
+		padding: 0 0.75rem 0 0.25rem;
+		margin-left: -0.25rem;
+		border-radius: 9999px;
+		font-family: var(--font-heading);
+		font-weight: 500;
+		font-size: 1rem;
+		color: var(--color-brand-muted);
+		transition: color 300ms ease-in-out, background-color 300ms ease-in-out;
+	}
+	.ev-back:hover { color: var(--color-brand-accent); background: rgba(188, 89, 64, 0.07); }
+	.ev-progress {
+		flex: 1;
+		height: 6px;
+		border-radius: 9999px;
+		background: var(--color-brand-secondary);
+		overflow: hidden;
+	}
+	.ev-bar {
+		height: 100%;
+		width: 0;
+		border-radius: 9999px;
+		background: var(--color-brand-accent);
+		transition: width 500ms ease-in-out;
+	}
+
+	/* ---------- Stappen ---------- */
+	.ev-step.is-in { animation: ev-in 380ms ease-out both; }
+	@keyframes ev-in {
+		from { opacity: 0; transform: translateY(10px); }
+		to { opacity: 1; transform: none; }
+	}
+	.ev-q {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		font-size: 1.6rem;
+		line-height: 1.22;
+		letter-spacing: -0.01em;
+		color: var(--color-brand-primary-text);
+		text-wrap: balance;
+		outline: none;
+	}
+	@media (min-width: 640px) { .ev-q { font-size: 1.95rem; } }
+	.ev-q-hero { font-size: 2.6rem; }
+	@media (min-width: 640px) { .ev-q-hero { font-size: 3.25rem; } }
+	.ev-hint {
+		margin-top: 0.5rem;
+		font-size: 1rem;
+		font-style: italic;
+		color: var(--color-brand-muted);
+	}
+
+	/* ---------- Antwoordknoppen ---------- */
+	.ev-options { display: grid; gap: 0.7rem; margin-top: 1.75rem; }
+	.ev-opt { position: relative; display: block; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+	.ev-opt input {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+	.ev-face {
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		min-height: 3.6rem;
+		padding: 0.8rem 1.1rem;
+		border: 1.5px solid var(--color-brand-secondary);
+		border-radius: 1rem;
+		background: #fff;
+		font-size: 1.0625rem;
+		line-height: 1.35;
+		color: var(--color-brand-primary-text);
+		transition: border-color 300ms ease-in-out, background-color 300ms ease-in-out, box-shadow 300ms ease-in-out;
+	}
+	.ev-opt:hover .ev-face { border-color: var(--color-brand-accent-light); background: #fffaf8; }
+	.ev-opt input:checked + .ev-face {
+		border-color: var(--color-brand-accent);
+		background: rgba(188, 89, 64, 0.08);
+		box-shadow: 0 6px 18px -10px rgba(188, 89, 64, 0.55);
+	}
+	.ev-opt input:focus-visible + .ev-face { outline: 3px solid #f3d3c8; outline-offset: 2px; }
+
+	.ev-mark {
+		flex: none;
+		width: 1.4rem;
+		height: 1.4rem;
+		border: 1.5px solid #cdb9b0;
+		border-radius: 9999px;
+		background: #fff;
+		display: grid;
+		place-items: center;
+		transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
+	}
+	.ev-mark::after {
+		content: "";
+		width: 0.6rem;
+		height: 0.6rem;
+		border-radius: 9999px;
+		background: #fff;
+		transform: scale(0);
+		transition: transform 250ms ease-in-out;
+	}
+	.ev-opt input:checked + .ev-face .ev-mark { background: var(--color-brand-accent); border-color: var(--color-brand-accent); }
+	.ev-opt input:checked + .ev-face .ev-mark::after { transform: scale(1); }
+	.ev-mark-check { border-radius: 0.4rem; }
+	.ev-mark-check::after {
+		width: 0.7rem;
+		height: 0.4rem;
+		border-radius: 0;
+		background: transparent;
+		border-left: 2.5px solid #fff;
+		border-bottom: 2.5px solid #fff;
+		transform: rotate(-45deg) scale(0);
+		margin-top: -0.12rem;
+	}
+	.ev-opt input:checked + .ev-face .ev-mark-check::after { transform: rotate(-45deg) scale(1); }
+
+	.ev-other { margin: -0.15rem 0 0.1rem; }
+	.ev-other[hidden] { display: none; }
+
+	/* ---------- Schaal 0-10 ---------- */
+	.ev-scale { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; margin-top: 1.75rem; }
+	.ev-face-num { justify-content: center; min-height: 3.4rem; padding: 0.5rem; font-family: var(--font-heading); font-weight: 500; font-size: 1.2rem; }
+	@media (min-width: 540px) {
+		.ev-scale { grid-template-columns: repeat(11, 1fr); gap: 0.4rem; }
+		.ev-face-num { padding: 0.5rem 0; font-size: 1.1rem; border-radius: 0.85rem; }
+	}
+
+	/* ---------- Acties ---------- */
+	.ev-actions { margin-top: 1.75rem; }
+	.ev-actions[hidden] { display: none; }
+	.ev-skip-row { margin-top: 1.1rem; text-align: center; }
+	.ev-actions + .ev-skip-row { text-align: left; }
+	.ev-skip {
+		min-height: 2.75rem;
+		padding: 0 0.5rem;
+		font-size: 1rem;
+		color: var(--color-brand-muted);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		transition: color 300ms ease-in-out;
+	}
+	.ev-skip:hover { color: var(--color-brand-accent); }
+	.ev-err { margin-top: 1rem; font-size: 0.95rem; color: var(--color-brand-accent); }
+	.ev-err[hidden] { display: none; }
+	.ev-page button:focus-visible,
+	.ev-page a:focus-visible { outline: 3px solid #f3d3c8; outline-offset: 3px; }
+	.ev-page button[disabled] { opacity: 0.6; cursor: default; transform: none; }
+
+	@media (prefers-reduced-motion: reduce) {
+		.ev-step.is-in { animation: none; }
+		.ev-bar { transition: none; }
+	}
+</style>
+
+<script>
+	(function () {
+		const form = document.getElementById("ev-form") as HTMLFormElement | null;
+		if (!form) return;
+
+		const endpoint = form.dataset.endpoint as string;
+		const steps = Array.from(form.querySelectorAll<HTMLElement>(".ev-step"));
+		const top = document.getElementById("ev-top") as HTMLElement;
+		const backBtn = document.getElementById("ev-back") as HTMLButtonElement;
+		const progress = document.getElementById("ev-progress") as HTMLElement;
+		const bar = document.getElementById("ev-bar") as HTMLElement;
+
+		const params = new URLSearchParams(window.location.search);
+		const bron = (params.get("bron") || "").toLowerCase().replace(/[^a-z0-9_-]/g, "").slice(0, 30);
+
+		const submissionId =
+			typeof crypto !== "undefined" && crypto.randomUUID
+				? crypto.randomUUID()
+				: `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+		let startedAt = "";
+		let kernAt = "";
+		let volledigAt = "";
+		let clickedBooking = false;
+		let kernSaved = false;
+		let currentId = "intro";
+		let modality: "pointer" | "key" = "pointer";
+		let autoTimer: number | undefined;
+		const visited = new Set<string>(); // stappen die de bezoeker verlaten heeft (voor de voortgangsberekening)
+		const pushed = new Set<string>(); // stappen met een history-entry in deze paginasessie
+
+		const push = (data: Record<string, unknown>) => {
+			const w = window as any;
+			w.dataLayer = w.dataLayer || [];
+			w.dataLayer.push(data);
+		};
+		const byId = (id: string) => steps.find((s) => s.dataset.id === id) as HTMLElement;
+
+		// E-mailadres uit de MailerLite-mail (?email=…), alleen als het een geldig adres is
+		// (een niet-vervangen merge tag zoals {$email} valt hier dus af).
+		const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		const emailInput = form.querySelector<HTMLInputElement>("#email")!;
+		const nameInput = form.querySelector<HTMLInputElement>("#voornaam")!;
+		const emailParam = (params.get("email") || "").trim().replace(/ /g, "+");
+		if (emailRe.test(emailParam)) emailInput.value = emailParam;
+
+		// ---------- Antwoorden verzamelen ----------
+		function applies(s: HTMLElement, a: Record<string, string>, assumeUnvisited = false): boolean {
+			const f = s.dataset.ifField;
+			if (!f) return true;
+			if (assumeUnvisited && !visited.has(f)) return true;
+			const v = a[f] ?? "";
+			if (s.dataset.ifEquals !== undefined) return v === s.dataset.ifEquals;
+			if (s.dataset.ifFilled !== undefined) return v.length > 0;
+			return true;
+		}
+
+		// Alleen antwoorden van vragen die in het gevolgde pad zaten: wie terugging en een
+		// ander antwoord koos, laat geen verouderd antwoord van de vertakking achter.
+		function collect(): Record<string, string> {
+			const a: Record<string, string> = {};
+			for (const s of steps) {
+				const inputs = Array.from(s.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("[name]"));
+				const names = Array.from(new Set(inputs.map((i) => i.name)));
+				if (!applies(s, a)) {
+					names.forEach((n) => (a[n] = ""));
+					continue;
+				}
+				for (const n of names) {
+					const group = inputs.filter((i) => i.name === n);
+					const type = (group[0] as HTMLInputElement).type;
+					if (type === "radio") {
+						const c = group.find((i) => (i as HTMLInputElement).checked);
+						a[n] = c ? c.value : "";
+					} else if (type === "checkbox") {
+						a[n] = group.filter((i) => (i as HTMLInputElement).checked).map((i) => i.value).join("; ");
+					} else {
+						a[n] = group[0].value.trim();
+					}
+				}
+				for (const n of names) {
+					if (n.endsWith("_anders")) {
+						const chosen = (a[n.slice(0, -7)] || "").split("; ").includes("Anders");
+						if (!chosen) a[n] = "";
+					}
+				}
+			}
+			return a;
+		}
+
+		// ---------- Opslaan (serieel, zodat de volgorde onvolledig → kern → volledig klopt) ----------
+		let queue: Promise<unknown> = Promise.resolve();
+
+		function buildPayload(stage: string) {
+			const a = collect();
+			return {
+				submission_id: submissionId,
+				status: stage,
+				bron,
+				gestart: startedAt,
+				kern_ingevuld_op: kernAt,
+				volledig_op: volledigAt,
+				klik_boekingslink: clickedBooking ? "ja" : "nee",
+				...a,
+			};
+		}
+
+		async function postOnce(body: string): Promise<boolean> {
+			const ctrl = new AbortController();
+			const t = window.setTimeout(() => ctrl.abort(), 12000);
+			try {
+				const res = await fetch(endpoint, {
+					method: "POST",
+					headers: { "Content-Type": "application/json" },
+					body,
+					signal: ctrl.signal,
+				});
+				if (!res.ok) return false;
+				const json = await res.json().catch(() => ({}));
+				return !!(json && json.success === true);
+			} catch {
+				return false;
+			} finally {
+				window.clearTimeout(t);
+			}
+		}
+
+		function save(stage: string): Promise<boolean> {
+			const run = async () => {
+				const body = JSON.stringify(buildPayload(stage));
+				if (await postOnce(body)) return true;
+				await new Promise((r) => setTimeout(r, 1200));
+				return postOnce(body);
+			};
+			const p = queue.then(run);
+			queue = p.catch(() => false);
+			return p;
+		}
+
+		// ---------- Navigatie ----------
+		function nextOf(id: string): string | null {
+			const a = collect();
+			const i = steps.findIndex((s) => s.dataset.id === id);
+			for (let j = i + 1; j < steps.length; j++) if (applies(steps[j], a)) return steps[j].dataset.id as string;
+			return null;
+		}
+
+		function updateProgress(id: string) {
+			const s = byId(id);
+			const part = s.dataset.part;
+			if (part !== "1" && part !== "2") {
+				top.hidden = true;
+				progress.hidden = true;
+				return;
+			}
+			top.hidden = false;
+			progress.hidden = false;
+			const a = collect();
+			// Nog onbekende vertakkingen tellen mee tot ze uitvallen: de balk schuift zo alleen vooruit.
+			const path = steps.filter((x) => x.dataset.part === part && applies(x, a, true));
+			const idx = Math.max(0, path.indexOf(s));
+			const pct = Math.round(((idx + 1) / (path.length + 1)) * 100);
+			bar.style.width = `${pct}%`;
+			progress.setAttribute("aria-valuenow", String(pct));
+		}
+
+		function show(id: string, mode: "push" | "replace" | "none" = "push") {
+			currentId = id;
+			steps.forEach((s) => {
+				s.hidden = s.dataset.id !== id;
+				s.classList.remove("is-in");
+			});
+			const s = byId(id);
+			s.classList.add("is-in");
+			backBtn.hidden = id === "intro" || id === "overgang";
+			updateProgress(id);
+			syncOther(s);
+			if (mode === "push") history.pushState({ step: id }, "");
+			else if (mode === "replace") history.replaceState({ step: id }, "");
+			pushed.add(id);
+			window.scrollTo({ top: 0 });
+			(s.querySelector("[data-focus]") as HTMLElement | null)?.focus({ preventScroll: true });
+			// Bij het bereiken van V10: antwoorden V1 t/m V9 tussentijds opslaan (anoniem)
+			if (id === "contact" && !kernSaved) void save("onvolledig");
+		}
+
+		function goNext() {
+			visited.add(currentId);
+			const n = nextOf(currentId);
+			if (n) show(n);
+		}
+
+		function showError(s: HTMLElement, msg: string) {
+			const el = s.querySelector<HTMLElement>(".ev-err");
+			if (!el) return;
+			el.textContent = msg;
+			el.hidden = false;
+		}
+		function clearError(s: HTMLElement) {
+			const el = s.querySelector<HTMLElement>(".ev-err");
+			if (el) el.hidden = true;
+		}
+
+		function validate(s: HTMLElement): boolean {
+			clearError(s);
+			if (s.dataset.required) {
+				const id = s.dataset.id as string;
+				if (!collect()[id]) {
+					showError(s, "Kies een antwoord om door te gaan.");
+					return false;
+				}
+			}
+			return true;
+		}
+
+		// "Anders"-tekstveld en Volgende-knop tonen als "Anders" gekozen is
+		function syncOther(s: HTMLElement) {
+			s.querySelectorAll<HTMLInputElement>("input[data-other]").forEach((inp) => {
+				const box = inp.closest(".ev-opt")?.nextElementSibling as HTMLElement | null;
+				if (box && box.classList.contains("ev-other")) box.hidden = !inp.checked;
+			});
+			if (s.dataset.type === "single") {
+				const actions = s.querySelector<HTMLElement>("[data-actions-for-other]");
+				if (actions) actions.hidden = !s.querySelector<HTMLInputElement>("input[data-other]:checked");
+			}
+		}
+
+		function scheduleAdvance() {
+			window.clearTimeout(autoTimer);
+			// Korte pauze, zodat de gekozen knop even zichtbaar aan blijft
+			autoTimer = window.setTimeout(() => {
+				const s = byId(currentId);
+				if (validate(s)) goNext();
+			}, 240);
+		}
+
+		// ---------- Events ----------
+		// De radio dekt het hele antwoordvlak, dus de klik komt altijd op de input zelf aan en
+		// staat dan al aan. Daarom vóór de klik onthouden of dit antwoord al gekozen was.
+		let wasChecked = false;
+		form.addEventListener(
+			"pointerdown",
+			(e) => {
+				modality = "pointer";
+				const t = e.target as HTMLInputElement;
+				wasChecked = t.tagName === "INPUT" && t.type === "radio" && t.checked;
+			},
+			true
+		);
+		form.addEventListener("keydown", (e) => {
+			modality = "key";
+			if (e.key !== "Enter" || e.shiftKey) return;
+			const t = e.target as HTMLElement;
+			if (t.tagName === "TEXTAREA" || t.tagName === "BUTTON" || t.tagName === "A") return;
+			e.preventDefault();
+			primary();
+		});
+
+		// Foutmelding verdwijnt tijdens het typen, nooit bij het verlaten van een veld: dat gebeurt
+		// op het moment dat de bezoeker op Verstuur tikt, en dan zou de knop onder de tik wegschuiven.
+		form.addEventListener("input", (e) => {
+			const s = (e.target as HTMLElement).closest<HTMLElement>(".ev-step");
+			if (s) clearError(s);
+		});
+
+		form.addEventListener("change", (e) => {
+			const inp = e.target as HTMLInputElement;
+			const s = inp.closest<HTMLElement>(".ev-step");
+			if (!s) return;
+
+			if (inp.type === "checkbox") {
+				clearError(s);
+				// "Nog niets" sluit de andere opties uit, en andersom
+				if (inp.checked) {
+					s.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((o) => {
+						if (o === inp) return;
+						if (inp.dataset.exclusive || o.dataset.exclusive) o.checked = false;
+					});
+				}
+				syncOther(s);
+				return;
+			}
+			if (inp.type !== "radio") return;
+
+			clearError(s);
+			syncOther(s);
+			if (inp.dataset.other) {
+				// Anders: eerst de toelichting laten typen, dan Volgende
+				s.querySelector<HTMLInputElement>(".ev-other:not([hidden]) input")?.focus();
+				return;
+			}
+			// Enkelvoudige keuze: automatisch door bij tikken/klikken. Bij toetsenbordbediening
+			// (pijltjes door de opties) juist niet: daar bevestigt Enter.
+			if (modality === "pointer") scheduleAdvance();
+		});
+
+		// Opnieuw tikken op het al gekozen antwoord (bijv. na "Terug") gaat ook door
+		form.addEventListener("click", (e) => {
+			const target = e.target as HTMLElement;
+
+			if (wasChecked && target.tagName === "INPUT" && !(target as HTMLInputElement).dataset.other && modality === "pointer") {
+				scheduleAdvance();
+			}
+			wasChecked = false;
+
+			const booking = target.closest<HTMLElement>("[data-track-booking]");
+			if (booking) {
+				clickedBooking = true;
+				push({ event: "evaluatie_boekingslink_klik", plaatsing: booking.dataset.trackBooking, bron: bron || "onbekend" });
+			}
+
+			const btn = target.closest<HTMLElement>("[data-action]");
+			if (!btn) return;
+			const action = btn.dataset.action;
+			if (action === "start") {
+				startedAt = new Date().toISOString();
+				visited.add("intro");
+				show(nextOf("intro") as string);
+			} else if (action === "next") {
+				primary();
+			} else if (action === "skip") {
+				const s = byId(currentId);
+				s.querySelectorAll<HTMLInputElement>('input[type="radio"], input[type="checkbox"]').forEach((i) => (i.checked = false));
+				s.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("textarea, .ev-other input").forEach((i) => (i.value = ""));
+				syncOther(s);
+				clearError(s);
+				goNext();
+			} else if (action === "core") {
+				void submitCore(btn as HTMLButtonElement);
+			} else if (action === "full") {
+				void submitFull(btn as HTMLButtonElement);
+			} else if (action === "deel2") {
+				visited.add("overgang");
+				show(nextOf("overgang") as string);
+			} else if (action === "bedankt") {
+				goBedankt();
+			}
+		});
+
+		// Enter / Volgende: de hoofdactie van de huidige stap
+		function primary() {
+			const s = byId(currentId);
+			const p = s.dataset.primary;
+			if (p === "start") (s.querySelector('[data-action="start"]') as HTMLElement).click();
+			else if (p === "core") void submitCore(s.querySelector('[data-action="core"]') as HTMLButtonElement);
+			else if (p === "full") void submitFull(s.querySelector('[data-action="full"]') as HTMLButtonElement);
+			else if (p === "none") return;
+			else if (validate(s)) goNext();
+		}
+
+		backBtn.addEventListener("click", () => history.back());
+
+		window.addEventListener("popstate", (e) => {
+			const id = (e.state && e.state.step) as string | undefined;
+			if (!id || !pushed.has(id)) return;
+			// Na het versturen van de kern geen terugkeer naar deel 1 (voorkomt dat status terugvalt)
+			if (kernSaved && byId(id).dataset.part === "1") {
+				show("overgang", "push");
+				return;
+			}
+			show(id, "none");
+		});
+
+		// ---------- Versturen ----------
+		const SAVE_ERROR = "Het versturen lukt even niet. Controleer je verbinding en probeer het nog een keer.";
+
+		async function submitCore(btn: HTMLButtonElement) {
+			const s = byId("contact");
+			clearError(s);
+			const name = nameInput.value.trim();
+			const email = emailInput.value.trim();
+			if (!name) return showError(s, "Vul je voornaam in");
+			if (!email) return showError(s, "Vul je e-mailadres in");
+			if (!emailRe.test(email)) return showError(s, "Dit lijkt geen geldig e-mailadres");
+
+			const label = btn.textContent;
+			btn.disabled = true;
+			btn.textContent = "Een moment…";
+			kernAt = new Date().toISOString();
+			const ok = await save("kern_ingevuld");
+			if (!ok) {
+				kernAt = "";
+				btn.disabled = false;
+				btn.textContent = label;
+				return showError(s, SAVE_ERROR);
+			}
+			kernSaved = true;
+			try {
+				sessionStorage.setItem("jpie_eval_geboekt", collect().geboekt || "");
+				sessionStorage.setItem("jpie_eval_bron", bron || "onbekend");
+			} catch {}
+			push({ event: "evaluatie_kern_verstuurd", bron: bron || "onbekend" });
+			btn.disabled = false;
+			btn.textContent = label;
+			visited.add("contact");
+			show("overgang");
+		}
+
+		async function submitFull(btn: HTMLButtonElement) {
+			const s = byId(currentId);
+			clearError(s);
+			const label = btn.textContent;
+			btn.disabled = true;
+			btn.textContent = "Een moment…";
+			volledigAt = new Date().toISOString();
+			const ok = await save("volledig");
+			if (!ok) {
+				volledigAt = "";
+				btn.disabled = false;
+				btn.textContent = label;
+				return showError(s, SAVE_ERROR);
+			}
+			goBedankt();
+		}
+
+		function goBedankt() {
+			window.location.href = "/evaluatie-jpie/bedankt/";
+		}
+
+		// Startstaat: history-entry voor de intro (herlaad-veilig)
+		show("intro", "replace");
+	})();
+</script>
