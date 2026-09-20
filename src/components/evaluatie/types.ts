@@ -17,6 +17,9 @@ export type Question = {
 	ifEquals?: string;
 	ifIn?: string[];
 	ifFilled?: boolean;
+	// Optionele open vraag die onder de gekozen optie verschijnt (zelfde scherm, dus altijd duidelijk
+	// waar de vraag over gaat)
+	followUp?: { field: string; whenOptions: string[]; text: string };
 	// Boekingsknop bovenaan het scherm (V9a)
 	bookingButton?: boolean;
 };

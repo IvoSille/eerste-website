@@ -68,6 +68,7 @@ const condAttrs = {
 								name={q.id}
 								value={o.label}
 								data-other={o.other ? "1" : undefined}
+								data-follow={q.followUp?.whenOptions.includes(o.label) ? "1" : undefined}
 								data-exclusive={o.exclusive ? "1" : undefined}
 							/>
 							<span class="ev-face">
@@ -89,6 +90,21 @@ const condAttrs = {
 						)}
 					</>
 				))}
+				{q.followUp && (
+					<div class="ev-follow" hidden>
+						<label for={`f-${q.followUp.field}`} class="block text-base font-semibold text-[var(--color-brand-primary-text)] mb-2">
+							{q.followUp.text}
+						</label>
+						<textarea
+							id={`f-${q.followUp.field}`}
+							name={q.followUp.field}
+							data-follow-group={q.id}
+							rows="4"
+							maxlength="2000"
+							class={`${inputClass} resize-y min-h-[7rem]`}
+						/>
+					</div>
+				)}
 			</div>
 		)
 	}
@@ -118,7 +134,7 @@ const condAttrs = {
 
 	{/* Volgende: bij meerkeuze, open vragen en enkelvoudig met een tekstveld-optie (dan pas zichtbaar) */}
 	{
-		(q.type === "multi" || q.type === "text" || q.options?.some((o) => o.other)) && (
+		(q.type === "multi" || q.type === "text" || q.followUp || q.options?.some((o) => o.other)) && (
 			<div class="ev-actions" data-actions-for-other={q.type === "single" ? "1" : undefined} hidden={q.type === "single"}>
 				<Button type="button" data-action="next" className="w-full sm:w-auto text-lg px-10 py-4 cursor-pointer">
 					Volgende

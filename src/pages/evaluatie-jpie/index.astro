@@ -155,6 +155,15 @@ const questions: Question[] = [
 		ifEquals: "Nog niet",
 		bookingButton: true,
 		text: "Wat maakt dat je nog niet geboekt hebt?",
+		followUp: {
+			field: "vervolg_niet_geboekt",
+			text: "Wil je er iets meer over vertellen? Dan kan ik er rekening mee houden.",
+			whenOptions: [
+				"Ik wil er nog over nadenken",
+				"Ik weet niet of het bij mijn klachten past",
+				"Ik heb er nu geen behoefte aan",
+			],
+		},
 		options: [
 			{ label: "Ik wil er nog over nadenken" },
 			{ label: "Ik weet niet goed wat het gesprek inhoudt" },
@@ -164,18 +173,6 @@ const questions: Question[] = [
 			{ label: "Ik heb er nu geen behoefte aan" },
 			{ label: "Anders", other: true },
 		],
-	},
-	{
-		id: "vervolg_niet_geboekt",
-		part: 1,
-		type: "text",
-		ifField: "reden_niet_geboekt",
-		ifIn: [
-			"Ik wil er nog over nadenken",
-			"Ik weet niet of het bij mijn klachten past",
-			"Ik heb er nu geen behoefte aan",
-		],
-		text: "Wil je er iets meer over vertellen? Dan kan ik er rekening mee houden.",
 	},
 	// Deel 1, na naam en e-mail (V5 t/m V8: snelle, optionele vragen)
 ];
@@ -193,7 +190,6 @@ const kernA = pick([
 	"toestemming_review",
 	"geboekt",
 	"reden_niet_geboekt",
-	"vervolg_niet_geboekt",
 ]);
 const kernB = pick(["leeftijd", "cyclusfase", "bekend_gg", "eerder_geprobeerd"]);
 
@@ -493,6 +489,8 @@ const inputClass =
 
 	.ev-other { margin: -0.15rem 0 0.1rem; }
 	.ev-other[hidden] { display: none; }
+	.ev-follow { margin: -0.15rem 0 0.1rem; padding: 0.15rem 0.1rem 0.35rem; }
+	.ev-follow[hidden] { display: none; }
 
 	/* ---------- Schaal 0-10 ---------- */
 	.ev-scale { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.5rem; margin-top: 1.75rem; }
@@ -615,6 +613,13 @@ const inputClass =
 					} else {
 						a[n] = group[0].value.trim();
 					}
+				}
+				// Toelichting telt alleen mee als de bijbehorende optie nog gekozen is
+				for (const el of inputs) {
+					const group = el.dataset.followGroup;
+					if (!group) continue;
+					const chosen = inputs.some((i) => i.name === group && (i as HTMLInputElement).checked && (i as HTMLInputElement).dataset.follow);
+					if (!chosen) a[el.name] = "";
 				}
 				for (const n of names) {
 					if (n.endsWith("_anders")) {
@@ -763,9 +768,18 @@ const inputClass =
 				const box = inp.closest(".ev-opt")?.nextElementSibling as HTMLElement | null;
 				if (box && box.classList.contains("ev-other")) box.hidden = !inp.checked;
 			});
+			// Eén toelichtingsvak: staat direct onder de gekozen optie (dus altijd duidelijk waar de vraag over gaat)
+			const follow = s.querySelector<HTMLElement>(".ev-follow");
+			if (follow) {
+				const chosen = s.querySelector<HTMLInputElement>("input[data-follow]:checked");
+				if (chosen) {
+					chosen.closest(".ev-opt")?.after(follow);
+					follow.hidden = false;
+				} else follow.hidden = true;
+			}
 			if (s.dataset.type === "single") {
 				const actions = s.querySelector<HTMLElement>("[data-actions-for-other]");
-				if (actions) actions.hidden = !s.querySelector<HTMLInputElement>("input[data-other]:checked");
+				if (actions) actions.hidden = !s.querySelector<HTMLInputElement>("input[data-other]:checked, input[data-follow]:checked");
 			}
 		}
 
@@ -828,9 +842,11 @@ const inputClass =
 
 			clearError(s);
 			syncOther(s);
-			if (inp.dataset.other) {
-				// Anders: eerst de toelichting laten typen, dan Volgende
-				s.querySelector<HTMLInputElement>(".ev-other:not([hidden]) input")?.focus();
+			if (inp.dataset.other || inp.dataset.follow) {
+				// Anders / optie met toelichting: eerst de toelichting laten typen, dan Volgende.
+				// Geen focus op het veld (dat zou op mobiel meteen het toetsenbord openen).
+				if (inp.dataset.other) s.querySelector<HTMLInputElement>(".ev-other:not([hidden]) input")?.focus();
+				else s.querySelector<HTMLElement>(".ev-follow:not([hidden])")?.scrollIntoView({ block: "nearest", behavior: "smooth" });
 				return;
 			}
 			// Enkelvoudige keuze: automatisch door bij tikken/klikken. Bij toetsenbordbediening
@@ -842,7 +858,7 @@ const inputClass =
 		form.addEventListener("click", (e) => {
 			const target = e.target as HTMLElement;
 
-			if (wasChecked && target.tagName === "INPUT" && !(target as HTMLInputElement).dataset.other && modality === "pointer") {
+			if (wasChecked && target.tagName === "INPUT" && !(target as HTMLInputElement).dataset.other && !(target as HTMLInputElement).dataset.follow && modality === "pointer") {
 				scheduleAdvance();
 			}
 			wasChecked = false;
