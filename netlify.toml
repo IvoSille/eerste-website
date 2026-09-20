@@ -38,6 +38,15 @@
   status = 302
   force = true
 
+# Evaluatieformulier challenge: korte link voor in de WhatsApp-groep. De bron en UTM's
+# zitten achter de doorverwijzing, zodat de zichtbare link kort blijft en de bron nooit
+# vergeten kan worden. Doel eindigt op een slash: geen tweede doorverwijzing.
+[[redirects]]
+  from = "/evaluatie"
+  to = "/evaluatie-jpie/?bron=whatsapp&utm_source=whatsapp&utm_medium=group&utm_campaign=jpie_ronde2"
+  status = 302
+  force = true
+
 # Cache fonts for 1 year (immutable, never change)
 [[headers]]
   for = "/fonts/*"
