@@ -15,6 +15,9 @@ export default defineConfig({
         !page.includes('/bekijken/') &&
         !page.includes('/evaluatie-jpie/') &&
         !page.includes('/dashboard/') &&
+        // Korte sales page /thuiskomen/: alleen per WhatsApp, nooit vindbaar.
+        // Exacte match, zodat de lange pagina (/thuiskomen-in-je-vrouwenlijf/) wel in de sitemap blijft.
+        new URL(page).pathname !== '/thuiskomen/' &&
         !page.includes('/de-taal-van-je-lichaam/e-book/'),
     }),
   ],

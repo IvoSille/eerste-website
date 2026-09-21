@@ -1,0 +1,23 @@
+---
+import { THUISKOMEN_CLOSE_AT_ISO } from "../../lib/thuiskomen";
+---
+
+{/* Datumtrigger inschrijving (zelfde patroon als /je-pijn-is-echt/): synchrone check
+    vóór paint, zet html.signup-closed. Elementen met .signup-open-only verdwijnen dan
+    en .signup-closed-only verschijnt, zonder flits. De pagina is statisch, dus dit
+    moet in de browser gebeuren. De datum staat op één plek: src/lib/thuiskomen.ts.
+    Plaats dit component bovenaan de pagina, vóór de eerste open/closed-elementen. */}
+<script is:inline define:vars={{ closeAtIso: THUISKOMEN_CLOSE_AT_ISO }}>
+	if (Date.now() >= new Date(closeAtIso).getTime()) {
+		document.documentElement.classList.add("signup-closed");
+	}
+</script>
+
+<style is:global>
+	html.signup-closed .signup-open-only {
+		display: none !important;
+	}
+	html:not(.signup-closed) .signup-closed-only {
+		display: none !important;
+	}
+</style>

@@ -1,0 +1,500 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Footer from "../../components/Footer.astro";
+import SignupSwitch from "../../components/thuiskomen/SignupSwitch.astro";
+import SignupCta from "../../components/thuiskomen/SignupCta.astro";
+import CheckoutButtons from "../../components/thuiskomen/CheckoutButtons.astro";
+
+// Korte sales page, alleen bedoeld om na een inzichtgesprek per WhatsApp te versturen.
+// Copy: docs/korte-salespage-thuiskomen-crystal.md. Bewust NOOIT indexeerbaar (robots
+// noindex) en uitgesloten van de sitemap (astro.config.mjs). Niet in robots.txt zetten:
+// een Disallow laat Google de noindex niet lezen en verraadt het adres.
+// Bedragen en labels in de waardestapel zijn identiek aan de lange pagina
+// (/thuiskomen-in-je-vrouwenlijf/). Open/dicht: zie src/lib/thuiskomen.ts.
+
+const extras = [
+	{
+		nr: 1,
+		naam: "De eerste verschuiving",
+		prijs: "€ 497",
+		tekst: "Eén oefening die je meteen krijgt, nog voordat we beginnen. Zodat je niet tien weken hoeft te wachten op iets merkbaars.",
+	},
+	{
+		nr: 2,
+		naam: "Je symptoomdecoder",
+		prijs: "€ 197",
+		tekst: "Een persoonlijk document dat tien weken lang met je meegroeit. Aan het einde heb je je eigen naslagwerk, zodat je bij een nieuw symptoom niet opnieuw begint bij Google, maar bij jezelf.",
+	},
+	{
+		nr: 3,
+		naam: "De relatiekit",
+		prijs: "€ 497",
+		tekst: "Woorden voor de gesprekken waar je nu tegenop ziet, en een video die je kunt laten zien. Zodat het van mij komt, en jij het niet nog een keer hoeft uit te leggen.",
+	},
+	{
+		nr: 4,
+		naam: "Het veiligheidsnet",
+		prijs: "€ 297",
+		tekst: "Een protocol voor als het schuurt, en een audio die je meteen kunt opzetten. En als het echt even niet gaat, een directe lijn naar mij.",
+	},
+	{
+		nr: 5,
+		naam: "Het cycluskompas",
+		prijs: "€ 297",
+		tekst: "Een kaart van je eigen cyclus, en wat je in elke fase van jezelf mag verwachten.",
+	},
+	{
+		nr: 6,
+		naam: "Je gereedschap, voor altijd",
+		prijs: "€ 397",
+		tekst: "Alle video's, audio's en werkbladen blijven van jou, en je houdt toegang tot de groep. Zodat je bij een terugval niet opnieuw begint, maar teruggrijpt.",
+	},
+];
+---
+
+<Layout
+	title="Thuiskomen in je Vrouwenlijf — alles op een rij | Crystal Helder"
+	description="Wat je krijgt, wanneer het is, wat het kost en wat de garantie is. Alles op een rij, ook om door te sturen."
+	robots="noindex"
+	includeCal={false}
+>
+	<SignupSwitch />
+
+	{/* DECORATIVE BACKGROUND BLOBS */}
+	<div
+		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
+		aria-hidden="true"
+	>
+		<div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-[var(--color-brand-secondary)] rounded-full mix-blend-multiply filter blur-[120px] opacity-50"></div>
+		<div class="absolute top-[35%] left-[-10%] w-[520px] h-[520px] bg-[var(--color-brand-accent-light)] rounded-full mix-blend-multiply filter blur-[120px] opacity-40"></div>
+	</div>
+
+	{/* BLOK 1: BEVESTIGING */}
+	<section id="hero" class="pt-14 pb-14 md:pt-24 md:pb-20 px-6 lg:px-8">
+		<div class="max-w-2xl mx-auto text-center">
+			<h1 class="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-[var(--color-brand-primary-text)] leading-tight tracking-tight">
+				Thuiskomen in je Vrouwenlijf
+			</h1>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-muted)] leading-relaxed mb-8">
+				Tien weken waarin je leert waarom je lichaam doet wat het doet. Plus een sessie in januari, zodat het daarna niet ophoudt.
+			</p>
+			<div class="space-y-4 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-10">
+				<p>Fijn dat we elkaar gesproken hebben.</p>
+				<p>Hieronder staat alles op een rij. Wat je krijgt, wanneer het is, wat het kost, en wat er gebeurt als het bij jou toch niet blijkt te kloppen.</p>
+				<p>Lees het in je eigen tempo. En wil je het thuis laten lezen, stuur deze pagina dan door. Hij is er ook voor de mensen om je heen.</p>
+				<p class="signup-closed-only font-semibold text-[var(--color-brand-primary-text)]">
+					De inschrijving voor deze groep is gesloten. Wil je horen wanneer er een volgende groep komt? Zet je dan op de wachtlijst.
+				</p>
+			</div>
+			<SignupCta arrow openLabel="Naar de plek waar je je aanmeldt" data-cta-location="hero" className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
+		</div>
+	</section>
+
+	{/* BLOK 2: WAT JE KRIJGT */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">Wat je krijgt</h2>
+			<ul class="space-y-5">
+				{[
+					["Elke week een video", " van tien tot vijftien minuten. Die kijk je liggend, op de bank, wanneer het jou uitkomt."],
+					["Een werkboek", " dat je stap voor stap naar je eigen verhaal brengt."],
+					["Elke week een live sessie met de groep, online.", " Hier gebeurt de diepgang. We kijken naar wat er bij jou speelt, met jouw naam en jouw situatie erbij. Kun je een keer niet, dan is er een opname."],
+					["Een dag waarop we echt samenkomen.", " In dezelfde ruimte. Daarover verderop meer."],
+					["Twee gesprekken met mij, één op één.", " Een ruim intakegesprek in de eerste week, en een persoonlijk gesprek na afloop."],
+					["Audio-oefeningen en meditaties", " die je opzet op het moment dat je ze nodig hebt."],
+					["De Kring,", " mijn besloten groep, waar je terechtkunt als het schuurt."],
+					["Een buddy", " die weet waar je aan werkt."],
+					["Een sessie met de groep in januari,", " na de feestdagen."],
+				].map(([lead, rest]) => (
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+						<span><strong class="text-[var(--color-brand-primary-text)]">{lead}</strong>{rest}</span>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	{/* BLOK 3: DE ZES EXTRA'S */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-5xl mx-auto">
+			<div class="max-w-2xl mx-auto text-center mb-10 md:mb-14">
+				<h2 class="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">En dit heb ik erbij gemaakt</h2>
+				<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">Elk van deze zes lost iets op waarvan ik weet dat het speelt.</p>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
+				{extras.map((e) => (
+					<div class="bg-white rounded-3xl p-6 md:p-8 shadow-sm shadow-[var(--color-brand-secondary)]/50">
+						<h3 class="text-lg md:text-xl font-semibold mb-3">
+							{e.nr}. {e.naam} <span class="font-normal text-[var(--color-brand-muted)]">· {e.prijs}</span>
+						</h3>
+						<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">{e.tekst}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 4: WAAR WE HET OVER HEBBEN */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Waar we het in die tien weken over hebben</h2>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Steeds vertaald naar jouw lijf en jouw verhaal, nooit als losse theorie.</p>
+			<ul class="space-y-4">
+				{[
+					"Hoe je lichaam werkt, en waarom het reageert zoals het reageert",
+					"Wat het betekent om vrouw te zijn, en hoe je cyclus echt werkt",
+					"Je eigen tijdlijn: wanneer begon dit, en wat speelde er op dat moment in je leven",
+					"Waar je te veel zorg weggeeft, en waar je je niet beschermd voelt",
+					"Je bekken: spanning, schaamte en grenzen in je onderlichaam",
+					"Je baarmoeder en je eierstokken, en het herstel van intieme veiligheid",
+					"Je cyclus in kaart, en wat je in elke fase van jezelf mag verwachten",
+					"Woorden vinden voor de gesprekken met je partner, je familie en je arts",
+					"Je eigen symptoomdecoder: wat zegt dit symptoom, nu",
+					"Wat je doet als het terugkomt, en waarom een terugval geen achteruitgang is",
+					"Wie je bent voorbij je klacht",
+				].map((item) => (
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-sage)] font-bold shrink-0 mt-0.5">✓</span>
+						{item}
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	{/* BLOK 5: DE DAG SAMEN */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+			<h2 class="text-3xl md:text-4xl font-semibold text-[var(--color-brand-primary-text)] tracking-tight mb-8">De dag dat we samenkomen</h2>
+			<p>Eén dag komen we fysiek bij elkaar, in dezelfde ruimte.</p>
+			<p>Dat is geen extraatje. Het hoort bij het programma, en ik wil dat je erbij bent.</p>
+			<p>We werken die dag met het lichaam, in een cirkel van vrouwen. En we maken voelbaar wat er onder je klacht speelt, op een manier die via een scherm niet lukt.</p>
+			<p>Je hoeft het maar één keer mee te maken dat iemand tegenover je hetzelfde zegt als wat jij al jaren denkt, en er verandert iets.</p>
+			<p>De datum en de plek prik ik zodra de groep compleet is, zodat ik rekening kan houden met wat er bij jullie past. Want ik weet dat een dag van huis voor jou geen kleinigheid is.</p>
+			<p>Er is een plek om te liggen. Je mag zitten zoals je wilt, later komen en eerder gaan.</p>
+		</div>
+	</section>
+
+	{/* BLOK 6: WAT HET JE KOST AAN TIJD */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">Wat het je in een week kost</h2>
+			<ul class="space-y-4 mb-8">
+				{[
+					"Een video van tien tot vijftien minuten",
+					"Een korte oefening of audio",
+					"Eén of twee vragen in je werkboek",
+					"Een live sessie van zestig tot vijfenzeventig minuten",
+					"Een gesprek met je buddy, zo lang als jullie zelf willen",
+				].map((item) => (
+					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+						{item}
+					</li>
+				))}
+			</ul>
+			<div class="space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+				<p class="font-semibold text-[var(--color-brand-primary-text)]">Bij elkaar zit je rond de twee uur in een week.</p>
+				<p>Het vaste moment van de sessies prik ik zodra de groep compleet is, samen met de vrouwen die erbij zijn. En kun je een keer niet, dan is er een opname.</p>
+				<p>En heb je een week waarin je niets kunt, dan doe je die week niets. Alles blijft voor je klaarstaan, en je pakt het op wanneer je lijf meewerkt.</p>
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 7: DE DATA */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">De data op een rij</h2>
+			<dl class="space-y-3">
+				{[
+					["Start", "maandag 12 oktober. In die eerste week spreek ik je één op één."],
+					["Duur", "tien weken. De laatste week begint maandag 14 december, dus we ronden af voor de kerst."],
+					["Live sessies", "wekelijks, zestig tot vijfenzeventig minuten, online. Het vaste moment prik ik met de groep, en er is altijd een opname."],
+					["De dag samen", "datum en plek prik ik zodra de groep compleet is"],
+					["Nazorgsessie", "in januari, plus een persoonlijk gesprek met mij"],
+					["Groepsgrootte", "acht vrouwen"],
+				].map(([label, waarde]) => (
+					<div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm sm:grid sm:grid-cols-[10rem_1fr] sm:gap-4">
+						<dt class="font-semibold text-[var(--color-brand-primary-text)] mb-1 sm:mb-0">{label}</dt>
+						<dd class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">{waarde}</dd>
+					</div>
+				))}
+				<div class="signup-open-only bg-white rounded-2xl p-5 md:p-6 shadow-sm sm:grid sm:grid-cols-[10rem_1fr] sm:gap-4">
+					<dt class="font-semibold text-[var(--color-brand-primary-text)] mb-1 sm:mb-0">Inschrijving sluit</dt>
+					<dd class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">maandag 5 oktober, 23:59</dd>
+				</div>
+				<div class="signup-closed-only bg-white rounded-2xl p-5 md:p-6 shadow-sm sm:grid sm:grid-cols-[10rem_1fr] sm:gap-4">
+					<dt class="font-semibold text-[var(--color-brand-primary-text)] mb-1 sm:mb-0">Inschrijving</dt>
+					<dd class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">gesloten sinds maandag 5 oktober, 23:59</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+
+	{/* BLOK 8: DE INVESTERING */}
+	<section id="investering" class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Wat het kost</h2>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Even alles bij elkaar, tegen wat het los zou kosten.</p>
+
+			<table class="w-full border-separate border-spacing-y-3 mb-8">
+				<thead>
+					<tr class="text-left text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-muted)]">
+						<th class="pb-1 px-4 font-semibold">Wat je krijgt</th>
+						<th class="pb-1 px-4 text-right font-semibold">Waarde</th>
+					</tr>
+				</thead>
+				<tbody>
+					{[
+						["Het lichaamsbegrip", "tien video-modules, je intake en het werkboek", "€ 997"],
+						["De lichaamstaal", "voice dialogue, opstellingen, lichaamsgerichte oefeningen", "€ 2.497"],
+						["De bedding", "de live sessies, de dag samen, de groep en je buddy", "€ 1.497"],
+						["De zes extra's", "hierboven", "€ 2.182"],
+					].map(([naam, omschrijving, waarde]) => (
+						<tr class="bg-[var(--color-brand-base)] shadow-sm">
+							<td class="p-4 md:p-5 rounded-l-2xl">
+								<span class="font-semibold text-[var(--color-brand-primary-text)]">{naam}</span>
+								<span class="text-[var(--color-brand-muted)]"> · {omschrijving}</span>
+							</td>
+							<td class="p-4 md:p-5 rounded-r-2xl text-right font-semibold whitespace-nowrap align-top">{waarde}</td>
+						</tr>
+					))}
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class="pt-4 px-4 font-semibold uppercase tracking-widest text-sm text-[var(--color-brand-muted)]">Totale waarde</td>
+						<td class="pt-4 px-4 text-right text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)] whitespace-nowrap">€ 7.173</td>
+					</tr>
+				</tfoot>
+			</table>
+
+			<div class="space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-10">
+				<p>Als deze tien weken volgend jaar opnieuw draaien, is de prijs <strong class="text-[var(--color-brand-primary-text)]">€&nbsp;1.497</strong>.</p>
+				<p class="text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)] leading-snug">Voor deze eerste groep is het €&nbsp;997, inclusief btw.</p>
+				<p>Niet omdat je minder krijgt. Je krijgt meer van mij dan iedere groep die na jou komt, omdat ik er met acht vrouwen dichterbij ben dan ik ooit nog zal zijn. Maar jij stapt in bij iets waar nog geen verhalen van anderen bij staan, en je zegt ja op mijn woord alleen. Dat is wat waard.</p>
+			</div>
+
+			<CheckoutButtons />
+			<p class="signup-open-only text-sm text-[var(--color-brand-muted)] italic text-center mt-4">
+				Kies je voor termijnen, dan betaal je drie maandelijkse termijnen van €&nbsp;365.
+			</p>
+		</div>
+	</section>
+
+	{/* BLOK 9: DE GARANTIE */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">Je draagt het risico niet alleen</h2>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-snug mb-4">Doe veertien dagen mee.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">Kijk de eerste video's, kom naar de eerste sessie, doe de eerste oefening. Gewoon meedoen, niet afwachten.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Voel je aan het einde van die veertien dagen dat dit niet is wat je zoekt, dan zeg je dat tegen me en krijg je je geld terug. Geen formulier, geen uitleg, geen ongemakkelijk gesprek.</p>
+
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-snug mb-4">En dan de tweede.</p>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Loop je de tien weken door, doe je alle modules en ben je bij de sessies, en begrijp je aan het einde nog steeds niet wat jouw lichaam je vertelt, dan ga ik met je door. Eén op één, tot je het wel snapt. Daar betaal je niets extra voor.</p>
+
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-4">Ik beloof je niet dat je pijn weg is. Dat is niet aan mij.</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed">Ik beloof je wel dat je gaat snappen waarom je lijf doet wat het doet. En dat durf ik zo hard te beloven dat ik er mijn geld op zet.</p>
+		</div>
+	</section>
+
+	{/* BLOK 10: WAAROM NU */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+			<h2 class="text-3xl md:text-4xl font-semibold text-[var(--color-brand-primary-text)] tracking-tight mb-8">Acht vrouwen, en dat is het</h2>
+			<p>Ik doe dit met acht omdat ik in de live sessies elke vrouw wil zien. Wat er bij jou speelt, waar jij vastloopt, wat jij nodig hebt. Bij twintig lukt dat niet, en dan word jij een van de twintig. Dat is precies wat je al jaren overkomt.</p>
+			<p class="signup-open-only">De inschrijving sluit op maandag 5 oktober om 23:59, omdat ik de week voor de start de groep wil samenstellen en alle intakes wil inplannen. Daarna gaat hij niet meer open, ook niet als de groep nog niet vol is.</p>
+			<p class="signup-closed-only">De inschrijving is gesloten, omdat ik de groep heb samengesteld en alle intakes inplan. Hij gaat niet meer open, ook niet als de groep nog niet vol is.</p>
+			<p>Wanneer er een volgende groep komt, weet ik nu echt niet. Wat ik wel weet is dat dit de founding-prijs is, en dat die niet terugkomt.</p>
+		</div>
+	</section>
+
+	{/* BLOK 11: NOG EVEN DIT (accordion, standaard dicht) */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
+		<div class="max-w-3xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-10 text-center tracking-tight">Nog even dit</h2>
+			<div class="space-y-4 md:space-y-6">
+				{[
+					{
+						vraag: '"Ik heb hier de energie niet voor."',
+						tekst: [
+							"Ik weet het. En ik neem dat serieus, want dit is niet hetzelfde als geen zin hebben. Jij bent op. Jij verdeelt je energie al maanden alsof het rantsoen is.",
+							"Daarom is dit programma zo gebouwd dat het geen energie kóst. De video's kijk je liggend. De oefeningen zijn bedoeld om je zenuwstelsel te laten zakken. En sla je een week over omdat je lijf niet meewerkt, dan blijft alles gewoon voor je klaarstaan.",
+							"Alles blijft van jou. Ook als je even niet kunt.",
+						],
+					},
+					{
+						vraag: '"Ik wil het eerst thuis bespreken."',
+						tekst: [
+							"Doe dat. Bij een bedrag als dit hoort dat gesprek erbij, en ik zou het zelf ook zo doen.",
+							"Daarom staat alles op deze pagina: de data, de tijd die het kost, de prijs en de garantie. Stuur hem gewoon door, dan hoef jij het niet in je eentje uit te leggen aan iemand die er de afgelopen jaren van een afstandje naar heeft gekeken.",
+							"En zodra je erbij bent, krijg je de relatiekit. Daar zit een video in die je kunt laten zien, en woorden voor de gesprekken waar je nu tegenop ziet.",
+							"OPEN:Je hebt tot maandag 5 oktober.",
+						],
+					},
+					{
+						vraag: '"Een hele dag ergens naartoe. Ik weet niet of ik dat aankan."',
+						tekst: [
+							"Dit is de vraag die ik het serieus neem van allemaal, en ik ga hem niet wegwuiven.",
+							"Ik weet dat reizen voor jou geen kleinigheid is. Dat een dag van huis betekent: hoe kom ik er, waar kan ik liggen, wat als het misgaat, en wat kost het me de dagen erna. Ik weet dat je je leven al jaren inricht rond precies deze rekensom.",
+							"En toch vraag ik je om te komen, omdat ik heb gezien wat er op die dag gebeurt.",
+							"Dus dit is wat ik doe. Er is een plek om te liggen. Je mag zitten zoals je wilt, weglopen wanneer je wilt, later komen en eerder gaan.",
+							"De datum prik ik pas als de groep compleet is, dus je kunt hem ruim van tevoren in je agenda zetten en eromheen plannen.",
+							"Denk je nu al dat het je niet gaat lukken, stuur me dan een bericht. Dan kijk ik met je mee wat er wél kan.",
+						],
+					},
+					{
+						vraag: '"Ik durf dit niet in een groep te bespreken."',
+						tekst: [
+							"Natuurlijk niet. Je praat over je bekken, je blaas, je seksleven. Dat vertel je niet zomaar aan zeven vreemden, en iedereen die zegt dat dat wel meevalt, heeft het nooit hoeven doen.",
+							"Dus: je hoeft niets te delen wat je niet wilt. Nooit. Je mag tien weken lang je camera aan hebben en niets zeggen, en dan nog krijg je het volle programma.",
+							"Maar ik zeg er dit bij. Deze vrouwen kennen dit van binnenuit. En het moment waarop iemand iets zegt wat jij dacht dat alleen jij had, is voor de meeste vrouwen het moment waarop er iets breekt wat jaren op slot heeft gezeten.",
+						],
+					},
+					{
+						vraag: '"Wat betekent dit voor mijn arts en mijn medicatie?"',
+						tekst: [
+							"Niets. Je houdt je arts, je onderzoeken en je medicatie gewoon. Wat ik doe staat ernaast, en ik ga daar niet tussen staan.",
+							"Ik stel andere vragen dan je arts, over wat er in je leven speelde en hoe jouw lijf daarop reageert. Dat vervangt zijn werk niet, het vult het aan.",
+						],
+					},
+				].map((item) => (
+					<details class="group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
+						<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
+							<span class="pr-6">{item.vraag}</span>
+							<span class="transition-transform duration-500 ease-in-out group-open:rotate-180 shrink-0">
+								<svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+							</span>
+						</summary>
+						<div class="text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
+							<div class="pb-6 md:pb-8 space-y-4">
+								{item.tekst.map((alinea) =>
+									alinea.startsWith("OPEN:") ? (
+										<p class="signup-open-only">{alinea.slice(5)}</p>
+									) : (
+										<p>{alinea}</p>
+									)
+								)}
+							</div>
+						</div>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+
+	{/* BLOK 12: SLOT */}
+	<section id="slot" class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
+		<div class="max-w-2xl mx-auto">
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Dat tweede gevecht, dat je al die jaren in je eentje hebt gevoerd zonder dat iemand het zag.
+			</p>
+			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat leg je hier neer.</p>
+
+			<div class="mb-10">
+				<CheckoutButtons />
+			</div>
+
+			<p class="text-4xl text-center text-[var(--color-brand-accent)]" style="font-family: var(--font-signature);">Crystal</p>
+		</div>
+	</section>
+
+	<Footer />
+</Layout>
+
+<style is:global>
+	:global(html.js) .fade-in-section {
+		opacity: 0;
+		transform: translateY(20px);
+		visibility: hidden;
+		transition: opacity 600ms ease-out, transform 600ms ease-out;
+		will-change: opacity, visibility, transform;
+	}
+	:global(html.js) .fade-in-section.is-visible {
+		opacity: 1;
+		transform: none;
+		visibility: visible;
+	}
+</style>
+
+<script>
+	// DataLayer: CTA click tracking (scroll-to-section CTA's; de betaalknoppen tracken zichzelf
+	// via CheckoutButtons.astro)
+	document.addEventListener("DOMContentLoaded", () => {
+		document.addEventListener("click", (e) => {
+			const el = (e.target as HTMLElement).closest('a[href^="#"]');
+			if (!el) return;
+
+			const href = el.getAttribute("href");
+			const text = el.textContent?.trim();
+			const section = el.closest("section");
+			const location = section?.id || "unknown";
+
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({
+				event: "cta_click",
+				cta_text: text,
+				cta_destination: href?.replace("#", ""),
+				cta_location: location,
+			});
+		});
+	});
+
+	// DataLayer: Scroll depth tracking
+	document.addEventListener("DOMContentLoaded", () => {
+		const thresholds = [25, 50, 75, 90];
+		const fired = new Set();
+
+		const checkScroll = () => {
+			const scrollTop = window.scrollY;
+			const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+			if (docHeight <= 0) return;
+			const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+
+			thresholds.forEach((threshold) => {
+				if (scrollPercent >= threshold && !fired.has(threshold)) {
+					fired.add(threshold);
+					window.dataLayer = window.dataLayer || [];
+					window.dataLayer.push({
+						event: "scroll_depth",
+						scroll_percentage: threshold,
+					});
+				}
+			});
+		};
+
+		let ticking = false;
+		window.addEventListener(
+			"scroll",
+			() => {
+				if (!ticking) {
+					window.requestAnimationFrame(() => {
+						checkScroll();
+						ticking = false;
+					});
+					ticking = true;
+				}
+			},
+			{ passive: true }
+		);
+	});
+</script>
+
+<script>
+	// Scroll-triggered fade-in for every .fade-in-section
+	document.addEventListener("DOMContentLoaded", () => {
+		const observer = new IntersectionObserver(
+			(entries, observer) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-visible");
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ root: null, rootMargin: "0px", threshold: 0.15 }
+		);
+
+		document.querySelectorAll(".fade-in-section").forEach((el) => observer.observe(el));
+	});
+</script>

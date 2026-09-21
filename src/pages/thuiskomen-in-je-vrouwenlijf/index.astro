@@ -4,25 +4,19 @@ import Button from "../../components/Button.astro";
 import Card from "../../components/Card.astro";
 import Footer from "../../components/Footer.astro";
 import StickyBar from "../../components/thuiskomen/StickyBar.astro";
+import SignupSwitch from "../../components/thuiskomen/SignupSwitch.astro";
+import SignupCta from "../../components/thuiskomen/SignupCta.astro";
+import CheckoutButtons from "../../components/thuiskomen/CheckoutButtons.astro";
 import { Picture } from "astro:assets";
 import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 
-// Checkout-links (blok 15).
-const CHECKOUT_URL_INEENS = "https://buy.stripe.com/eVqcN5bdU4aVcBM1hC00001";
-const CHECKOUT_URL_TERMIJNEN = "https://buy.stripe.com/cNi14nfuagXHgS28K400000";
-
-// Wachtlijst-schakelaar (blok 16 build-notitie). Op false: alle primary CTA's
-// linken naar de wachtlijst in plaats van naar blok 15, en tonen wachtlijst-tekst.
-const inschrijvingOpen = true;
-const WACHTLIJST_URL = "/wachtlijst/";
-
-const ctaHref = inschrijvingOpen ? "#investering" : WACHTLIJST_URL;
-const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtlijst";
+// Open/dicht wordt bepaald door de datumtrigger in src/lib/thuiskomen.ts
+// (THUISKOMEN_CLOSE_AT_ISO): erna verdwijnen de betaalknoppen en linken alle CTA's naar de wachtlijst.
 ---
 
 <Layout
-	title="Thuiskomen in je Vrouwenlijf — 12 weken begeleiding | Crystal Helder"
-	description="In 12 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet. Een begeleid programma voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten."
+	title="Thuiskomen in je Vrouwenlijf — 10 weken begeleiding | Crystal Helder"
+	description="In 10 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet. Een begeleid programma voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten."
 	includeCal={false}
 >
 	{/* DECORATIVE BACKGROUND BLOBS */}
@@ -34,7 +28,8 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 		<div class="absolute top-[35%] left-[-10%] w-[520px] h-[520px] bg-[var(--color-brand-accent-light)] rounded-full mix-blend-multiply filter blur-[120px] opacity-40"></div>
 	</div>
 
-	<StickyBar ctaHref={ctaHref} ctaLabel={ctaLabel} />
+	<SignupSwitch />
+	<StickyBar />
 
 	{/* BLOK 1: HERO */}
 	<section id="hero" class="relative pt-12 pb-4 md:pt-24 md:pb-8 px-6 lg:px-8 max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-3 md:gap-12 lg:gap-0">
@@ -43,10 +38,10 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				Voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten
 			</div>
 			<h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-[3.75rem] xl:text-[4rem] font-bold mb-4 md:mb-6 text-[var(--color-brand-primary-text)] leading-tight md:leading-[1.08] tracking-tight drop-shadow-sm">
-				In 12 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet.
+				In 10 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet.
 			</h1>
 			<p class="text-lg sm:text-xl md:text-2xl text-[var(--color-brand-muted)] mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed font-semibold">
-				Een begeleid programma van twaalf weken waarin je de taal van je klacht leert verstaan. In een kleine groep van acht vrouwen bij wie je niets hoeft uit te leggen.
+				Een begeleid programma van tien weken waarin je de taal van je klacht leert verstaan. In een kleine groep van acht vrouwen bij wie je niets hoeft uit te leggen.
 			</p>
 			<ul class="text-left max-w-xl mx-auto lg:mx-0 space-y-3 mb-8 md:mb-10">
 				<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)]">
@@ -71,13 +66,14 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				</li>
 			</ul>
 			<div class="flex justify-center lg:justify-start">
-				<Button href={ctaHref} data-cta-location="hero" className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
-					{ctaLabel} →
-				</Button>
+				<SignupCta arrow data-cta-location="hero" className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
-			<p class="text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
-				8 plekken. Start maandag 21 september.
-			</p>
+			<p class="signup-open-only text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
+					8 plekken. Start maandag 12 oktober. Inschrijven kan tot en met maandag 5 oktober.
+				</p>
+				<p class="signup-closed-only text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
+					De inschrijving voor deze groep is gesloten.
+				</p>
 		</div>
 		<div class="w-full lg:w-[50%] relative z-10">
 			<div class="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto aspect-[3/4] sm:aspect-square md:aspect-square lg:aspect-[4/5]">
@@ -441,8 +437,8 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 		<div class="max-w-5xl mx-auto">
 			<div class="text-center mb-12 md:mb-16">
 				<h2 class="text-3xl md:text-5xl font-bold mb-3 tracking-tight">Thuiskomen in je Vrouwenlijf</h2>
-				<p class="text-xl md:text-2xl text-[var(--color-brand-muted)] font-medium mb-4">In twaalf weken begrijpen waarom je lichaam dit doet.</p>
-				<p class="text-base md:text-lg text-[var(--color-brand-muted)]">Twaalf weken, drie pijlers, acht vrouwen.</p>
+				<p class="text-xl md:text-2xl text-[var(--color-brand-muted)] font-medium mb-4">In tien weken begrijpen waarom je lichaam dit doet.</p>
+				<p class="text-base md:text-lg text-[var(--color-brand-muted)]">Tien weken, drie pijlers, acht vrouwen.</p>
 			</div>
 
 			<div class="max-w-2xl mx-auto mb-16">
@@ -474,7 +470,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				<Card bgVariant="white" className="border-t-2 border-t-[var(--color-brand-accent)]/30">
 					<p class="text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] mb-3">Pijler 1</p>
 					<h3 class="text-xl md:text-2xl font-semibold mb-4">Het lichaamsbegrip</h3>
-					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Je leert de biologische logica onder jouw specifieke klacht. Twaalf video-modules die je kijkt wanneer het jou uitkomt, met een werkboek dat je stap voor stap naar je eigen verhaal brengt.</p>
+					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Je leert de biologische logica onder jouw specifieke klacht. Tien video-modules die je kijkt wanneer het jou uitkomt, met een werkboek dat je stap voor stap naar je eigen verhaal brengt.</p>
 					<p class="text-sm font-semibold text-[var(--color-brand-primary-text)] italic">Wat het je oplevert: het einde van de onzekerheid. Je snapt eindelijk waarom.</p>
 				</Card>
 				<Card bgVariant="white" className="border-t-2 border-t-[var(--color-brand-accent)]/30">
@@ -486,7 +482,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				<Card bgVariant="white" className="border-t-2 border-t-[var(--color-brand-accent)]/30">
 					<p class="text-sm font-semibold tracking-widest uppercase text-[var(--color-brand-accent)] mb-3">Pijler 3</p>
 					<h3 class="text-xl md:text-2xl font-semibold mb-4">De bedding</h3>
-					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Zes live sessies waarin we samen kijken naar wat er bij jou speelt, een besloten groep waar je terechtkunt als het schuurt, en een buddy die weet waar je aan werkt.</p>
+					<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Wekelijks een live sessie waarin we samen kijken naar wat er bij jou speelt, een besloten groep waar je terechtkunt als het schuurt, en een buddy die weet waar je aan werkt.</p>
 					<p class="text-sm font-semibold text-[var(--color-brand-primary-text)] italic">Wat het je oplevert: je doet het niet alleen.</p>
 				</Card>
 			</div>
@@ -503,7 +499,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 					Wat er in één dag gebeurt tussen acht vrouwen die hetzelfde dragen, dat krijg ik via een scherm niet voor elkaar.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Niet in zes sessies, niet in twaalf weken.
+					Niet in een paar sessies, niet in tien weken.
 				</p>
 				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
 					Je hoeft het maar één keer mee te maken dat iemand tegenover je hetzelfde zegt als wat jij al jaren denkt, en er verandert iets wat online niet verandert.
@@ -550,7 +546,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				</thead>
 				<tbody>
 					<tr class="bg-[var(--color-brand-base)] rounded-2xl shadow-sm">
-						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">Het lichaamsbegrip<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">12 video-modules, intake en werkboek</span></td>
+						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">Het lichaamsbegrip<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">10 video-modules, intake en werkboek</span></td>
 						<td data-label="Wat het je oplevert" class="p-4 md:p-5 text-[var(--color-brand-muted)]">Je snapt eindelijk waarom je lijf dit doet</td>
 						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 997</td>
 					</tr>
@@ -560,7 +556,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 2.497</td>
 					</tr>
 					<tr class="bg-[var(--color-brand-base)] rounded-2xl shadow-sm">
-						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">De bedding<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">6 live sessies, besloten groep, buddy</span></td>
+						<td data-label="Wat je krijgt" class="p-4 md:p-5 font-semibold text-[var(--color-brand-primary-text)] rounded-t-2xl md:rounded-l-2xl md:rounded-tr-none">De bedding<br /><span class="font-normal text-sm text-[var(--color-brand-muted)]">De live sessies, de dag samen, de groep en je buddy</span></td>
 						<td data-label="Wat het je oplevert" class="p-4 md:p-5 text-[var(--color-brand-muted)]">Je doet het niet meer alleen</td>
 						<td data-label="Waarde" class="p-4 md:p-5 md:text-right font-semibold rounded-b-2xl md:rounded-r-2xl md:rounded-bl-none">€ 1.497</td>
 					</tr>
@@ -612,10 +608,10 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				<Card bgVariant="white" className="p-6 md:p-8">
 					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"En als het over twee jaar terugkomt?"</p>
 					<h3 class="text-lg font-semibold mb-1">5. Je gereedschap, voor altijd <span class="font-normal text-[var(--color-brand-muted)]">· € 397</span></h3>
-					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Alles blijft van jou, en je houdt toegang tot de groep, ook als de twaalf weken voorbij zijn. Zodat je bij een terugval niet opnieuw begint, maar teruggrijpt.</p>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Alles blijft van jou, en je houdt toegang tot de groep, ook als de tien weken voorbij zijn. Zodat je bij een terugval niet opnieuw begint, maar teruggrijpt.</p>
 				</Card>
 				<Card bgVariant="white" className="p-6 md:p-8">
-					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Ik wil niet twaalf weken wachten op iets merkbaars."</p>
+					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Ik wil niet tien weken wachten op iets merkbaars."</p>
 					<h3 class="text-lg font-semibold mb-1">6. De eerste verschuiving <span class="font-normal text-[var(--color-brand-muted)]">· € 497</span></h3>
 					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Eén oefening die je meteen krijgt, en waarmee de meeste vrouwen binnen twee dagen iets voelen verschuiven. Niet je pijn weg, maar de greep eromheen losser.</p>
 				</Card>
@@ -660,7 +656,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 					</li>
 					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
 						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
-						Je wilt dat ik je vertel dat je pijn over twaalf weken weg is. Dat beloof ik je niet, en ik zou liegen als ik het wel deed.
+						Je wilt dat ik je vertel dat je pijn over tien weken weg is. Dat beloof ik je niet, en ik zou liegen als ik het wel deed.
 					</li>
 					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
 						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
@@ -717,7 +713,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				Het lichaamsbegrip, de lichaamstaal, de bedding, en de zes extra's. Bij elkaar een waarde van <strong class="text-[var(--color-brand-primary-text)]">€ 7.173</strong>.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Als deze twaalf weken volgend jaar draaien, is de prijs <strong class="text-[var(--color-brand-primary-text)]">€ 1.497</strong>.
+				Als deze tien weken volgend jaar opnieuw draaien, is de prijs <strong class="text-[var(--color-brand-primary-text)]">€ 1.497</strong>.
 			</p>
 			<p class="text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)] mb-6">
 				Voor deze eerste groep is het € 997.
@@ -742,54 +738,38 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 				</p>
 			</div>
 
-			<div class="flex flex-col sm:flex-row gap-4 justify-center mb-4">
-				<a
-					href={CHECKOUT_URL_INEENS}
-					data-checkout
-					data-payment-option="single"
-					data-cta-text="Ik doe mee, €997 ineens"
-					class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white shadow-lg shadow-[var(--color-brand-accent)]/25 hover:shadow-xl hover:shadow-[var(--color-brand-accent)]/30"
-				>
-					Ik doe mee, € 997 ineens
-				</a>
-				<a
-					href={CHECKOUT_URL_TERMIJNEN}
-					data-checkout
-					data-payment-option="installments"
-					data-cta-text="Ik doe mee, in 3 termijnen"
-					class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-secondary)] hover:bg-[#D5C2B9] text-[var(--color-brand-primary-text)] shadow-sm hover:shadow-md"
-				>
-					Ik doe mee, in 3 termijnen
-				</a>
+			<div class="mb-4">
+				<CheckoutButtons />
 			</div>
-			<p class="text-sm text-[var(--color-brand-muted)] italic">Je draagt het risico niet alleen. Lees hieronder waarom.</p>
+			<p class="signup-open-only text-sm text-[var(--color-brand-muted)] italic">Je draagt het risico niet alleen. Lees hieronder waarom.</p>
+			<p class="signup-closed-only text-sm text-[var(--color-brand-muted)] italic">De inschrijving voor deze groep is gesloten. Op de wachtlijst hoor je als eerste of er een volgende groep komt.</p>
 		</div>
 	</section>
 
 	{/* BLOK 16: WAAROM NU */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-2xl mx-auto">
-			{inschrijvingOpen ? (
-				<>
-					<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Acht vrouwen. Meer niet.</h3>
-					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dat is geen trucje om je op te jagen.</p>
-					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-						Ik doe dit met acht omdat ik in de live sessies elke vrouw wil zien. Niet als naam in een lijst, maar echt: wat er bij jou speelt, waar jij vastloopt, wat jij nodig hebt. Bij twintig vrouwen lukt dat niet, en dan word jij een van de twintig. Dat wil ik niet, en jij wilt het ook niet, want dat is precies wat je al jaren overkomt.
-					</p>
-					<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">We beginnen op maandag 21 september.</h3>
-					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-						Acht plekken, en als ze vol zijn, is het vol. Ik schuif niemand er nog even bij, want dan klopt de groep niet meer.
-					</p>
-					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Daarna is de volgende groep pas over een half jaar.</p>
-				</>
-			) : (
-				<>
-					<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Deze groep is vol.</h3>
-					<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-						Acht vrouwen, en die acht plekken zijn ingevuld. Zet je op de wachtlijst en je hoort als eerste wanneer de volgende groep van start gaat.
-					</p>
-				</>
-			)}
+			<div class="signup-open-only">
+				<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Acht vrouwen. Meer niet.</h3>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dat is geen trucje om je op te jagen.</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+					Ik doe dit met acht omdat ik in de live sessies elke vrouw wil zien. Niet als naam in een lijst, maar echt: wat er bij jou speelt, waar jij vastloopt, wat jij nodig hebt. Bij twintig vrouwen lukt dat niet, en dan word jij een van de twintig. Dat wil ik niet, en jij wilt het ook niet, want dat is precies wat je al jaren overkomt.
+				</p>
+				<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">We beginnen op maandag 12 oktober.</h3>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+					Acht plekken, en als ze vol zijn, is het vol. Ik schuif niemand er nog even bij, want dan klopt de groep niet meer.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+					De inschrijving sluit op maandag 5 oktober om 23:59, omdat ik de week voor de start de groep wil samenstellen en alle intakes wil inplannen. Daarna gaat hij niet meer open, ook niet als de groep nog niet vol is.
+				</p>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Wanneer er een volgende groep komt, weet ik nu nog niet.</p>
+			</div>
+			<div class="signup-closed-only">
+				<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">De inschrijving voor deze groep is gesloten.</h3>
+				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+					Ik heb de groep samengesteld en de intakes ingepland. Zet je op de wachtlijst en je hoort als eerste wanneer er een volgende groep komt.
+				</p>
+			</div>
 			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] mb-6">En dat is het eigenlijke punt.</p>
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Niet de datum. De datum is maar een datum.</p>
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
@@ -798,9 +778,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dan is er niets veranderd, behalve dat er weer een half jaar van je leven voorbij is.</p>
 			<p class="text-lg font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat is geen dreigement. Dat is gewoon wat er gebeurt als je niets doet, en dat weet je zelf ook.</p>
 			<div class="text-center">
-				<Button href={ctaHref} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
-					{ctaLabel}
-				</Button>
+				<SignupCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
 		</div>
 	</section>
@@ -886,7 +864,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 							<p>Ik snap dat je dat vraagt. En weet je wat er onder die vraag zit? Niet de twijfel of ik goed ben. De twijfel of jij het kunt.</p>
 							<p>Dat is de gedachte die je al jaren met je meedraagt. Dat het aan jou ligt. Dat je niet genoeg je best doet, dat je te veel kapot bent, dat jij de uitzondering bent bij wie niets aanslaat.</p>
 							<p class="font-semibold text-[var(--color-brand-primary-text)]">Je bent de uitzondering niet.</p>
-							<p>Je krijgt hier een groep om je heen, een buddy die weet waar je aan werkt, en mij, twaalf weken lang. Je hoeft dit niet in je eentje te fiksen, en je hoeft het ook niet in één keer goed te doen.</p>
+							<p>Je krijgt hier een groep om je heen, een buddy die weet waar je aan werkt, en mij, tien weken lang. Je hoeft dit niet in je eentje te fiksen, en je hoeft het ook niet in één keer goed te doen.</p>
 							<p>En als je aan het einde alles hebt gedaan en je begrijpt je klacht nog steeds niet, dan ga ik met je door tot je het wel snapt. Zonder dat het je iets extra's kost.</p>
 						</div>
 					</div>
@@ -920,7 +898,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 					<div class="faq-content text-[var(--color-brand-muted)] px-6 md:px-8 text-base md:text-lg leading-relaxed">
 						<div class="pb-6 md:pb-8 space-y-4">
 							<p>Natuurlijk niet. Je praat over je bekken, je blaas, je seksleven. Dat vertel je niet zomaar aan zeven vreemden, en iedereen die zegt dat dat wel meevalt, heeft het nooit hoeven doen.</p>
-							<p>Dus: je hoeft niets te delen wat je niet wilt. Nooit. Je mag twaalf weken lang je camera aan hebben en niets zeggen, en dan nog krijg je het volle programma.</p>
+							<p>Dus: je hoeft niets te delen wat je niet wilt. Nooit. Je mag tien weken lang je camera aan hebben en niets zeggen, en dan nog krijg je het volle programma.</p>
 							<p>Maar ik zeg er dit bij. Deze vrouwen kennen dit van binnenuit. En het moment waarop iemand iets zegt wat jij dacht dat alleen jij had, is voor de meeste vrouwen het moment waarop er iets breekt wat jaren op slot heeft gezeten.</p>
 							<p>Je hoeft het niet te vertellen. Maar je hoeft het ook niet langer alleen te dragen.</p>
 						</div>
@@ -946,7 +924,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 
 			<h3 class="text-xl md:text-2xl font-semibold mb-4">En dan de tweede.</h3>
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">
-				Als je de twaalf weken doorloopt, alle modules doet en bij de sessies bent, en je begrijpt aan het einde nog steeds niet wat jouw lichaam je vertelt, dan ga ik met je door. Eén op één, tot je het wel snapt. Daar betaal je niets extra voor.
+				Als je de tien weken doorloopt, alle modules doet en bij de sessies bent, en je begrijpt aan het einde nog steeds niet wat jouw lichaam je vertelt, dan ga ik met je door. Eén op één, tot je het wel snapt. Daar betaal je niets extra voor.
 			</p>
 
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">Ik beloof je niet dat je pijn weg is. Dat is niet aan mij.</p>
@@ -973,9 +951,7 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat leg je hier neer.</p>
 
 			<div class="text-center mb-10">
-				<Button href={ctaHref} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
-					{ctaLabel}
-				</Button>
+				<SignupCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
 
 			<p class="text-4xl text-center text-[var(--color-brand-accent)]" style="font-family: var(--font-signature);">Crystal</p>
@@ -986,16 +962,15 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-2xl mx-auto">
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-				<strong class="text-[var(--color-brand-primary-text)]">P.S.</strong> Twaalf weken, in een groep van acht vrouwen, waarin je leert waarom je lichaam doet wat het doet. Start maandag 21 september. Normaal € 1.497, voor deze eerste groep € 997.
+				<strong class="text-[var(--color-brand-primary-text)]">P.S.</strong> Tien weken, in een groep van acht vrouwen, waarin je leert waarom je lichaam doet wat het doet. Start maandag 12 oktober. Normaal € 1.497, voor deze eerste groep € 997.
 			</p>
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
 				Doe veertien dagen mee, en als het niet is wat je zoekt, krijg je je geld terug. En als je aan het einde je klacht nog steeds niet begrijpt, ga ik met je door tot je het wel doet.
 			</p>
-			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">Acht plekken. Daarna is het een half jaar wachten.</p>
+			<p class="signup-open-only text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">Acht plekken. De inschrijving sluit maandag 5 oktober.</p>
+			<p class="signup-closed-only text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">Acht plekken, en de inschrijving voor deze groep is gesloten.</p>
 			<div class="text-center">
-				<Button href={ctaHref} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
-					{ctaLabel}
-				</Button>
+				<SignupCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
 		</div>
 	</section>
@@ -1054,40 +1029,6 @@ const ctaLabel = inschrijvingOpen ? "Ik wil erbij zijn" : "Zet mij op de wachtli
 		}
 	}
 </style>
-
-<script>
-	// DataLayer: begin_checkout tracking on the two checkout buttons (blok 15).
-	// Cross-origin redirect must wait for the dataLayer event to be sent — see tracking-patterns.md.
-	document.addEventListener("DOMContentLoaded", () => {
-		document.querySelectorAll("[data-checkout]").forEach((el) => {
-			el.addEventListener("click", (e) => {
-				e.preventDefault();
-				const href = el.getAttribute("href");
-				const paymentOption = el.getAttribute("data-payment-option");
-				const ctaText = el.getAttribute("data-cta-text");
-
-				let navigated = false;
-				function navigate() {
-					if (navigated) return;
-					navigated = true;
-					window.location.href = href as string;
-				}
-
-				window.dataLayer = window.dataLayer || [];
-				window.dataLayer.push({
-					event: "begin_checkout",
-					cta_text: ctaText,
-					payment_option: paymentOption,
-					value: 997,
-					currency: "EUR",
-					eventCallback: navigate,
-					eventTimeout: 2000,
-				});
-				setTimeout(navigate, 2500);
-			});
-		});
-	});
-</script>
 
 <script>
 	// DataLayer: CTA click tracking (scroll-to-section CTA's, not the checkout buttons above)

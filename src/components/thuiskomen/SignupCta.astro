@@ -1,0 +1,23 @@
+---
+import Button from "../Button.astro";
+import { WACHTLIJST_URL } from "../../lib/thuiskomen";
+
+// Primaire CTA: vóór de deadline een anker naar het inschrijfblok, erna de wachtlijst.
+interface Props {
+	className?: string;
+	openHref?: string;
+	openLabel?: string;
+	arrow?: boolean;
+	[key: string]: any;
+}
+
+const { className = "", openHref = "#investering", openLabel = "Ik wil erbij zijn", arrow = false, ...rest } = Astro.props;
+const pijl = arrow ? " →" : "";
+---
+
+<Button href={openHref} className={`signup-open-only ${className}`} {...rest}>
+	{openLabel}{pijl}
+</Button>
+<Button href={WACHTLIJST_URL} className={`signup-closed-only ${className}`} {...rest}>
+	Zet mij op de wachtlijst{pijl}
+</Button>

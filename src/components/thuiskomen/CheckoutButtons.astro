@@ -1,0 +1,68 @@
+---
+import Button from "../Button.astro";
+import { CHECKOUT_URL_INEENS, CHECKOUT_URL_TERMIJNEN, WACHTLIJST_URL } from "../../lib/thuiskomen";
+
+// De twee betaalknoppen. Eén component voor alle plaatsingen op beide sales pages,
+// zodat links, teksten en tracking overal identiek zijn. Na de deadline (html.signup-closed)
+// vervangt één wachtlijstknop de betaalknoppen.
+---
+
+<div class="signup-open-only flex flex-col sm:flex-row gap-4 justify-center">
+	<a
+		href={CHECKOUT_URL_INEENS}
+		data-checkout
+		data-payment-option="single"
+		data-cta-text="Ik doe mee, €997 ineens"
+		class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white shadow-lg shadow-[var(--color-brand-accent)]/25 hover:shadow-xl hover:shadow-[var(--color-brand-accent)]/30"
+	>
+		Ik doe mee, € 997 ineens
+	</a>
+	<a
+		href={CHECKOUT_URL_TERMIJNEN}
+		data-checkout
+		data-payment-option="installments"
+		data-cta-text="Ik doe mee, in 3 termijnen"
+		class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-secondary)] hover:bg-[#D5C2B9] text-[var(--color-brand-primary-text)] shadow-sm hover:shadow-md"
+	>
+		Ik doe mee, in 3 termijnen
+	</a>
+</div>
+<div class="signup-closed-only flex justify-center">
+	<Button href={WACHTLIJST_URL} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
+		Zet mij op de wachtlijst
+	</Button>
+</div>
+
+<script>
+	// DataLayer: begin_checkout tracking on the two checkout buttons.
+	// Cross-origin redirect must wait for the dataLayer event to be sent — see tracking-patterns.md.
+	document.addEventListener("DOMContentLoaded", () => {
+		document.querySelectorAll("[data-checkout]").forEach((el) => {
+			el.addEventListener("click", (e) => {
+				e.preventDefault();
+				const href = el.getAttribute("href");
+				const paymentOption = el.getAttribute("data-payment-option");
+				const ctaText = el.getAttribute("data-cta-text");
+
+				let navigated = false;
+				function navigate() {
+					if (navigated) return;
+					navigated = true;
+					window.location.href = href as string;
+				}
+
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({
+					event: "begin_checkout",
+					cta_text: ctaText,
+					payment_option: paymentOption,
+					value: 997,
+					currency: "EUR",
+					eventCallback: navigate,
+					eventTimeout: 2000,
+				});
+				setTimeout(navigate, 2500);
+			});
+		});
+	});
+</script>

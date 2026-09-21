@@ -1,12 +1,5 @@
 ---
-import Button from "../Button.astro";
-
-interface Props {
-	ctaHref: string;
-	ctaLabel: string;
-}
-
-const { ctaHref, ctaLabel } = Astro.props;
+import SignupCta from "./SignupCta.astro";
 ---
 
 <div
@@ -15,11 +8,12 @@ const { ctaHref, ctaLabel } = Astro.props;
 >
 	<div class="flex items-center gap-4">
 		<span class="font-heading font-semibold text-base text-[var(--color-brand-primary-text)]">Thuiskomen in je Vrouwenlijf</span>
-		<span class="text-sm text-[var(--color-brand-muted)]">€ 997 · start 21 september</span>
+		<span class="signup-open-only text-sm text-[var(--color-brand-muted)]">€ 997 · start 12 oktober</span>
+		<span class="signup-closed-only text-sm text-[var(--color-brand-muted)]">Inschrijving gesloten</span>
 	</div>
-	<Button href={ctaHref} className="text-sm px-6 py-2.5">
-		{ctaLabel}
-	</Button>
+	<div>
+		<SignupCta className="text-sm px-6 py-2.5" />
+	</div>
 </div>
 
 <script>
