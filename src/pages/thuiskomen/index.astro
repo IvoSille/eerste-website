@@ -8,7 +8,7 @@ import SignupCta from "../../components/thuiskomen/SignupCta.astro";
 import CheckoutButtons from "../../components/thuiskomen/CheckoutButtons.astro";
 
 // Korte sales page, alleen bedoeld om na een inzichtgesprek per WhatsApp te versturen.
-// Copy: docs/korte-salespage-thuiskomen-crystal-v2.md. Bewust NOOIT indexeerbaar (robots
+// Copy: docs/korte-salespage-thuiskomen-crystal-v3.md. Bewust NOOIT indexeerbaar (robots
 // noindex) en uitgesloten van de sitemap (astro.config.mjs). Niet in robots.txt zetten:
 // een Disallow laat Google de noindex niet lezen en verraadt het adres.
 // Bedragen en labels in de waardestapel zijn identiek aan de lange pagina
@@ -21,13 +21,13 @@ const krijgt = [
 		items: [
 			["Elke week een video", " van tien tot vijftien minuten. Die kijk je liggend, op de bank, wanneer het jou uitkomt."],
 			["Een werkboek", " dat je stap voor stap naar je eigen verhaal brengt."],
-			["Twee gesprekken met mij, één op één.", " Een ruim intakegesprek in de eerste week, en een persoonlijk gesprek na afloop."],
+			["Drie gesprekken met mij, één op één.", " Een ruim intakegesprek van anderhalf uur nog vóór de start, een gesprek halverwege, en je nazorggesprek in januari."],
 		],
 	},
 	{
 		kop: "En het gaat landen in je lijf, want begrijpen met je hoofd verandert op zichzelf niets.",
 		items: [
-			["Elke week een live sessie met de groep, online.", " Hier gebeurt de diepgang. Ik werk met voice dialogue, met opstellingen en met lichaamsgerichte oefeningen, en we kijken naar wat er bij jou speelt. Kun je een keer niet, dan is er een opname."],
+			["Bijna elke week een live sessie met de groep, online.", " Hier gebeurt de diepgang. Ik werk met voice dialogue, met opstellingen en met lichaamsgerichte oefeningen, en we kijken naar wat er bij jou speelt. Kun je een keer niet, dan is er een opname."],
 			["Audio-oefeningen en meditaties", " die je opzet op het moment dat je ze nodig hebt."],
 			["Een dag waarop we echt samenkomen.", " In dezelfde ruimte. Daarover verderop meer."],
 		],
@@ -37,7 +37,6 @@ const krijgt = [
 		items: [
 			["De Kring,", " mijn besloten groep, waar je terechtkunt als het schuurt."],
 			["Een buddy", " die weet waar je aan werkt."],
-			["Een sessie met de groep in januari,", " na de feestdagen."],
 		],
 	},
 ];
@@ -47,7 +46,7 @@ const extras = [
 		nr: 1,
 		naam: "De eerste verschuiving",
 		prijs: "€ 497",
-		tekst: "Eén oefening die je meteen krijgt, nog voordat we beginnen. Zodat je niet tien weken hoeft te wachten op iets merkbaars.",
+		tekst: "Je intakegesprek, ruim anderhalf uur, één op één. Dat voeren we nog vóór 12 oktober, zodat je niet hoeft te wachten tot het programma begint. In dat ene gesprek komt er vaak al iets los.",
 	},
 	{
 		nr: 2,
@@ -223,7 +222,7 @@ const extras = [
 				{[
 					"Een video van tien tot vijftien minuten",
 					"Een korte oefening of audio",
-					"Eén of twee vragen in je werkboek",
+					"Eén of twee pagina's in je werkboek",
 					"Een live sessie van zestig tot vijfenzeventig minuten",
 					"Een gesprek met je buddy, zo lang als jullie zelf willen",
 				].map((item) => (
@@ -247,11 +246,11 @@ const extras = [
 			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">De data op een rij</h2>
 			<dl class="space-y-3">
 				{[
-					["Start", "maandag 12 oktober. In die eerste week spreek ik je één op één."],
+					["Start", "maandag 12 oktober. Je eerste gesprek met mij is daarvóór."],
 					["Duur", "tien weken. De laatste week begint maandag 14 december, dus we ronden af voor de kerst."],
-					["Live sessies", "wekelijks, zestig tot vijfenzeventig minuten, online. Het vaste moment prik ik met de groep, en er is altijd een opname."],
+					["Live sessies", "bijna wekelijks, zestig tot vijfenzeventig minuten, online. Het vaste moment prik ik met de groep, en er is altijd een opname."],
 					["De dag samen", "datum en plek prik ik zodra de groep compleet is"],
-					["Nazorgsessie", "in januari, plus een persoonlijk gesprek met mij"],
+					["Nazorg", "een persoonlijk gesprek met mij in januari"],
 					["Groepsgrootte", "acht vrouwen"],
 				].map(([label, waarde]) => (
 					<div class="bg-white rounded-2xl p-5 md:p-6 shadow-sm sm:grid sm:grid-cols-[10rem_1fr] sm:gap-4">
@@ -300,9 +299,9 @@ const extras = [
 				</thead>
 				<tbody>
 					{[
-						["Het lichaamsbegrip", "tien video-modules, je intake en het werkboek", "€ 997"],
+						["Het lichaamsbegrip", "tien video-modules en het werkboek", "€ 997"],
 						["De lichaamstaal", "voice dialogue, opstellingen, lichaamsgerichte oefeningen", "€ 2.497"],
-						["De bedding", "de live sessies, de dag samen, de groep en je buddy", "€ 1.497"],
+						["De bedding", "de live sessies, de dag samen, je gesprek halverwege, je nazorggesprek, de groep en je buddy", "€ 1.497"],
 						["De zes extra's", "hierboven", "€ 2.182"],
 					].map(([naam, omschrijving, waarde]) => (
 						<tr class="bg-[var(--color-brand-base)] shadow-sm">
