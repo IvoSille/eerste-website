@@ -1,16 +1,46 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Footer from "../../components/Footer.astro";
+import { Picture } from "astro:assets";
+import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 import SignupSwitch from "../../components/thuiskomen/SignupSwitch.astro";
 import SignupCta from "../../components/thuiskomen/SignupCta.astro";
 import CheckoutButtons from "../../components/thuiskomen/CheckoutButtons.astro";
 
 // Korte sales page, alleen bedoeld om na een inzichtgesprek per WhatsApp te versturen.
-// Copy: docs/korte-salespage-thuiskomen-crystal.md. Bewust NOOIT indexeerbaar (robots
+// Copy: docs/korte-salespage-thuiskomen-crystal-v2.md. Bewust NOOIT indexeerbaar (robots
 // noindex) en uitgesloten van de sitemap (astro.config.mjs). Niet in robots.txt zetten:
 // een Disallow laat Google de noindex niet lezen en verraadt het adres.
 // Bedragen en labels in de waardestapel zijn identiek aan de lange pagina
 // (/thuiskomen-in-je-vrouwenlijf/). Open/dicht: zie src/lib/thuiskomen.ts.
+
+// Blok 2: de drie koppen lopen gelijk met de drie pijlers op de lange pagina.
+const krijgt = [
+	{
+		kop: "Je gaat begrijpen waarom je lijf dit doet.",
+		items: [
+			["Elke week een video", " van tien tot vijftien minuten. Die kijk je liggend, op de bank, wanneer het jou uitkomt."],
+			["Een werkboek", " dat je stap voor stap naar je eigen verhaal brengt."],
+			["Twee gesprekken met mij, één op één.", " Een ruim intakegesprek in de eerste week, en een persoonlijk gesprek na afloop."],
+		],
+	},
+	{
+		kop: "En het gaat landen in je lijf, want begrijpen met je hoofd verandert op zichzelf niets.",
+		items: [
+			["Elke week een live sessie met de groep, online.", " Hier gebeurt de diepgang. Ik werk met voice dialogue, met opstellingen en met lichaamsgerichte oefeningen, en we kijken naar wat er bij jou speelt. Kun je een keer niet, dan is er een opname."],
+			["Audio-oefeningen en meditaties", " die je opzet op het moment dat je ze nodig hebt."],
+			["Een dag waarop we echt samenkomen.", " In dezelfde ruimte. Daarover verderop meer."],
+		],
+	},
+	{
+		kop: "En je doet het niet meer alleen.",
+		items: [
+			["De Kring,", " mijn besloten groep, waar je terechtkunt als het schuurt."],
+			["Een buddy", " die weet waar je aan werkt."],
+			["Een sessie met de groep in januari,", " na de feestdagen."],
+		],
+	},
+];
 
 const extras = [
 	{
@@ -78,6 +108,17 @@ const extras = [
 			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-muted)] leading-relaxed mb-8">
 				Tien weken waarin je leert waarom je lichaam doet wat het doet. Plus een sessie in januari, zodat het daarna niet ophoudt.
 			</p>
+			<div class="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden mx-auto mb-8 border-4 border-[var(--color-brand-secondary)] shadow-lg">
+				<Picture
+					src={portretCrystal}
+					alt="Crystal Helder"
+					widths={[128, 256]}
+					sizes="(max-width: 768px) 96px, 128px"
+					class="w-full h-full object-cover"
+					style="object-position: center 20%; transform: scale(1.5); transform-origin: 50% 47%;"
+					loading="eager"
+				/>
+			</div>
 			<div class="space-y-4 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-10">
 				<p>Fijn dat we elkaar gesproken hebben.</p>
 				<p>Hieronder staat alles op een rij. Wat je krijgt, wanneer het is, wat het kost, en wat er gebeurt als het bij jou toch niet blijkt te kloppen.</p>
@@ -90,28 +131,25 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 2: WAT JE KRIJGT */}
+	{/* BLOK 2: WAT JE KRIJGT, EN WAARTOE */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-2xl mx-auto">
-			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">Wat je krijgt</h2>
-			<ul class="space-y-5">
-				{[
-					["Elke week een video", " van tien tot vijftien minuten. Die kijk je liggend, op de bank, wanneer het jou uitkomt."],
-					["Een werkboek", " dat je stap voor stap naar je eigen verhaal brengt."],
-					["Elke week een live sessie met de groep, online.", " Hier gebeurt de diepgang. We kijken naar wat er bij jou speelt, met jouw naam en jouw situatie erbij. Kun je een keer niet, dan is er een opname."],
-					["Een dag waarop we echt samenkomen.", " In dezelfde ruimte. Daarover verderop meer."],
-					["Twee gesprekken met mij, één op één.", " Een ruim intakegesprek in de eerste week, en een persoonlijk gesprek na afloop."],
-					["Audio-oefeningen en meditaties", " die je opzet op het moment dat je ze nodig hebt."],
-					["De Kring,", " mijn besloten groep, waar je terechtkunt als het schuurt."],
-					["Een buddy", " die weet waar je aan werkt."],
-					["Een sessie met de groep in januari,", " na de feestdagen."],
-				].map(([lead, rest]) => (
-					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
-						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
-						<span><strong class="text-[var(--color-brand-primary-text)]">{lead}</strong>{rest}</span>
-					</li>
+			<h2 class="text-3xl md:text-4xl font-semibold mb-10 tracking-tight">Wat je krijgt</h2>
+			<div class="space-y-10">
+				{krijgt.map((groep) => (
+					<div>
+						<h3 class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-snug mb-5">{groep.kop}</h3>
+						<ul class="space-y-5">
+							{groep.items.map(([lead, rest]) => (
+								<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
+									<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-0.5">→</span>
+									<span><strong class="text-[var(--color-brand-primary-text)]">{lead}</strong>{rest}</span>
+								</li>
+							))}
+						</ul>
+					</div>
 				))}
-			</ul>
+			</div>
 		</div>
 	</section>
 
@@ -176,10 +214,11 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 6: WAT HET JE KOST AAN TIJD */}
+	{/* BLOK 6: HOE DIT IN JE LEVEN PAST */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-2xl mx-auto">
-			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">Wat het je in een week kost</h2>
+			<h2 class="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Dit komt niet bovenop je leven</h2>
+			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Je bent moe. Dus dit is zo gebouwd dat het past in een week die al vol zit.</p>
 			<ul class="space-y-4 mb-8">
 				{[
 					"Een video van tien tot vijftien minuten",
@@ -195,7 +234,7 @@ const extras = [
 				))}
 			</ul>
 			<div class="space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
-				<p class="font-semibold text-[var(--color-brand-primary-text)]">Bij elkaar zit je rond de twee uur in een week.</p>
+				<p><strong class="text-[var(--color-brand-primary-text)]">Bij elkaar zit je rond de twee uur in een week.</strong> Dat is minder dan wat je nu al kwijt bent aan de pijn en aan het leven eromheen.</p>
 				<p>Het vaste moment van de sessies prik ik zodra de groep compleet is, samen met de vrouwen die erbij zijn. En kun je een keer niet, dan is er een opname.</p>
 				<p>En heb je een week waarin je niets kunt, dan doe je die week niets. Alles blijft voor je klaarstaan, en je pakt het op wanneer je lijf meewerkt.</p>
 			</div>
@@ -232,7 +271,21 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 8: DE INVESTERING */}
+	{/* BLOK 8: WAAR DIT NAARTOE GAAT (scenes uit de lange pagina, met de eerlijke grens ervoor) */}
+	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[#f4ebe6] fade-in-section">
+		<div class="max-w-2xl mx-auto space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
+			<h2 class="text-3xl md:text-4xl font-semibold text-[var(--color-brand-primary-text)] tracking-tight mb-8">Waar dit naartoe gaat</h2>
+			<p>Ik beloof je niet dat je pijn weg is. Dat is niet aan mij, en iedereen die dat wel belooft bij een lijf als het jouwe, moet je wantrouwen.</p>
+			<p class="font-semibold text-[var(--color-brand-primary-text)]">Wat er wél verandert, is dit.</p>
+			<p>Op een ochtend word je wakker en merk je dat je je buik niet meteen aftast. Dat je gewoon opstaat, zonder eerst te scannen wat er vandaag gaat gebeuren.</p>
+			<p>Je partner zegt op een dag, half verbaasd, dat je de laatste tijd zoveel minder gespannen bent. En je snapt eerst niet waar hij het over heeft, tot je het zelf ook merkt.</p>
+			<p>Je krijgt je menstruatie en er komt geen paniek. De pijn is er misschien nog, maar de angst eromheen is weg. En dat scheelt zoveel meer dan je nu kunt geloven.</p>
+			<p>Je zegt geen afspraak meer af omdat je bang bent voor wat er zou kunnen gebeuren.</p>
+			<p>En op een dag hoor je jezelf iets zeggen over je lijf, en je merkt dat je niet meer praat over een vijand.</p>
+		</div>
+	</section>
+
+	{/* BLOK 9: DE INVESTERING */}
 	<section id="investering" class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-2xl mx-auto">
 			<h2 class="text-3xl md:text-4xl font-semibold mb-4 tracking-tight">Wat het kost</h2>
@@ -282,7 +335,7 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 9: DE GARANTIE */}
+	{/* BLOK 10: DE GARANTIE */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-2xl mx-auto">
 			<h2 class="text-3xl md:text-4xl font-semibold mb-8 tracking-tight">Je draagt het risico niet alleen</h2>
@@ -298,7 +351,7 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 10: WAAROM NU */}
+	{/* BLOK 11: WAAROM NU */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-2xl mx-auto space-y-5 text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed">
 			<h2 class="text-3xl md:text-4xl font-semibold text-[var(--color-brand-primary-text)] tracking-tight mb-8">Acht vrouwen, en dat is het</h2>
@@ -309,7 +362,7 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 11: NOG EVEN DIT (accordion, standaard dicht) */}
+	{/* BLOK 12: NOG EVEN DIT (accordion, standaard dicht) */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-3xl mx-auto">
 			<h2 class="text-3xl md:text-4xl font-semibold mb-10 text-center tracking-tight">Nog even dit</h2>
@@ -383,7 +436,7 @@ const extras = [
 		</div>
 	</section>
 
-	{/* BLOK 12: SLOT */}
+	{/* BLOK 13: SLOT */}
 	<section id="slot" class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-2xl mx-auto">
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
@@ -395,7 +448,19 @@ const extras = [
 				<CheckoutButtons />
 			</div>
 
-			<p class="text-4xl text-center text-[var(--color-brand-accent)]" style="font-family: var(--font-signature);">Crystal</p>
+			<div class="flex flex-col items-center gap-3">
+				<div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-4 border-[var(--color-brand-secondary)] shadow-lg">
+					<Picture
+						src={portretCrystal}
+						alt="Crystal Helder"
+						widths={[96, 192]}
+						sizes="96px"
+						class="w-full h-full object-cover"
+						style="object-position: center 20%; transform: scale(1.5); transform-origin: 50% 47%;"
+					/>
+				</div>
+				<p class="text-4xl text-center text-[var(--color-brand-accent)]" style="font-family: var(--font-signature);">Crystal</p>
+			</div>
 		</div>
 	</section>
 
