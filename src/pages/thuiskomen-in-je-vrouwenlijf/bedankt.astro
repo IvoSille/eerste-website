@@ -79,6 +79,41 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 </style>
 
 <script>
+	// DataLayer: purchase na een betaling via Plug&Pay. De checkout stuurt na betaling door naar
+	// deze pagina met ?bron=plugandpay; alleen dan telt het als aankoop (een directe bezoeker niet).
+	// Geen navigatie na de push, dus geen eventCallback nodig. Dedup per browser via localStorage,
+	// zodat verversen of terugkomen via de link geen tweede aankoop meetelt.
+	(() => {
+		const params = new URLSearchParams(window.location.search);
+		if (params.get("bron") !== "plugandpay") return;
+
+		const DEDUP_KEY = "thuiskomen_purchase_id";
+		let alreadySent: string | null = null;
+		try {
+			alreadySent = localStorage.getItem(DEDUP_KEY);
+		} catch {}
+		if (alreadySent) return;
+
+		// Plug&Pay's orderreferentie als die in de URL meekomt, anders een eigen id.
+		const transactionId =
+			params.get("order_id") ||
+			params.get("order") ||
+			params.get("reference") ||
+			`thuiskomen-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+		window.dataLayer = window.dataLayer || [];
+		window.dataLayer.push({
+			event: "purchase",
+			value: 997,
+			currency: "EUR",
+			transaction_id: transactionId,
+			lead_source: "thuiskomen_salespage",
+		});
+		try {
+			localStorage.setItem(DEDUP_KEY, transactionId);
+		} catch {}
+	})();
+
 	document.addEventListener("DOMContentLoaded", () => {
 		const observer = new IntersectionObserver(
 			(entries, obs) => {
