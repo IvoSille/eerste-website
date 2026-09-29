@@ -34,13 +34,30 @@ import { CHECKOUT_URL_INEENS, CHECKOUT_URL_TERMIJNEN, WACHTLIJST_URL } from "../
 </div>
 
 <script>
+	// Plug&Pay-checkout: GA4 client_id + de UTM's van deze bezoek meegeven. De purchase wordt
+	// server-side verstuurd (Plug&Pay-webhook → n8n → GA4 Measurement Protocol); met dit client_id
+	// hangt die aankoop aan de juiste bezoeker en bron. Plug&Pay slaat utm_* op bij de order.
+	function withCheckoutParams(href: string): string {
+		const url = new URL(href, window.location.href);
+		if (url.hostname !== "shop.crystalhelder.nl") return href;
+		const page = new URLSearchParams(window.location.search);
+		["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"].forEach((key) => {
+			const value = page.get(key);
+			if (value && !url.searchParams.has(key)) url.searchParams.set(key, value);
+		});
+		// _ga-cookie: GA1.1.<random>.<timestamp> → client_id "<random>.<timestamp>"
+		const ga = document.cookie.match(/(?:^|;\s*)_ga=GA\d\.\d\.(\d+\.\d+)/);
+		if (ga) url.searchParams.set("ga_client_id", ga[1]);
+		return url.toString();
+	}
+
 	// DataLayer: begin_checkout tracking on the two checkout buttons.
 	// Cross-origin redirect must wait for the dataLayer event to be sent — see tracking-patterns.md.
 	document.addEventListener("DOMContentLoaded", () => {
 		document.querySelectorAll("[data-checkout]").forEach((el) => {
 			el.addEventListener("click", (e) => {
 				e.preventDefault();
-				const href = el.getAttribute("href");
+				const href = withCheckoutParams(el.getAttribute("href") as string);
 				const paymentOption = el.getAttribute("data-payment-option");
 				const ctaText = el.getAttribute("data-cta-text");
 
