@@ -1,31 +1,24 @@
 ---
 import Button from "../Button.astro";
-import { CHECKOUT_URL_INEENS, CHECKOUT_URL_TERMIJNEN, WACHTLIJST_URL } from "../../lib/thuiskomen";
+import { CHECKOUT_URL, WACHTLIJST_URL } from "../../lib/thuiskomen";
 
-// De twee betaalknoppen. Eén component voor alle plaatsingen op beide sales pages,
-// zodat links, teksten en tracking overal identiek zijn. Na de deadline (html.signup-closed)
-// vervangt één wachtlijstknop de betaalknoppen.
+// De betaalknop. Eén component voor alle plaatsingen op beide sales pages, zodat link, tekst en
+// tracking overal identiek zijn. Eén knop: ineens of termijnen kiest de koper op de checkout.
+// Na de deadline (html.signup-closed) vervangt de wachtlijstknop hem.
 ---
 
-<div class="signup-open-only flex flex-col sm:flex-row gap-4 justify-center">
+<div class="signup-open-only flex flex-col items-center gap-3">
 	<a
-		href={CHECKOUT_URL_INEENS}
+		href={CHECKOUT_URL}
 		data-checkout
-		data-payment-option="single"
-		data-cta-text="Ik doe mee, €997 ineens"
+		data-cta-text="Ik doe mee"
 		class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-accent)] hover:bg-[var(--color-brand-accent-hover)] text-white shadow-lg shadow-[var(--color-brand-accent)]/25 hover:shadow-xl hover:shadow-[var(--color-brand-accent)]/30"
 	>
-		Ik doe mee, € 997 ineens
+		Ik doe mee
 	</a>
-	<a
-		href={CHECKOUT_URL_TERMIJNEN}
-		data-checkout
-		data-payment-option="installments"
-		data-cta-text="Ik doe mee, in 3 termijnen"
-		class="inline-flex justify-center items-center text-center font-heading font-medium rounded-full px-8 py-4 md:px-10 md:py-5 text-base md:text-lg transition-all duration-300 ease-in-out hover:-translate-y-1 bg-[var(--color-brand-secondary)] hover:bg-[#D5C2B9] text-[var(--color-brand-primary-text)] shadow-sm hover:shadow-md"
-	>
-		Ik doe mee, in 3 termijnen
-	</a>
+	<p class="text-sm text-[var(--color-brand-muted)] text-center">
+		Liever in termijnen? Dat kan: 3 × € 365, je kiest het bij het afrekenen.
+	</p>
 </div>
 <div class="signup-closed-only flex justify-center">
 	<Button href={WACHTLIJST_URL} className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5">
@@ -51,14 +44,13 @@ import { CHECKOUT_URL_INEENS, CHECKOUT_URL_TERMIJNEN, WACHTLIJST_URL } from "../
 		return url.toString();
 	}
 
-	// DataLayer: begin_checkout tracking on the two checkout buttons.
+	// DataLayer: begin_checkout tracking on the checkout button.
 	// Cross-origin redirect must wait for the dataLayer event to be sent — see tracking-patterns.md.
 	document.addEventListener("DOMContentLoaded", () => {
 		document.querySelectorAll("[data-checkout]").forEach((el) => {
 			el.addEventListener("click", (e) => {
 				e.preventDefault();
 				const href = withCheckoutParams(el.getAttribute("href") as string);
-				const paymentOption = el.getAttribute("data-payment-option");
 				const ctaText = el.getAttribute("data-cta-text");
 
 				let navigated = false;
@@ -72,7 +64,6 @@ import { CHECKOUT_URL_INEENS, CHECKOUT_URL_TERMIJNEN, WACHTLIJST_URL } from "../
 				window.dataLayer.push({
 					event: "begin_checkout",
 					cta_text: ctaText,
-					payment_option: paymentOption,
 					value: 997,
 					currency: "EUR",
 					eventCallback: navigate,
