@@ -53,6 +53,9 @@ const reviews = [
 	},
 ];
 
+// "Twijfel je nog?"-link onder de betaalknop: opent WhatsApp naar Crystal met een voorbereid bericht.
+const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponent("Hoi Crystal, ik twijfel nog over Thuiskomen in je Vrouwenlijf. Mag ik je iets vragen?")}`;
+
 // Open/dicht wordt bepaald door de datumtrigger in src/lib/thuiskomen.ts
 // (THUISKOMEN_CLOSE_AT_ISO): erna verdwijnen de betaalknoppen en linken alle CTA's naar de wachtlijst.
 ---
@@ -772,6 +775,16 @@ const reviews = [
 				<CheckoutButtons />
 			</div>
 			<p class="signup-open-only text-sm text-[var(--color-brand-muted)] italic">Je draagt het risico niet alleen. Lees hieronder waarom.</p>
+			<p class="signup-open-only text-sm text-[var(--color-brand-muted)] mt-3">
+				Twijfel je nog?
+				<a
+					href={WHATSAPP_TWIJFEL_URL}
+					target="_blank"
+					rel="noopener"
+					data-whatsapp-twijfel
+					class="font-semibold text-[var(--color-brand-accent)] underline underline-offset-4 hover:text-[var(--color-brand-accent-hover)]"
+				>Stuur me een berichtje</a>.
+			</p>
 			<p class="signup-closed-only text-sm text-[var(--color-brand-muted)] italic">De inschrijving voor deze groep is gesloten. Op de wachtlijst hoor je als eerste of er een volgende groep komt.</p>
 		</div>
 	</section>
@@ -1078,6 +1091,20 @@ const reviews = [
 				cta_text: text,
 				cta_destination: href?.replace("#", ""),
 				cta_location: location,
+			});
+		});
+
+		// WhatsApp "Twijfel je nog?"-link. Opent in een nieuw tabblad/de app, dus de pagina
+		// blijft staan en de push kan gewoon verstuurd worden.
+		document.querySelectorAll("[data-whatsapp-twijfel]").forEach((el) => {
+			el.addEventListener("click", () => {
+				window.dataLayer = window.dataLayer || [];
+				window.dataLayer.push({
+					event: "cta_click",
+					cta_text: "Stuur me een berichtje",
+					cta_destination: "whatsapp_crystal",
+					cta_location: el.closest("section")?.id || "unknown",
+				});
 			});
 		});
 	});
