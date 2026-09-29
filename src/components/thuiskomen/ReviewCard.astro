@@ -1,0 +1,37 @@
+---
+import { Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// Eén review: kop (citaat), tekst, naam. De avatar is een initiaal-cirkel; geef `photo`
+// mee (import uit src/assets/images) om er later een foto in te zetten, zelfde maat en vorm.
+interface Props {
+	name: string;
+	quote: string;
+	paragraphs: string[];
+	photo?: ImageMetadata;
+}
+
+const { name, quote, paragraphs, photo } = Astro.props;
+const initial = name.trim().charAt(0).toUpperCase();
+---
+
+<figure class="bg-white rounded-[2rem] p-8 md:p-10 shadow-sm flex flex-col h-full">
+	<blockquote class="flex-1">
+		<p class="font-heading text-xl md:text-2xl font-semibold leading-snug mb-6 text-[var(--color-brand-primary-text)]">
+			"{quote}"
+		</p>
+		<div class="space-y-4 text-base leading-relaxed text-[var(--color-brand-muted)]">
+			{paragraphs.map((p) => <p>{p}</p>)}
+		</div>
+	</blockquote>
+	<figcaption class="flex items-center gap-4 mt-8 pt-6 border-t border-[var(--color-brand-secondary)]/60">
+		<div class="w-12 h-12 rounded-full overflow-hidden shrink-0 bg-[var(--color-brand-secondary)] flex items-center justify-center" aria-hidden="true">
+			{photo ? (
+				<Picture src={photo} alt="" widths={[48, 96]} sizes="48px" class="w-full h-full object-cover" />
+			) : (
+				<span class="font-heading text-lg font-semibold text-[var(--color-brand-primary-text)]">{initial}</span>
+			)}
+		</div>
+		<span class="font-bold text-sm text-[var(--color-brand-primary-text)]">{name}</span>
+	</figcaption>
+</figure>

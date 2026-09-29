@@ -7,8 +7,51 @@ import StickyBar from "../../components/thuiskomen/StickyBar.astro";
 import SignupSwitch from "../../components/thuiskomen/SignupSwitch.astro";
 import SignupCta from "../../components/thuiskomen/SignupCta.astro";
 import CheckoutButtons from "../../components/thuiskomen/CheckoutButtons.astro";
+import ReviewCard from "../../components/thuiskomen/ReviewCard.astro";
 import { Picture } from "astro:assets";
 import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
+
+// Blok 14. Volgorde en tekst 1-op-1 zoals aangeleverd (Pien, T., Nina, Famke).
+// Foto erbij? Zet `photo: <import>` op de review (staat klaar voor Nina).
+const reviews = [
+	{
+		name: "Pien",
+		quote: "Ik ervaar nu weer de vrijheid om volop van mijn gezin te genieten.",
+		paragraphs: [
+			"Toen ik aan het traject begon, liep ik vast met endometriose, buikklachten en intense krampen. Dit belemmerde me dagelijks, zelfs bij het spelen met mijn kind.",
+			"Samen met Crystal ontdekte ik dat er nog veel onverwerkt verdriet zat rondom het verlies van mijn moeder en verliesangst. Een belangrijk omslagpunt was een diepe oefening waarin ik weer echt verbinding maakte met mijn baarmoeder. Waar eerst angst en spanning zat, ontstond er weer rust.",
+			"Kort na deze inzichten merkte ik dat de spanning en krampen zakten. Crystal gaat direct naar de kern, voelt haarscherp aan en biedt een oordeelloze bedding. Ik ervaar nu weer de vrijheid om volop van mijn gezin te genieten.",
+			"Als je twijfelt: niet twijfelen, gewoon doen!",
+		],
+	},
+	{
+		name: "T.",
+		quote: "Ik ontdekte dat die controle mij juist weghield van genezing.",
+		paragraphs: [
+			"Ondanks dat ik al veel innerlijk werk had gedaan, bleef ik proberen controle te houden over mijn pijnklachten. Ik zocht de antwoorden steeds buiten mezelf: 'Moet ik anders eten? Wat doe ik niet goed? Waarom voel ik die pijn nog steeds?' Ik werkte zo hard aan mezelf, maar er veranderde niets. Ik voelde me hopeloos.",
+			"Tijdens het traject ontdekte ik dat die controle mij juist weghield van genezing. Crystal heeft een unieke aanpak: de combinatie van inzicht in klachten (volgens de Germaanse Geneeskunde) samen met intuïtieve opstellingen bracht de omslag. Crystal luistert haarscherp, voelt exact aan wat er speelt en stelt precies de juiste vragen.",
+			"Ik kan nu voorbij de angst gaan, de controle loslaten en echt in liefde verbinding maken met mijn lijf en de pijn. In mijn dagelijks leven merk ik nu zoveel meer rust, geduld en vertrouwen. Ik leef weer vanuit mijn hart.",
+		],
+	},
+	{
+		name: "Nina",
+		quote: "Dankzij Crystals kijkwijze word je horizon echt verbreed: zij is een van de denkers van de nieuwe tijd!",
+		paragraphs: [
+			"Toen de menopauze begon met heftige klachten, stuitte ik op hoe weinig er in de reguliere zorg bekend is over wat een vrouw echt doormaakt. Ik twijfelde geen seconde om met Crystal aan de slag te gaan.",
+			"Meer inzicht bracht me direct zoveel rust. Elke dag was er wel een moment van: 'Oh ja, zo kun je het ook zien, voelen en ervaren.' Het vraagt soms om eerlijk in de spiegel te durven kijken en ook je schaduwkanten met liefde te omarmen, maar dat is precies wat je in je oerkracht zet.",
+			"Wat ontzettend fijn om te voelen dat je niet alleen bent, maar echt gehoord en begrepen wordt. Een absolute aanrader voor iedere vrouw!",
+		],
+	},
+	{
+		name: "Famke",
+		quote: "Écht gezien en gehoord worden was ontzettend fijn.",
+		paragraphs: [
+			"Voordat ik meedeed, had ik last van een zeer pijnlijke menstruatie én continue angst voor die pijn. Ik was erg zoekende naar wat mij kon helpen, maar liep vaak aan tegen frustratie en het gevoel niet serieus genomen te worden. Toen deze challenge voorbijkwam, voelde ik meteen nieuwsgierigheid.",
+			"Tijdens en na de challenge werd ik me veel bewuster van mijn gedachten en angsten rondom de menstruatie, én de grote impact die deze op mijn lichaam hebben.",
+			"Deze challenge is écht een aanrader voor vrouwen die zich niet gezien voelen in hun fysieke en mentale klachten, meer zicht willen krijgen op hun cyclus én de angst voor de pijn onder de loep durven te nemen.",
+		],
+	},
+];
 
 // Open/dicht wordt bepaald door de datumtrigger in src/lib/thuiskomen.ts
 // (THUISKOMEN_CLOSE_AT_ISO): erna verdwijnen de betaalknoppen en linken alle CTA's naar de wachtlijst.
@@ -678,26 +721,12 @@ import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
 			<p class="max-w-2xl mx-auto text-center text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
 				Wat ik je wel kan zeggen: het werk zelf is niet nieuw. Dit doe ik al meer dan tien jaar, één op één.
 			</p>
-			<p class="max-w-2xl mx-auto text-center text-base md:text-lg font-medium text-[var(--color-brand-primary-text)] leading-relaxed mb-12 md:mb-16">
-				Dit zeggen vrouwen die ik begeleidde.
-			</p>
+			<h3 class="text-xl md:text-2xl font-semibold text-center text-[var(--color-brand-primary-text)] mt-10 md:mt-12 mb-8 md:mb-12">
+				Ervaringen van vrouwen die ik begeleidde
+			</h3>
 
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-12">
-				<div class="bg-white rounded-[2rem] p-8 shadow-sm">
-					<svg class="h-8 w-8 text-[var(--color-brand-accent)]/30 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
-					<p class="text-base leading-relaxed mb-6 italic text-[var(--color-brand-primary-text)]">"Ik vond Crystal zeer scherp in verbanden leggen, heel helder in uitleg over wat ik te doen had en met welke thema's mijn klachten verbonden waren in mijn leven. Vooral werd me duidelijk hoe ik moest navigeren in wat er in mijn leven gebeurde. Ze is een heel fijn, open en compassievol mens."</p>
-					<p class="font-bold text-sm text-[var(--color-brand-primary-text)]">Kinga Sidor</p>
-				</div>
-				<div class="bg-white rounded-[2rem] p-8 shadow-sm">
-					<svg class="h-8 w-8 text-[var(--color-brand-accent)]/30 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
-					<p class="text-base leading-relaxed mb-6 italic text-[var(--color-brand-primary-text)]">"Crystal is heerlijk nuchter maar enorm doortastend. Ze kan me op een bepaalde manier lezen waardoor ze heel snel concreet kan maken waar ik zelf de woorden nog niet voor kan vinden. Ik merk dat ik veel meer bij mezelf kan blijven, m'n grenzen aanvoel en mezelf een stuk beter begrijp."</p>
-					<p class="font-bold text-sm text-[var(--color-brand-primary-text)]">Tessa van Beek</p>
-				</div>
-				<div class="bg-white rounded-[2rem] p-8 shadow-sm">
-					<svg class="h-8 w-8 text-[var(--color-brand-accent)]/30 mb-5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" /></svg>
-					<p class="text-base leading-relaxed mb-6 italic text-[var(--color-brand-primary-text)]">"We gingen terug in de tijd naar de oorsprong van bepaalde thema's, en wauw. Wat een geschenk en verademing om op deze manier meegenomen te worden. Heel straight en helder."</p>
-					<p class="font-bold text-sm text-[var(--color-brand-primary-text)]">Marinka van Aken</p>
-				</div>
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12">
+				{reviews.map((r) => <ReviewCard {...r} />)}
 			</div>
 
 			<p class="max-w-2xl mx-auto text-center text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
