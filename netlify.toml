@@ -13,6 +13,40 @@
   status = 302
   force = true
 
+# Thuiskomen: programma gesloten, geen wachtlijst. De korte sales page en de wachtlijst-pagina's
+# bestaan niet meer; oude links (WhatsApp, mails) komen op de lange pagina met de sluitingsmelding.
+[[redirects]]
+  from = "/thuiskomen"
+  to = "/thuiskomen-in-je-vrouwenlijf/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/thuiskomen/*"
+  to = "/thuiskomen-in-je-vrouwenlijf/"
+  status = 301
+  force = true
+
+# Bedankpagina bestaat nog als broncode (src/pages/thuiskomen-in-je-vrouwenlijf/bedankt.astro) voor
+# hergebruik bij een nieuw traject, maar is nu niet bereikbaar. Verwijder deze regel om hem weer te openen.
+[[redirects]]
+  from = "/thuiskomen-in-je-vrouwenlijf/bedankt/*"
+  to = "/thuiskomen-in-je-vrouwenlijf/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wachtlijst"
+  to = "/thuiskomen-in-je-vrouwenlijf/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wachtlijst/*"
+  to = "/thuiskomen-in-je-vrouwenlijf/"
+  status = 301
+  force = true
+
 # Social media campagne "jpie_ronde2" - UTM-tracking per platform
 [[redirects]]
   from = "/je-pijn-is-echt-ig"

@@ -1,0 +1,40 @@
+---
+import Button from "../Button.astro";
+
+// Primaire CTA op de gesloten sales page: opent de Cal.com-modal van het inzichtgesprek
+// (45 min, event type "inzicht"; de Cal-embed staat in Layout.astro via calLink).
+interface Props {
+	className?: string;
+	label?: string;
+	arrow?: boolean;
+	[key: string]: any;
+}
+
+const { className = "", label = "Plan een kennismakingsgesprek in", arrow = false, ...rest } = Astro.props;
+const pijl = arrow ? " →" : "";
+---
+
+<Button
+	data-cal-link="crystalhelder/inzicht"
+	data-cal-config='{"layout":"month_view","theme":"light"}'
+	className={`cursor-pointer ${className}`}
+	{...rest}
+>
+	{label}{pijl}
+</Button>
+
+<script>
+	// CTA-klik opent de Cal.com-modal (geen navigatie), dus een gewone dataLayer-push volstaat.
+	document.addEventListener("click", (e) => {
+		const el = (e.target as Element).closest("[data-cal-link]");
+		if (!el) return;
+		const w = window as any;
+		w.dataLayer = w.dataLayer || [];
+		w.dataLayer.push({
+			event: "cta_click",
+			cta_text: el.textContent?.trim() || "",
+			cta_destination: "inzicht",
+			cta_location: el.getAttribute("data-cta-location") || "thuiskomen",
+		});
+	});
+</script>

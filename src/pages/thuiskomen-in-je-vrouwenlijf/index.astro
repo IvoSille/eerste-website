@@ -4,9 +4,7 @@ import Button from "../../components/Button.astro";
 import Card from "../../components/Card.astro";
 import Footer from "../../components/Footer.astro";
 import StickyBar from "../../components/thuiskomen/StickyBar.astro";
-import SignupSwitch from "../../components/thuiskomen/SignupSwitch.astro";
-import SignupCta from "../../components/thuiskomen/SignupCta.astro";
-import CheckoutButtons from "../../components/thuiskomen/CheckoutButtons.astro";
+import GesprekCta from "../../components/thuiskomen/GesprekCta.astro";
 import ReviewCard from "../../components/thuiskomen/ReviewCard.astro";
 import { Picture } from "astro:assets";
 import portretCrystal from "../../assets/images/Portret Crystal 1.jpg";
@@ -53,19 +51,26 @@ const reviews = [
 	},
 ];
 
-// "Twijfel je nog?"-link onder de betaalknop: opent WhatsApp naar Crystal met een voorbereid bericht.
-const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponent("Hoi Crystal, ik twijfel nog over Thuiskomen in je Vrouwenlijf. Mag ik je iets vragen?")}`;
-
-// Open/dicht wordt bepaald door de datumtrigger in src/lib/thuiskomen.ts
-// (THUISKOMEN_CLOSE_AT_ISO): erna verdwijnen de betaalknoppen en linken alle CTA's naar de wachtlijst.
+// Inschrijving is gesloten (okt 2026). Geen wachtlijst: alle CTA's openen de Cal.com-modal van het
+// inzichtgesprek (GesprekCta). De pagina blijft staan en indexeerbaar voor SEO.
 ---
 
 <Layout
-	title="Thuiskomen in je Vrouwenlijf — 10 weken begeleiding | Crystal Helder"
-	description="In 10 weken begrijp je eindelijk wat geen enkele arts je kon vertellen: waarom je lichaam dit doet. Een begeleid programma voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten."
-	includeCal={false}
+	title="Thuiskomen in je Vrouwenlijf | Onbegrepen bekkenklachten"
+	description="Tienwekenprogramma voor vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten. De groep is gesloten; plan een kennismakingsgesprek met Crystal."
+	calLink="crystalhelder/inzicht"
 	showConsentBanner={false}
 >
+	<script slot="head" type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Course",
+		"name": "Thuiskomen in je Vrouwenlijf",
+		"description": "Een begeleid programma van tien weken waarin vrouwen met onbegrepen bekken-, baarmoeder- of cyclusklachten leren verstaan wat hun lichaam hen vertelt, volgens de Germaanse Geneeskunde. Groep van acht vrouwen, met video-modules, live sessies en een dag samen.",
+		"inLanguage": "nl",
+		"url": "https://go.crystalhelder.nl/thuiskomen-in-je-vrouwenlijf/",
+		"provider": { "@type": "Person", "name": "Crystal Helder", "url": "https://go.crystalhelder.nl" },
+	})} />
+
 	{/* DECORATIVE BACKGROUND BLOBS */}
 	<div
 		class="hidden md:block fixed top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none"
@@ -75,7 +80,6 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 		<div class="absolute top-[35%] left-[-10%] w-[520px] h-[520px] bg-[var(--color-brand-accent-light)] rounded-full mix-blend-multiply filter blur-[120px] opacity-40"></div>
 	</div>
 
-	<SignupSwitch />
 	<StickyBar />
 
 	{/* BLOK 1: HERO */}
@@ -113,14 +117,11 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 				</li>
 			</ul>
 			<div class="flex justify-center lg:justify-start">
-				<SignupCta arrow data-cta-location="hero" className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
+				<GesprekCta arrow data-cta-location="hero" className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
-			<p class="signup-open-only text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
-					8 plekken. Start maandag 12 oktober. Inschrijven kan tot en met maandag 5 oktober.
-				</p>
-				<p class="signup-closed-only text-xs text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
-					De inschrijving voor deze groep is gesloten.
-				</p>
+			<p class="text-sm text-[var(--color-brand-muted)] mt-3 max-w-md mx-auto lg:mx-0">
+				Het programma is gesloten. Wil je toch met me samenwerken rond dit thema? Plan dan even een kennismakingsgesprek in.
+			</p>
 		</div>
 		<div class="w-full lg:w-[50%] relative z-10">
 			<div class="relative w-full max-w-[220px] sm:max-w-xs md:max-w-md mx-auto aspect-[3/4] sm:aspect-square md:aspect-square lg:aspect-[4/5]">
@@ -215,7 +216,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 	{/* BLOK 5: HET VERHAAL VAN CRYSTAL */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-2xl mx-auto">
-			<h3 class="text-2xl md:text-3xl font-semibold mt-2 mb-6 text-center text-[var(--color-brand-primary-text)]">Waarom ik dit doe</h3>
+			<h2 class="text-2xl md:text-3xl font-semibold mt-2 mb-6 text-center text-[var(--color-brand-primary-text)]">Waarom ik dit doe</h2>
 			<p class="dropcap text-lg md:text-xl text-[var(--color-brand-primary-text)] leading-relaxed mb-6">
 				Mijn broertje overleed toen hij vijf maanden oud was. Hij had een hartafwijking.
 			</p>
@@ -259,7 +260,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 				Ik leerde ziek te zijn zonder te vechten. En wat ik ontdekte, is dat het dan sneller voorbijgaat. Elke keer bracht het me iets wat ik nodig had.
 			</p>
 
-			<h3 class="text-2xl md:text-3xl font-semibold mt-12 mb-6 text-center text-[var(--color-brand-primary-text)]">Waarom ik dit met vrouwen doe, en met deze klachten</h3>
+			<h2 class="text-2xl md:text-3xl font-semibold mt-12 mb-6 text-center text-[var(--color-brand-primary-text)]">Waarom ik dit met vrouwen doe, en met deze klachten</h2>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
 				Wij vrouwen zijn ons aan het losmaken van oude patronen. We zoeken onze eigen plek, en we kunnen alles.
 			</p>
@@ -628,6 +629,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 	{/* BLOK 12: DE ZES EXTRA'S */}
 	<section class="py-20 md:py-32 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-6xl mx-auto">
+			<h2 class="text-3xl md:text-4xl font-semibold mb-4 text-center tracking-tight">De zes extra's</h2>
 			<p class="text-center text-xl md:text-2xl font-medium text-[var(--color-brand-primary-text)] max-w-2xl mx-auto mb-12 md:mb-16">
 				Ik heb zes dingen voor je gemaakt. Elk daarvan lost iets op waar ik je nu al over hoor twijfelen.
 			</p>
@@ -660,7 +662,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 				<Card bgVariant="white" className="p-6 md:p-8">
 					<p class="text-sm text-[var(--color-brand-muted)] italic leading-relaxed mb-4">"Ik wil niet tien weken wachten op iets merkbaars."</p>
 					<h3 class="text-lg font-semibold mb-1">6. De eerste verschuiving <span class="font-normal text-[var(--color-brand-muted)]">· € 497</span></h3>
-					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Je intakegesprek, ruim anderhalf uur, één op één. Dat voeren we nog vóór 12 oktober, zodat je niet hoeft te wachten tot het programma begint. In dat ene gesprek komt er vaak al iets los.</p>
+					<p class="text-base text-[var(--color-brand-muted)] leading-relaxed">Je intakegesprek, ruim anderhalf uur, één op één. Dat voeren we vóór de start van het programma, zodat je niet hoeft te wachten. In dat ene gesprek komt er vaak al iets los.</p>
 				</Card>
 			</div>
 		</div>
@@ -670,7 +672,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
 			<div>
-				<h3 class="text-xl md:text-2xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Dit is voor jou als:</h3>
+				<h2 class="text-xl md:text-2xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Dit is voor jou als:</h2>
 				<ul class="space-y-4">
 					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
 						<span class="text-[var(--color-brand-sage)] font-bold shrink-0 mt-1">✓</span>
@@ -691,7 +693,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 				</ul>
 			</div>
 			<div>
-				<h3 class="text-xl md:text-2xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Dit is niet voor jou als:</h3>
+				<h2 class="text-xl md:text-2xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Dit is niet voor jou als:</h2>
 				<ul class="space-y-4">
 					<li class="flex items-start gap-3 text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
 						<span class="text-[var(--color-brand-accent)] font-bold shrink-0 mt-1">✕</span>
@@ -746,90 +748,44 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 				Het lichaamsbegrip, de lichaamstaal, de bedding, en de zes extra's. Bij elkaar een waarde van <strong class="text-[var(--color-brand-primary-text)]">€ 7.173</strong>.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Als deze tien weken volgend jaar opnieuw draaien, is de prijs <strong class="text-[var(--color-brand-primary-text)]">€ 1.497</strong>.
-			</p>
-			<p class="text-2xl md:text-3xl font-bold text-[var(--color-brand-primary-text)] mb-6">
-				Voor deze eerste groep is het € 997.
+				Het tarief is <strong class="text-[var(--color-brand-primary-text)]">€ 1.497</strong>.
 			</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-10">
-				Niet omdat je minder krijgt. Je krijgt meer van mij dan iedere groep die na jou komt, want ik ben er met acht vrouwen dichterbij dan ik ooit nog zal zijn. Maar jij stapt in bij iets waar nog geen verhalen van anderen bij staan, en je zegt ja op mijn woord alleen. Dat is wat waard.
+				Wanneer er een nieuwe groep start, weet ik nog niet.
 			</p>
 
-			<div class="text-left bg-[var(--color-brand-base)] rounded-3xl p-6 md:p-8 shadow-sm mb-10">
-				<p class="font-semibold text-[var(--color-brand-primary-text)] mb-4">En dan dit, want ik ken deze gedachte.</p>
-				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Er komt zo een moment waarop je denkt: dat is veel geld, en ik heb al zoveel uitgegeven aan dingen die niet hielpen.
-				</p>
-				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Dat klopt. En je mag boos zijn over elke euro daarvan.
-				</p>
-				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-					Maar reken ook eens de andere kant uit. Wat kost het je nu al? De pijnstillers, de supplementen, de behandelingen die je zelf betaalt omdat ze niet vergoed worden. De dagen die je niet werkt. De dingen die je afzegt. De jaren.
-				</p>
-				<p class="text-base md:text-lg text-[var(--color-brand-muted)] leading-relaxed">
-					En vraag je dan af of het echt egoïstisch is om dit voor jezelf te doen. Want jij bent degene die alles draagt in je gezin, in je werk, voor iedereen om je heen. Je hebt jarenlang op je tenen gelopen. Dat je nu een keer iets voor jezelf regelt, is niet egoïstisch. Dat is het minst egoïstische dat er is.
-				</p>
-			</div>
-
-			<div class="mb-4">
-				<CheckoutButtons />
-			</div>
-			<p class="signup-open-only text-sm text-[var(--color-brand-muted)] italic">Je draagt het risico niet alleen. Lees hieronder waarom.</p>
-			<p class="signup-open-only text-sm text-[var(--color-brand-muted)] mt-3">
-				Twijfel je nog?
-				<a
-					href={WHATSAPP_TWIJFEL_URL}
-					target="_blank"
-					rel="noopener"
-					data-whatsapp-twijfel
-					class="font-semibold text-[var(--color-brand-accent)] underline underline-offset-4 hover:text-[var(--color-brand-accent-hover)]"
-				>Stuur me een berichtje</a>.
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Het programma is gesloten. Wil je toch met me samenwerken rond dit thema? Plan dan even een kennismakingsgesprek in.
 			</p>
-			<p class="signup-closed-only text-sm text-[var(--color-brand-muted)] italic">De inschrijving voor deze groep is gesloten. Op de wachtlijst hoor je als eerste of er een volgende groep komt.</p>
+			<div class="text-center">
+				<GesprekCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
+			</div>
 		</div>
 	</section>
 
-	{/* BLOK 16: WAAROM NU */}
+	{/* BLOK 16: GESLOTEN + UITNODIGING */}
 	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
 		<div class="max-w-2xl mx-auto">
-			<div class="signup-open-only">
-				<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">Acht vrouwen. Meer niet.</h3>
-				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dat is geen trucje om je op te jagen.</p>
-				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-					Ik doe dit met acht omdat ik in de live sessies elke vrouw wil zien. Niet als naam in een lijst, maar echt: wat er bij jou speelt, waar jij vastloopt, wat jij nodig hebt. Bij twintig vrouwen lukt dat niet, en dan word jij een van de twintig. Dat wil ik niet, en jij wilt het ook niet, want dat is precies wat je al jaren overkomt.
-				</p>
-				<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">We beginnen op maandag 12 oktober.</h3>
-				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-					Acht plekken, en als ze vol zijn, is het vol. Ik schuif niemand er nog even bij, want dan klopt de groep niet meer.
-				</p>
-				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-					De inschrijving sluit op maandag 5 oktober om 23:59, omdat ik de week voor de start de groep wil samenstellen en alle intakes wil inplannen. Daarna gaat hij niet meer open, ook niet als de groep nog niet vol is.
-				</p>
-				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Wanneer er een volgende groep komt, weet ik nu nog niet.</p>
-			</div>
-			<div class="signup-closed-only">
-				<h3 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">De inschrijving voor deze groep is gesloten.</h3>
-				<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-					Ik heb de groep samengesteld en de intakes ingepland. Zet je op de wachtlijst en je hoort als eerste wanneer er een volgende groep komt.
-				</p>
-			</div>
-			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] mb-6">En dat is het eigenlijke punt.</p>
-			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">Niet de datum. De datum is maar een datum.</p>
+			<h2 class="text-2xl md:text-3xl font-semibold mb-6 text-[var(--color-brand-primary-text)]">De inschrijving voor deze groep is gesloten.</h2>
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
-				Het punt is wat er gebeurt als je dit nog een half jaar laat liggen. Dan is het maart. Dan heb je nog zes menstruaties gehad waarvan je er minstens drie hebt uitgezeten met een kruik. Dan heb je weer een handvol afspraken afgezegd. Dan lig je nog steeds om 4:12 's nachts wakker, aangespannen, wachtend.
+				Je kunt wachten tot er een nieuwe komt. Wanneer dat is, weet ik nog niet.
 			</p>
-			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">En dan is er niets veranderd, behalve dat er weer een half jaar van je leven voorbij is.</p>
-			<p class="text-lg font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat is geen dreigement. Dat is gewoon wat er gebeurt als je niets doet, en dat weet je zelf ook.</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-6">
+				Maar misschien ben je er klaar mee om nog een half jaar rond te lopen met vage vrouwenklachten. Dan geef ik je graag de mogelijkheid om te kijken wat er mogelijk is: plan een gesprek met me in.
+			</p>
+			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-10">
+				Dan kijken we samen naar wat er bij jou speelt, waar het volgens mij vandaan komt en welke volgende stap bij jouw situatie past.
+			</p>
 			<div class="text-center">
-				<SignupCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
+				<GesprekCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
 		</div>
 	</section>
 
-	{/* BLOK 17: DE VRAGEN DIE JE NU HEBT */}
+	{/* BLOK 17: VEELGESTELDE VRAGEN */}
 	<section id="vragen" class="py-20 md:py-32 px-6 lg:px-8 bg-white fade-in-section">
 		<div class="max-w-3xl mx-auto">
-			<h2 class="text-3xl md:text-4xl font-semibold mb-12 text-center tracking-tight">De vragen die je nu hebt</h2>
+			<h2 class="text-3xl md:text-4xl font-semibold mb-12 text-center tracking-tight">Wat je misschien wilt weten</h2>
 			<div class="space-y-4 md:space-y-6">
 				<details class="group bg-[var(--color-brand-base)] rounded-2xl md:rounded-3xl overflow-hidden shadow-sm open:ring-1 open:ring-[var(--color-brand-accent)]/30 transition-colors duration-300">
 					<summary class="flex justify-between items-center font-semibold cursor-pointer list-none p-6 md:p-8 text-lg md:text-xl">
@@ -957,7 +913,7 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-6">Ik kan je nog geen verhalen van andere vrouwen laten zien.</p>
 			<p class="text-lg md:text-xl text-[var(--color-brand-muted)] leading-relaxed mb-8">Dus laat ik je zien dat ik er zelf voor sta.</p>
 
-			<h3 class="text-xl md:text-2xl font-semibold mb-4">Doe veertien dagen mee.</h3>
+			<h2 class="text-xl md:text-2xl font-semibold mb-4">Doe veertien dagen mee.</h2>
 			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
 				Niet nadenken, niet afwachten, niet aan de zijlijn kijken. Gewoon meedoen. Kijk de eerste modules, kom naar de eerste sessie, doe de eerste oefening.
 			</p>
@@ -994,27 +950,10 @@ const WHATSAPP_TWIJFEL_URL = `https://wa.me/31654375884?text=${encodeURIComponen
 			<p class="text-xl md:text-2xl font-semibold text-[var(--color-brand-primary-text)] leading-relaxed mb-10">Dat leg je hier neer.</p>
 
 			<div class="text-center mb-10">
-				<SignupCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
+				<GesprekCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
 			</div>
 
 			<p class="text-4xl text-center text-[var(--color-brand-accent)]" style="font-family: var(--font-signature);">Crystal</p>
-		</div>
-	</section>
-
-	{/* BLOK 20: P.S. */}
-	<section class="py-16 md:py-24 px-6 lg:px-8 bg-[var(--color-brand-base)] fade-in-section">
-		<div class="max-w-2xl mx-auto">
-			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-				<strong class="text-[var(--color-brand-primary-text)]">P.S.</strong> Tien weken, in een groep van acht vrouwen, waarin je leert waarom je lichaam doet wat het doet. Start maandag 12 oktober. Normaal € 1.497, voor deze eerste groep € 997.
-			</p>
-			<p class="text-lg text-[var(--color-brand-muted)] leading-relaxed mb-4">
-				Doe veertien dagen mee, en als het niet is wat je zoekt, krijg je je geld terug. En als je aan het einde je klacht nog steeds niet begrijpt, ga ik met je door tot je het wel doet.
-			</p>
-			<p class="signup-open-only text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">Acht plekken. De inschrijving sluit maandag 5 oktober.</p>
-			<p class="signup-closed-only text-lg text-[var(--color-brand-muted)] leading-relaxed mb-8">Acht plekken, en de inschrijving voor deze groep is gesloten.</p>
-			<div class="text-center">
-				<SignupCta className="text-base md:text-lg px-8 py-4 md:px-10 md:py-5" />
-			</div>
 		</div>
 	</section>
 

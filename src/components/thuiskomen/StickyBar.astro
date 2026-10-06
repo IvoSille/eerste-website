@@ -1,5 +1,5 @@
 ---
-import SignupCta from "./SignupCta.astro";
+import GesprekCta from "./GesprekCta.astro";
 ---
 
 <div
@@ -8,11 +8,10 @@ import SignupCta from "./SignupCta.astro";
 >
 	<div class="flex items-center gap-4">
 		<span class="font-heading font-semibold text-base text-[var(--color-brand-primary-text)]">Thuiskomen in je Vrouwenlijf</span>
-		<span class="signup-open-only text-sm text-[var(--color-brand-muted)]">€ 997 · start 12 oktober</span>
-		<span class="signup-closed-only text-sm text-[var(--color-brand-muted)]">Inschrijving gesloten</span>
+		<span class="text-sm text-[var(--color-brand-muted)]">Programma gesloten</span>
 	</div>
 	<div>
-		<SignupCta className="text-sm px-6 py-2.5" />
+		<GesprekCta data-cta-location="sticky_bar" className="text-sm px-6 py-2.5" />
 	</div>
 </div>
 

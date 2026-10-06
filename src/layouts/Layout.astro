@@ -75,6 +75,8 @@ const {
 			}
 		})} />
 
+		<slot name="head" />
+
 		<!-- Preconnect to Stape sGTM (DNS + TLS early, before GTM script tag).
 		     Bewust ZONDER crossorigin: de GTM-loader wordt als gewoon <script src>
 		     geladen (geen CORS), dus een anonieme verbinding is voor hem onbruikbaar
